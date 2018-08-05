@@ -7,7 +7,7 @@ public class testCMD {
     private static String line;
     public static void main(String[] args){
         String cmd = "cmd /c\" adb devices";
-        System.out.println(cmd);
+        //System.out.println(cmd);
         try {
            Process process = Runtime.getRuntime().exec(cmd);
            BufferedReader	bufferedReader = new BufferedReader

@@ -23,8 +23,9 @@ public class DemoPanel extends JPanel{
         this.labelPassWd = new JLabel("密    码");
         this.buttonLogin = new JButton("登录");
         this.buttonReset = new JButton("重置");
-        this.textFieldUserName = new JTextField(10);
-        this.passWdField = new JPasswordField(10);
+        this.textFieldUserName = new JTextField(20);
+        this.passWdField = new JPasswordField(20);
+
         this.panelPassWd = new JPanel();
         this.panelUserName = new JPanel();
         this.panelLoginButton = new JPanel();

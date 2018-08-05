@@ -10,7 +10,7 @@ public class DemoFrame extends JFrame{
         this.setSize(300, 200);
         this.setTitle("Frame Demo");
         this.add(panel);
-        this.setResizable(false);
+        this.setResizable(true);
         this.setVisible(true);
     }
 
