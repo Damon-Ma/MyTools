@@ -7,7 +7,7 @@ public class MyLabel {
     public JLabel input, output;
     LabelListener listener = new LabelListener();
     public MyLabel() {
-        input = new JLabel();
+        input = new JLabel("inputText");
         output = new JLabel();
         output.setFont(new Font("Dialog",0,18));
         listener.OutputLabelListener(output);

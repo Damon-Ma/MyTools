@@ -15,8 +15,8 @@ public class TestPanel extends JFrame{
         JPanel BtJpanel = new JPanel();
         BtJpanel.setBorder(BorderFactory.createEtchedBorder()); //添加蚀刻边框
         BtJpanel.setLayout(new GridLayout(1,3,10,10));
-        //定义两个按钮面板
-        JPanel Bt1,Bt2;
+        //定义三个按钮面板
+        JPanel Bt1,Bt2,Bt3;
         Bt1 = new JPanel();
         Bt1.setLayout(new GridLayout(3,1,10,10));
         //将按钮加到面板上
@@ -25,15 +25,22 @@ public class TestPanel extends JFrame{
         Bt1.add(button.killBt);
 
         Bt2 = new JPanel();
-        Bt2.setLayout(new GridLayout(3,1,10,10));
+        Bt2.setLayout(new GridLayout(4,1,10,10));
 
         Bt2.add(button.logcatBt);
+        Bt2.add(button.cleanLogBt);
         Bt2.add(button.packageBt);
         Bt2.add(button.recoveryBt);
 
+        Bt3 = new JPanel();
+        Bt3.setLayout(new GridLayout(2,1,10,10));
+
+        Bt3.add(button.installBt);
+        Bt3.add(button.sideloadBt);
+
         BtJpanel.add(Bt1);
         BtJpanel.add(Bt2);
-        BtJpanel.add(button.installBt);
+        BtJpanel.add(Bt3);
 
 
         //输入框
@@ -55,10 +62,8 @@ public class TestPanel extends JFrame{
         p2.setBorder(tb);
 
         p2.setLayout(new BorderLayout(3,3));
+
         //设置输出台可滚动
-
-      //  label.setOutputText("1111111111");
-
         JScrollPane text2=new JScrollPane(label.output);
         p2.add(text2,BorderLayout.CENTER);
 
@@ -85,10 +90,20 @@ public class TestPanel extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
+    //设置文本框文字
+    public static void setInputText(String text){
+        textField.inputText.setText(text);
+    }
+    public static String getInputText(){
+        return textField.inputText.getText();
+    }
 
     //设置输出台文字
     public static void setOutText(String text){
-        label.output.setText(text);
+        label.output.setText("<html><body>"+text+"<html><body>");
+    }
+    public static String getOutText(){
+        return label.output.getText();
     }
 
 

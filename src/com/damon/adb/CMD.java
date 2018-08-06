@@ -21,7 +21,7 @@ public class CMD {
                     result = result
                             + "<br>"
                             + line;
-                    //  System.out.println(line);
+                   // System.out.println(line);
                 }
             }
         } catch (Exception e) {
@@ -30,6 +30,16 @@ public class CMD {
     }
     public String getResult(){
         return result;
+    }
+
+    public Boolean isConnect(){
+        this.CMDCommand("adb devices");
+        //System.out.println(this.getResult());
+        if (this.getResult().endsWith("device<br>")){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 
