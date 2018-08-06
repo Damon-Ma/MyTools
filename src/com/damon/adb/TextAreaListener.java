@@ -12,12 +12,13 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
-public class LabelListener{
-    String allpath;
-    public void OutputLabelListener(JLabel label){
+public class TextAreaListener {
+    public static String allpath;
+    String path;
+    public void OutputLabelListener(JTextArea textArea){
 
         //输出台拖拽监听
-        DropTarget dt = new DropTarget(label,new DropTargetListener() {
+        DropTarget dt = new DropTarget(textArea,new DropTargetListener() {
             @Override
             public void dragEnter(DropTargetDragEvent dtde) { }
             @Override
@@ -34,21 +35,25 @@ public class LabelListener{
                         dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
                         java.util.List list = (List)tr.getTransferData(DataFlavor.javaFileListFlavor);
                         Iterator it = list.iterator();
+                        allpath = "";
                         while (it.hasNext()){
                             File f = (File) it.next();
-                            String path = f.getAbsolutePath();
-                            if(allpath==null||allpath==""||allpath==" "){
-                                allpath = path;
-                            }else {
-                                allpath = allpath + "<br>" + path;
-                            }
+                            path = f.getAbsolutePath();
+                            if (path.endsWith("apk")||path.endsWith("zip")){
+                                if(allpath==null||allpath==""||allpath==" ")
+                                    allpath = path;
+                                else
+                                    allpath = allpath + "\n" + path;
+                            }else
+                                TestPanel.setOutText(path+"不是正确的安装包");
+
                             System.out.println("allpath:"+allpath);
-                            System.out.println(path);
-                            label.setText("<html><body>"+allpath+"<html><body>");
-                            //  System.out.println(path);
+
                         }
                         dtde.dropComplete(true);
-                        allpath = "";
+                            if (!allpath.equals(""))
+                                TestPanel.setOutText("点击开始安装：\n"+allpath);
+
                     }else {
                         dtde.rejectDrop();
                     }
@@ -63,4 +68,7 @@ public class LabelListener{
 
     }
 
+    public static String getAllpath() {
+        return allpath;
+    }
 }

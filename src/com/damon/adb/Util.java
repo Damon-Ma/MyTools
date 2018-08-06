@@ -34,11 +34,9 @@ public class Util {
         return com.getAbsolutePath();
     }
 
-    public List<String> getInstallPath(String path){
-        String path1 = path.split("<body>")[1];
-        String path2 = path1.split("<html>")[0];
-        String[] path3 = path2.split("<br>");
-        List<String> filepathList =  Arrays.asList(path3);
+    public static List<String> getInstallPath(){
+        String allPath = TextAreaListener.getAllpath();
+        List<String> filepathList = Arrays.asList(allPath.split("\n"));
         return filepathList;
     }
 

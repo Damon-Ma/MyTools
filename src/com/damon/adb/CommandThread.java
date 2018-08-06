@@ -1,5 +1,6 @@
 package com.damon.adb;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CommandThread extends Thread{
@@ -19,6 +20,11 @@ public class CommandThread extends Thread{
             case "devices"  :
             case "spdevices":
                 TestPanel.setOutText("正在连接...");
+                if(name.equals("devices"))
+                    cmd.CMDCommand(util.getCommand("devices"));
+                else if (name.equals("spdevices"))
+                    cmd.CMDCommand(util.getCommand("spdevices"));
+
                 if (cmd.isConnect()){
                     cmd.CMDCommand(util.getCommand("system"));
                     TestPanel.setOutText("连接成功："+cmd.getResult());
@@ -55,16 +61,19 @@ public class CommandThread extends Thread{
             case "install":
                 //获取到面板上的文件路径
                if (cmd.isConnect()){
-                   String s = TestPanel.getOutText();
-                   List<String> filesPath = util.getInstallPath(s);
-                   for (String installFile : filesPath){
-                       if (installFile.endsWith(".apk")){
-                           TestPanel.setOutText("正在安装，请稍后。。。");
-                           cmd.CMDCommand(util.getCommand(name)+installFile);
-                           TestPanel.setOutText(cmd.getResult());
-                       }else {
-                           TestPanel.setOutText(installFile+"不是正确的安装包！");
-                       }
+
+
+                   List<String> filesPath = Util.getInstallPath();
+                   if (filesPath.size()!=0)
+                       for (String installFile : filesPath){
+                            System.out.println("获取到的installFile："+installFile);
+                            if (installFile.endsWith(".apk")){
+                                TestPanel.setOutText("正在安装,请稍后。。。");
+                                cmd.CMDCommand(util.getCommand(name)+installFile);
+                                TestPanel.setOutText(cmd.getResult());
+                            }else{
+                                TestPanel.setOutText(installFile+"不是正确的安装包！");
+                                }
                    }
                }else
                    TestPanel.setOutText("设备未连接！");

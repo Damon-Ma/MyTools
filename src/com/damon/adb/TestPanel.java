@@ -7,6 +7,7 @@ import java.awt.*;
 public class TestPanel extends JFrame{
     static MyButton button = new MyButton();
     static MyLabel label = new MyLabel();
+    static MyTextArea textArea = new MyTextArea();
     static MyTextField textField = new MyTextField();
 
 
@@ -64,7 +65,8 @@ public class TestPanel extends JFrame{
         p2.setLayout(new BorderLayout(3,3));
 
         //设置输出台可滚动
-        JScrollPane text2=new JScrollPane(label.output);
+        JScrollPane text2=new JScrollPane(textArea.textArea);
+        text2.doLayout();
         p2.add(text2,BorderLayout.CENTER);
 
         //输入框+p2
@@ -100,11 +102,12 @@ public class TestPanel extends JFrame{
 
     //设置输出台文字
     public static void setOutText(String text){
-        label.output.setText("<html><body>"+text+"<html><body>");
+        textArea.textArea.append(text+"\n");
     }
-    public static String getOutText(){
-        return label.output.getText();
+    public static void cleanOutText(){
+        textArea.textArea.setText("");
     }
+
 
 
 
