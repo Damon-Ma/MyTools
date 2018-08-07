@@ -17,11 +17,11 @@ public class ButtonListener implements ActionListener {
                 CommandThread devices = new CommandThread(Keys.DEVICES.getName());
                 devices.start();
                 break;
-            case "结束adb":
+            case "断开连接":
                 CommandThread kill = new CommandThread(Keys.kill_server.getName());
                 kill.start();
                 break;
-            case "检查连接S":
+            case "定制系统连接":
                CommandThread spAdb = new CommandThread(Keys.spdevices.getName());
                spAdb.start();
                break;

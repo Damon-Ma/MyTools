@@ -8,8 +8,8 @@ public class MyButton {
         ButtonListener listener = new ButtonListener();
 
         devicesBt = new JButton("检查连接");
-        killBt = new JButton("结束adb");
-        specialBt = new JButton("检查连接S");
+        killBt = new JButton("断开连接");
+        specialBt = new JButton("定制系统连接");
         logcatBt = new JButton("抓取日志");
         recoveryBt = new JButton("recovery模式");
         packageBt = new JButton("当前运行包名");

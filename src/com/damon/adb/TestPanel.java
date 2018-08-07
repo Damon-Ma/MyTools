@@ -9,6 +9,7 @@ public class TestPanel extends JFrame{
     static MyLabel label = new MyLabel();
     static MyTextArea textArea = new MyTextArea();
     static MyTextField textField = new MyTextField();
+    static JScrollPane text2;
 
 
     public TestPanel(){
@@ -65,7 +66,8 @@ public class TestPanel extends JFrame{
         p2.setLayout(new BorderLayout(3,3));
 
         //设置输出台可滚动
-        JScrollPane text2=new JScrollPane(textArea.textArea);
+        text2 =new JScrollPane(textArea.textArea);
+
         text2.doLayout();
         p2.add(text2,BorderLayout.CENTER);
 
@@ -103,6 +105,8 @@ public class TestPanel extends JFrame{
     //设置输出台文字
     public static void setOutText(String text){
         textArea.textArea.append(text+"\n");
+        //设置光标移到最后一行
+        textArea.textArea.setCaretPosition(textArea.textArea.getDocument().getLength());
     }
     public static void cleanOutText(){
         textArea.textArea.setText("");

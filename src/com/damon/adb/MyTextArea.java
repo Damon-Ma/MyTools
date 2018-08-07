@@ -13,6 +13,5 @@ public class MyTextArea {
         textArea.setLineWrap(true);        //激活自动换行功能
         textArea.setWrapStyleWord(true);   // 激活断行不断字功能
         listener.OutputLabelListener(textArea);
-
     }
 }

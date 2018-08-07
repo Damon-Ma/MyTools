@@ -44,7 +44,7 @@ public class Util {
 
         String [] s1  = s.split(" ");
         String s2 = s1[s1.length-1];
-        String s3 = s2.substring(0,s2.length()-5);
+        String s3 = s2.substring(0,s2.length()-1);
         return s3;
 
     }

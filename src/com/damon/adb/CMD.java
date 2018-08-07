@@ -15,13 +15,15 @@ public class CMD {
             BufferedReader	bufferedReader = new BufferedReader
                     (new InputStreamReader(p.getInputStream()));
             while ((line = bufferedReader.readLine()) != null) {
-                if (result == null || result == "") {
-                    result = line;
-                } else {
-                    result = result
-                            + "<br>"
-                            + line;
-                   // System.out.println(line);
+                if (!line.equals("")) {
+                    if (result == null || result == "") {
+                        result = line;
+                    } else {
+                        result = result
+                                + "\n"
+                                + line;
+                        // System.out.println(line);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -35,7 +37,7 @@ public class CMD {
     public Boolean isConnect(){
         this.CMDCommand("adb devices");
         //System.out.println(this.getResult());
-        if (this.getResult().endsWith("device<br>")){
+        if (this.getResult().endsWith("device")){
             return true;
         }else{
             return false;
