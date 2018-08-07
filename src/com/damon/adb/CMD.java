@@ -43,7 +43,4 @@ public class CMD {
             return false;
         }
     }
-
-
-
 }

@@ -23,7 +23,7 @@ public class Util {
         return "";
     }
 
-    public String getCommand(String key){
+    public static String getCommand(String key){
         bundle = ResourceBundle.getBundle("adb",Locale.CHINA);
         return bundle.getString(key);
     }
@@ -46,10 +46,37 @@ public class Util {
         String s2 = s1[s1.length-1];
         String s3 = s2.substring(0,s2.length()-1);
         return s3;
-
+    }
+    //截取文件名
+    public static String getFileName(String filePath){
+        String[] s = filePath.split("\\\\");
+        String fileName = s[s.length-1];
+        return fileName;
     }
     public static void main(String[] args){
-
     }
 
+    //获取apk信息
+    public static String getAPKMsg(String filePath){
+        CMD cmd = new CMD();
+        cmd.CMDCommand(Util.getCommand("getapkmsg")+filePath);
+        String APKMsg = cmd.getResult();
+        return APKMsg;
+    }
+    //截取apk信息
+    public static String getApkName(String filePath){
+        String allMsg = Util.getAPKMsg(filePath);
+        String apkName;
+        System.out.println("allMsg:\n"+allMsg);
+        String[] s = allMsg.split("\n");
+        List<String> l = Arrays.asList(s);
+        for (String msg : l){
+            System.out.println("msg:"+msg);
+            if (msg.startsWith("application-label")){
+                apkName = msg.split("'")[1];
+                return apkName;
+            }
+        }
+        return null;
+    }
 }

@@ -15,6 +15,8 @@ import java.util.List;
 public class TextAreaListener {
     public static String allpath;
     String path;
+    String fileName;
+    String filesName;
     public void OutputLabelListener(JTextArea textArea){
 
         //输出台拖拽监听
@@ -39,20 +41,34 @@ public class TextAreaListener {
                         while (it.hasNext()){
                             File f = (File) it.next();
                             path = f.getAbsolutePath();
+                            fileName = Util.getFileName(path);
                             if (path.endsWith("apk")||path.endsWith("zip")){
-                                if(allpath==null||allpath==""||allpath==" ")
+
+//                                String apkMsg = Util.getAPKMsg(path);
+//                                System.out.println("---------\n"+apkMsg+"\n-------");
+                                TestPanel.setOutText("应用名称："+Util.getApkName(path));
+
+                                if(allpath==null||allpath==""||allpath==" ") {
                                     allpath = path;
-                                else
+                                    filesName = fileName;
+                                }
+                                else {
                                     allpath = allpath + "\n" + path;
-                            }else
-                                TestPanel.setOutText(path+"不是正确的安装包");
+                                    filesName = filesName +"\n" + fileName;
+                                }
+                            }else{
+                                JOptionPane.showMessageDialog(null, fileName+"不是正确的安装包！", "提示",JOptionPane.WARNING_MESSAGE);
+                                //TestPanel.setOutText(path+"不是正确的安装包");
+                            }
 
                             System.out.println("allpath:"+allpath);
 
                         }
                         dtde.dropComplete(true);
-                            if (!allpath.equals(""))
-                                TestPanel.setOutText("点击开始安装：\n"+allpath);
+                            if (!allpath.equals("")){
+
+                                TestPanel.setOutText("点击开始安装：\n"+filesName);
+                            }
 
                     }else {
                         dtde.rejectDrop();

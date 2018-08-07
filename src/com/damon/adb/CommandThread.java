@@ -64,23 +64,27 @@ public class CommandThread extends Thread{
             case "install":
                 //获取到面板上的文件路径
                if (cmd.isConnect()){
-
-
+                   String fileName;
                    List<String> filesPath = Util.getInstallPath();
                    if (filesPath.size()!=0)
                        for (String installFile : filesPath){
+                            fileName = Util.getFileName(installFile);
                             System.out.println("获取到的installFile："+installFile);
                             if (installFile.endsWith(".apk")){
-                                TestPanel.setOutText("正在安装,请稍后。。。");
-                                cmd.CMDCommand(util.getCommand(name)+installFile);
+                                TestPanel.setOutText("正在安装"+fileName+"请稍后。。。");
+                                cmd.CMDCommand(util.getCommand(name)+"\""+installFile+"\"");
+                                System.out.println("安装完了");
                                 TestPanel.setOutText(cmd.getResult());
                             }else{
-                                TestPanel.setOutText(installFile+"不是正确的安装包！");
+                                JOptionPane.showMessageDialog(null, Util.getFileName(installFile)+"不是正确的安装包！", "提示",JOptionPane.WARNING_MESSAGE);
+//                              TestPanel.setOutText(installFile+"不是正确的安装包！");
                                 }
                    }
                }else
                    TestPanel.setOutText("设备未连接！");
                 break;
+
+
             case "getpackage":
                 if (cmd.isConnect()){
                     cmd.CMDCommand(util.getCommand(name));
@@ -99,6 +103,8 @@ public class CommandThread extends Thread{
                 }else
                     TestPanel.setOutText("设备未连接！");
                 break;
+
+
             case "send":
                 if (cmd.isConnect()){
                     String text = TestPanel.getInputText();
@@ -149,6 +155,7 @@ public class CommandThread extends Thread{
                     }
                 }else
                     TestPanel.setOutText("设备未连接！");
+                break;
         }
 
     }
