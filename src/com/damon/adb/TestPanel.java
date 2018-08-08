@@ -20,11 +20,12 @@ public class TestPanel extends JFrame{
         //定义三个按钮面板
         JPanel Bt1,Bt2,Bt3;
         Bt1 = new JPanel();
-        Bt1.setLayout(new GridLayout(3,1,10,10));
+        Bt1.setLayout(new GridLayout(4,1,10,10));
         //将按钮加到面板上
         Bt1.add(button.devicesBt);
         Bt1.add(button.specialBt);
         Bt1.add(button.killBt);
+        Bt1.add(button.cleanOutBt);
 
         Bt2 = new JPanel();
         Bt2.setLayout(new GridLayout(4,1,10,10));
@@ -108,6 +109,12 @@ public class TestPanel extends JFrame{
         //设置光标移到最后一行
         textArea.textArea.setCaretPosition(textArea.textArea.getDocument().getLength());
     }
+    //设置输出台字体、、textArea不能单独设置字体颜色，可以使用html样式的TextPane
+//    public static void setOutTextFont(int size){
+//        //textArea.textArea.setFont(new Font("Dialog",0,size));
+//        //textArea.textArea.setForeground(Color.BLUE);
+//    }
+
     public static void cleanOutText(){
         textArea.textArea.setText("");
     }

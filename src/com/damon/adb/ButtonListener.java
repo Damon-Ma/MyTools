@@ -53,6 +53,9 @@ public class ButtonListener implements ActionListener {
                 CommandThread sideload = new CommandThread(Keys.sideload.getName());
                 sideload.start();
                 break;
+            case "清屏":
+                TestPanel.cleanOutText();
+                break;
         }
     }
 }

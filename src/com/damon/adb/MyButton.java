@@ -3,7 +3,8 @@ package com.damon.adb;
 import javax.swing.*;
 
 public class MyButton {
-    public JButton devicesBt,killBt,specialBt,logcatBt,recoveryBt,packageBt,installBt,sendBt,cleanLogBt,sideloadBt;
+    public JButton devicesBt,killBt,specialBt,logcatBt,recoveryBt,packageBt,
+            installBt,sendBt,cleanLogBt,sideloadBt,cleanOutBt;
     public MyButton(){
         ButtonListener listener = new ButtonListener();
 
@@ -17,6 +18,7 @@ public class MyButton {
         sendBt = new JButton("发送");
         cleanLogBt = new JButton("清除日志");
         sideloadBt = new JButton("sideload");
+        cleanOutBt = new JButton("清屏");
 
         listener.BtListener(devicesBt);
         listener.BtListener(killBt);
@@ -28,5 +30,6 @@ public class MyButton {
         listener.BtListener(sendBt);
         listener.BtListener(cleanLogBt);
         listener.BtListener(sideloadBt);
+        listener.BtListener(cleanOutBt);
     }
 }

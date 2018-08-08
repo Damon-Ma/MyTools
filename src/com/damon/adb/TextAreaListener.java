@@ -46,8 +46,13 @@ public class TextAreaListener {
 
 //                                String apkMsg = Util.getAPKMsg(path);
 //                                System.out.println("---------\n"+apkMsg+"\n-------");
+                               // TestPanel.setOutText("-----------------------------------------------------");
+                                TestPanel.setOutText("------------------------------安装包“"+fileName+"”信息------------------------------");
                                 TestPanel.setOutText("应用名称："+Util.getApkName(path));
-
+                                TestPanel.setOutText("应用版本："+Util.getApkVersion(path));
+                                TestPanel.setOutText("应用包名："+Util.getApkPackage(path));
+                                TestPanel.setOutText("MainActivity：'"+Util.getApkActivity(path)+"'");
+                                TestPanel.setOutText(" ");
                                 if(allpath==null||allpath==""||allpath==" ") {
                                     allpath = path;
                                     filesName = fileName;
@@ -67,7 +72,12 @@ public class TextAreaListener {
                         dtde.dropComplete(true);
                             if (!allpath.equals("")){
 
-                                TestPanel.setOutText("点击开始安装：\n"+filesName);
+                                TestPanel.setOutText(
+                                        "----------------------------------\n"
+                                        +"点击开始安装：\n"
+                                        +filesName
+                                        +"\n----------------------------------"
+                                );
                             }
 
                     }else {
@@ -84,7 +94,7 @@ public class TextAreaListener {
 
     }
 
-    public static String getAllpath() {
-        return allpath;
-    }
+//    public static String getAllpath() {
+//        return allpath;
+//    }
 }
