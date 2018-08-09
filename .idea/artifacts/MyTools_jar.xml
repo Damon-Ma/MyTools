@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MyTools:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/MyTools_jar</output-path>
+    <root id="archive" name="MyTools.jar">
+      <element id="module-output" name="MyTools" />
+      <element id="dir-copy" path="$PROJECT_DIR$/libs" />
+    </root>
+  </artifact>
+</component>

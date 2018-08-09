@@ -88,13 +88,8 @@ public class TextAreaListener {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
         });
 
     }
-
-//    public static String getAllpath() {
-//        return allpath;
-//    }
 }

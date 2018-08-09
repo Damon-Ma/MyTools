@@ -56,6 +56,15 @@ public class ButtonListener implements ActionListener {
             case "清屏":
                 TestPanel.cleanOutText();
                 break;
+            case "清空":
+                TestPanel.cleanInputBox();
+                break;
+            case "返回主界面":
+                CommandThread toHome = new CommandThread(Keys.toHome.getName());
+                toHome.start();
+                break;
+            case "预留":
+                break;
         }
     }
 }

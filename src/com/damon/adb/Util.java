@@ -76,7 +76,7 @@ public class Util {
         String apkActivity;
         List<String> l = Util.getAPKMsg(filePath);
         for (String msg : l){
-            System.out.println("msg:"+msg);
+//            System.out.println("msg:"+msg);
             //用冒号截取名称
             String Msgname = msg.split(":")[0];
             //获取应用名称

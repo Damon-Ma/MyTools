@@ -16,9 +16,9 @@ public class TestPanel extends JFrame{
         //按钮 网格
         JPanel BtJpanel = new JPanel();
         BtJpanel.setBorder(BorderFactory.createEtchedBorder()); //添加蚀刻边框
-        BtJpanel.setLayout(new GridLayout(1,3,10,10));
-        //定义三个按钮面板
-        JPanel Bt1,Bt2,Bt3;
+        BtJpanel.setLayout(new GridLayout(1,4,10,10));
+        //定义四个按钮面板
+        JPanel Bt1,Bt2,Bt3,Bt4;
         Bt1 = new JPanel();
         Bt1.setLayout(new GridLayout(4,1,10,10));
         //将按钮加到面板上
@@ -36,25 +36,41 @@ public class TestPanel extends JFrame{
         Bt2.add(button.recoveryBt);
 
         Bt3 = new JPanel();
-        Bt3.setLayout(new GridLayout(2,1,10,10));
+        Bt3.setLayout(new GridLayout(4,1,10,10));
 
-        Bt3.add(button.installBt);
-        Bt3.add(button.sideloadBt);
+        Bt3.add(button.toHome);
+        Bt3.add(button.other);
+        Bt3.add(button.other);
+        Bt3.add(button.other);
+
+        Bt4 = new JPanel();
+        Bt4.setLayout(new GridLayout(2,1,10,10));
+
+        Bt4.add(button.installBt);
+        Bt4.add(button.sideloadBt);
 
         BtJpanel.add(Bt1);
         BtJpanel.add(Bt2);
         BtJpanel.add(Bt3);
+        BtJpanel.add(Bt4);
 
 
-        //输入框
+        //输入框行
         JPanel inputPanel = new JPanel();
         inputPanel.setBorder(BorderFactory.createEtchedBorder()); //添加蚀刻边框
         inputPanel.setLayout(new BorderLayout(5,5));
 
+        //输入框按钮行
+        JPanel inputBt = new JPanel();
+        inputBt.setLayout(new GridLayout(1,2,5,10));
+
+        inputBt.add(button.sendBt);
+        inputBt.add(button.cleanInputBt);
+
 
         inputPanel.add(label.input,BorderLayout.WEST);
         inputPanel.add(textField.inputText,BorderLayout.CENTER);
-        inputPanel.add(button.sendBt,BorderLayout.EAST);
+        inputPanel.add(inputBt,BorderLayout.EAST);
 
         //分割线+输出框p2
         JPanel p2 = new JPanel();
@@ -119,6 +135,9 @@ public class TestPanel extends JFrame{
         textArea.textArea.setText("");
     }
 
+    public static void cleanInputBox(){
+        textField.inputText.setText("");
+    }
 
 
 

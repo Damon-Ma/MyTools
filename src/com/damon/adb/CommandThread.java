@@ -28,7 +28,12 @@ public class CommandThread extends Thread{
 
                 if (cmd.getResult().endsWith("device")){
                     cmd.CMDCommand(Util.getCommand("system"));
-                    TestPanel.setOutText("连接成功："+cmd.getResult());
+                    if (cmd.getResult().equals("")){
+                        cmd.CMDCommand(Util.getCommand("system6.0"));
+                        TestPanel.setOutText("连接成功："+cmd.getResult());
+                    }else {
+                        TestPanel.setOutText("连接成功："+cmd.getResult());
+                    }
                 }
                 else
                     TestPanel.setOutText("设备未连接！");
@@ -83,6 +88,7 @@ public class CommandThread extends Thread{
                            }
                    }else{
                        JOptionPane.showMessageDialog(null, "请将apk文件拖入输出台！", "提示",JOptionPane.WARNING_MESSAGE);
+                       TestPanel.setOutText("请将apk文件拖入输出台！");
                    }
 
                }else{
@@ -102,8 +108,11 @@ public class CommandThread extends Thread{
                     if (split.length>1){
                         String thispackage = split[0];
                         String thisActivity = split[1];
+                        TestPanel.setOutText("=========================================================");
                         TestPanel.setOutText("当前运行程序package/Activity：\n"+PAAresult);
                         TestPanel.setOutText("package："+thispackage+"\n"+"Activity："+thisActivity);
+                        TestPanel.setOutText("=========================================================");
+
                     }else
                         TestPanel.setOutText("当前没有运行的程序！");
                 }else
@@ -112,7 +121,7 @@ public class CommandThread extends Thread{
 
 
             case "send":
-                if (cmd.isConnect()){
+
                     String text = TestPanel.getInputText();
                     String s = "";
 
@@ -135,8 +144,12 @@ public class CommandThread extends Thread{
                         }
                     }
                     if (isASCII&&!isBlank&&!isOther){
-                        cmd.CMDCommand(Util.getCommand("send")+text);
-                        TestPanel.setOutText("输入成功："+text);
+                        if (cmd.isConnect()){
+                            cmd.CMDCommand(Util.getCommand(name )+text);
+                            TestPanel.setOutText("输入成功："+text);
+                        }else {
+                            TestPanel.setOutText("设备未连接！");
+                        }
                     }else {
                         if (s.equals(" ")){
                             JOptionPane.showMessageDialog(null, "输入字符有误！不能发送空格", "提示",JOptionPane.WARNING_MESSAGE);
@@ -149,18 +162,27 @@ public class CommandThread extends Thread{
                             TestPanel.setOutText("输入有误，请检查："+text);
                         }
                     }
-                }else
-                    TestPanel.setOutText("设备未连接！");
+
                 break;
             case "recovery":
                 if (cmd.isConnect()){
                     //弹出提示框，返回的是按钮的index i=0或者1
                     int n = JOptionPane.showConfirmDialog(null, "确认进入recovery模式?", "提示",JOptionPane.YES_NO_OPTION);
                     if (n==0){
-                        cmd.CMDCommand(Util.getCommand("recovery"));
+                        cmd.CMDCommand(Util.getCommand(name));
+                        TestPanel.setOutText("OOOOOOOOOOOOOK!");
                     }
                 }else
                     TestPanel.setOutText("设备未连接！");
+                break;
+            case "toHome":
+                if (cmd.isConnect()){
+                    cmd.CMDCommand(Util.getCommand(name));
+                    cmd.CMDCommand(Util.getCommand("toHome2"));
+                    TestPanel.setOutText("OOOOOOOOOOOOOOVER!");
+                }else {
+                    TestPanel.setOutText("设备未连接！");
+                }
                 break;
         }
 

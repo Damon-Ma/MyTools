@@ -35,6 +35,7 @@ public class CMD {
     }
 
     public Boolean isConnect(){
+        TestPanel.setOutText("检查连接...");
         this.CMDCommand("adb devices");
         //System.out.println(this.getResult());
         if (this.getResult().endsWith("device")){
