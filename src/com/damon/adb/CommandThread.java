@@ -19,7 +19,7 @@ public class CommandThread extends Thread{
             case "devices"  :
             case "spdevices":
 
-                TestPanel.setOutText("正在连接...");
+                Application.setOutText("正在连接...");
                 String devResult ;
 
                 cmd.CMDCommand(Util.getCommand(name));
@@ -30,43 +30,43 @@ public class CommandThread extends Thread{
                     cmd.CMDCommand(Util.getCommand("system"));
                     if (cmd.getResult().equals("")){
                         cmd.CMDCommand(Util.getCommand("system6.0"));
-                        TestPanel.setOutText("连接成功："+cmd.getResult());
+                        Application.setOutText("连接成功："+cmd.getResult());
                     }else {
-                        TestPanel.setOutText("连接成功："+cmd.getResult());
+                        Application.setOutText("连接成功："+cmd.getResult());
                     }
                 }
                 else
-                    TestPanel.setOutText("设备未连接！");
+                    Application.setOutText("设备未连接！");
                 break;
             case "kill_server":
                 cmd.CMDCommand(Util.getCommand(name));
-                TestPanel.setOutText("OOOOOOOOOOOOOOK!");
+                Application.setOutText("OOOOOOOOOOOOOOK!");
                 break;
             case "logcat":
 
                 if (cmd.isConnect()){
-                    TestPanel.setOutText("正在抓取日志...");
+                    Application.setOutText("正在抓取日志...");
                     //日志文件路径
                     String path = Util.getDesktopPath()+"\\logcat";
                     cmd.CMDCommand("mkdir "+path);
                     String filePath = path+"\\logcat"+Util.getDate()+".txt";
 
                     cmd.CMDCommand(Util.getCommand(name)+filePath);
-                    cmd.getResult();
-                    TestPanel.setOutText("抓取成功："+filePath);
+                    Application.setOutText("抓取成功："+filePath);
                 }else
-                    TestPanel.setOutText("设备未连接！");
+                    Application.setOutText("设备未连接！");
                 break;
             case "cleanLog":
                 if (cmd.isConnect()){
                     cmd.CMDCommand(Util.getCommand(name));
-                    TestPanel.setOutText("清除成功！");
+                    Application.setOutText("清除成功！");
                 }else
-                    TestPanel.setOutText("设备未连接！");
+                    Application.setOutText("设备未连接！");
                 break;
             case "install":
+
                 //获取到面板上的文件路径
-                String thisText = TestPanel.textArea.textArea.getText();
+                String thisText = Application.textArea.textArea.getText();
                 if (cmd.isConnect()){
                    //判断面板是否进行过其他操作
                    if (thisText.endsWith("---------\n")){
@@ -77,22 +77,22 @@ public class CommandThread extends Thread{
                                fileName = Util.getFileName(installFile);
                                System.out.println("获取到的installFile："+installFile);
                                if (installFile.endsWith(".apk")){
-                                   TestPanel.setOutText("正在安装\""+fileName+"\"请稍后。。。");
+                                   Application.setOutText("正在安装\""+fileName+"\"请稍后。。。");
                                    cmd.CMDCommand(Util.getCommand(name)+"\""+installFile+"\"");
                                    System.out.println("安装完了");
-                                   TestPanel.setOutText("安装结果："+Util.getLastLine(cmd.getResult()));
+                                   Application.setOutText("安装结果："+Util.getLastLine(cmd.getResult()));
                                }else{
                                    JOptionPane.showMessageDialog(null, Util.getFileName(installFile)+"不是正确的安装包！", "提示",JOptionPane.WARNING_MESSAGE);
-//                              TestPanel.setOutText(installFile+"不是正确的安装包！");
+//                              Application.setOutText(installFile+"不是正确的安装包！");
                                }
                            }
                    }else{
                        JOptionPane.showMessageDialog(null, "请将apk文件拖入输出台！", "提示",JOptionPane.WARNING_MESSAGE);
-                       TestPanel.setOutText("请将apk文件拖入输出台！");
+                       Application.setOutText("请将apk文件拖入输出台！");
                    }
 
                }else{
-                   TestPanel.setOutText("设备未连接！");
+                   Application.setOutText("设备未连接！");
                }
                 break;
 
@@ -108,21 +108,21 @@ public class CommandThread extends Thread{
                     if (split.length>1){
                         String thispackage = split[0];
                         String thisActivity = split[1];
-                        TestPanel.setOutText("=========================================================");
-                        TestPanel.setOutText("当前运行程序package/Activity：\n"+PAAresult);
-                        TestPanel.setOutText("package："+thispackage+"\n"+"Activity："+thisActivity);
-                        TestPanel.setOutText("=========================================================");
+                        Application.setOutText("=========================================================");
+                        Application.setOutText("当前运行程序package/Activity：\n"+PAAresult);
+                        Application.setOutText("package："+thispackage+"\n"+"Activity："+thisActivity);
+                        Application.setOutText("=========================================================");
 
                     }else
-                        TestPanel.setOutText("当前没有运行的程序！");
+                        Application.setOutText("当前没有运行的程序！");
                 }else
-                    TestPanel.setOutText("设备未连接！");
+                    Application.setOutText("设备未连接！");
                 break;
 
 
             case "send":
 
-                    String text = TestPanel.getInputText();
+                    String text = Application.getInputText();
                     String s = "";
 
                     boolean isBlank = false;
@@ -146,20 +146,20 @@ public class CommandThread extends Thread{
                     if (isASCII&&!isBlank&&!isOther){
                         if (cmd.isConnect()){
                             cmd.CMDCommand(Util.getCommand(name )+text);
-                            TestPanel.setOutText("输入成功："+text);
+                            Application.setOutText("输入成功："+text);
                         }else {
-                            TestPanel.setOutText("设备未连接！");
+                            Application.setOutText("设备未连接！");
                         }
                     }else {
                         if (s.equals(" ")){
                             JOptionPane.showMessageDialog(null, "输入字符有误！不能发送空格", "提示",JOptionPane.WARNING_MESSAGE);
-                            TestPanel.setOutText("输入包含空格，请检查："+text);
+                            Application.setOutText("输入包含空格，请检查："+text);
                         }
                         else{
                             //弹窗提示
                             JOptionPane.showMessageDialog(null, "输入字符有误！请检查：\n"+s, "提示",JOptionPane.WARNING_MESSAGE);
                             //输入框显示
-                            TestPanel.setOutText("输入有误，请检查："+text);
+                            Application.setOutText("输入有误，请检查："+text);
                         }
                     }
 
@@ -170,21 +170,49 @@ public class CommandThread extends Thread{
                     int n = JOptionPane.showConfirmDialog(null, "确认进入recovery模式?", "提示",JOptionPane.YES_NO_OPTION);
                     if (n==0){
                         cmd.CMDCommand(Util.getCommand(name));
-                        TestPanel.setOutText("OOOOOOOOOOOOOK!");
+                        Application.setOutText("OOOOOOOOOOOOOK!");
+                    }else {
+                        Application.setOutText("干嘛取消！！");
                     }
                 }else
-                    TestPanel.setOutText("设备未连接！");
+                    Application.setOutText("设备未连接！");
                 break;
             case "toHome":
                 if (cmd.isConnect()){
                     cmd.CMDCommand(Util.getCommand(name));
                     cmd.CMDCommand(Util.getCommand("toHome2"));
-                    TestPanel.setOutText("OOOOOOOOOOOOOOVER!");
+                    Application.setOutText("OOOOOOOOOOOOOOVER!");
                 }else {
-                    TestPanel.setOutText("设备未连接！");
+                    Application.setOutText("设备未连接！");
+                }
+                break;
+            case "isSideload":
+                Application.setOutText("检查连接...");
+                cmd.CMDCommand("adb devices");
+                System.out.println(cmd.getResult());
+                if (cmd.getResult().startsWith("*")||!cmd.getResult().startsWith("List")){
+                    Application.setOutText("再点一下~~");
+                }else if (cmd.getResult().endsWith("sideload")){
+                    Application.setOutText("连接上了,可以把刷机包拖到输出台了~~");
+                }else {
+                    Application.setOutText("设备未连接哦~~");
+                }
+                break;
+            case "sideload":
+
+                //获取刷机包的路径
+
+
+
+                if (cmd.isSideload()){
+                    cmd.CMDCommand(Util.getCommand(name));
+                    Application.setOutText(cmd.getResult());
+                }else {
+                    Application.setOutText("设备未连接，请先检查sideload！");
                 }
                 break;
         }
+
 
     }
 }

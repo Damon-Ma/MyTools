@@ -2,6 +2,7 @@ package com.damon.adb;
 
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.ResourceBundle;
 public class Util {
 
     static ResourceBundle bundle;
+    private static List<String> l;      //获取到的apk信息
 
 
     public static String getDate(){
@@ -27,6 +29,7 @@ public class Util {
     //从配置文件中获取命令
     public static String getCommand(String key){
         bundle = ResourceBundle.getBundle("adb",Locale.CHINA);
+        System.out.println();
         return bundle.getString(key);
     }
 //    获取到桌面路径
@@ -35,6 +38,19 @@ public class Util {
         File com=fsv.getHomeDirectory();    //这便是读取桌面路径的方法了
         return com.getAbsolutePath();
     }
+
+    //获取当前运行路径
+    public static String getThisPath(){
+        File directory = new File("");//参数为空
+        String courseFile = null;
+        try {
+            courseFile = directory.getCanonicalPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return courseFile;
+    }
+
 //    获取所有安装包路径
     public static List<String> getInstallPath(String allPath){
         List<String> filepathList = Arrays.asList(allPath.split("\n"));
@@ -61,7 +77,7 @@ public class Util {
         cmd.CMDCommand(Util.getCommand("getapkmsg")+"\""+filePath+"\"");
         String APKMsgs = cmd.getResult();
         String[] s = APKMsgs.split("\n");
-        List<String> l = Arrays.asList(s);
+        l = Arrays.asList(s);
         return l;
     }
     //字符串通过空格截取成List
@@ -74,7 +90,7 @@ public class Util {
     public static String getMyAPKMsg(String filePath,String msgName){
         String apkName;
         String apkActivity;
-        List<String> l = Util.getAPKMsg(filePath);
+//        List<String> l = Util.getAPKMsg(filePath);
         for (String msg : l){
 //            System.out.println("msg:"+msg);
             //用冒号截取名称

@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class MyButton {
     public JButton devicesBt,killBt,specialBt,logcatBt,recoveryBt,packageBt,
-            installBt,sendBt,cleanLogBt,sideloadBt,cleanOutBt,cleanInputBt,toHome,other;
+            installBt,sendBt,cleanLogBt,sideloadBt,cleanOutBt,cleanInputBt,toHome,other,isSideload;
     public MyButton(){
         ButtonListener listener = new ButtonListener();
 
@@ -21,6 +21,7 @@ public class MyButton {
         cleanOutBt = new JButton("清屏");
         cleanInputBt = new JButton("清空");
         toHome = new JButton("返回主界面");
+        isSideload = new JButton("检查sideload");
         other = new JButton("预留");
 
         listener.BtListener(devicesBt);
@@ -36,6 +37,7 @@ public class MyButton {
         listener.BtListener(cleanOutBt);
         listener.BtListener(cleanInputBt);
         listener.BtListener(toHome);
+        listener.BtListener(isSideload);
         listener.BtListener(other);
     }
 }

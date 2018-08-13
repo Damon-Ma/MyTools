@@ -54,14 +54,18 @@ public class ButtonListener implements ActionListener {
                 sideload.start();
                 break;
             case "清屏":
-                TestPanel.cleanOutText();
+                Application.cleanOutText();
                 break;
             case "清空":
-                TestPanel.cleanInputBox();
+                Application.cleanInputBox();
                 break;
             case "返回主界面":
                 CommandThread toHome = new CommandThread(Keys.toHome.getName());
                 toHome.start();
+                break;
+            case "检查sideload":
+                CommandThread isSideload = new CommandThread(Keys.isSideload.getName());
+                isSideload.start();
                 break;
             case "预留":
                 break;

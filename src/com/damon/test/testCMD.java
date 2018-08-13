@@ -7,7 +7,7 @@ public class testCMD {
     private static String line;
     public static void main(String[] args){
 //        String cmd = "cmd /c\" adb devices";
-        String cmd = "cmd /c\" ping www.baidu.com";
+        String cmd = "cmd /c\" cd";
 
  //      String cmd = "cmd /c\" adb sideload E:\\FileRecv\\SQ29_P1_M2SS_T28.V1.0.1_UMSPOS_S_0_180730_01.zip";
         //System.out.println(cmd);
