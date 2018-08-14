@@ -107,7 +107,7 @@ public class Application extends JFrame{
 
 
         setTitle("Tools");
-        setSize(700,520);
+        setSize(700,550);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);

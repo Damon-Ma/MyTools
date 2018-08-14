@@ -201,7 +201,7 @@ public class CommandThread extends Thread{
                     String filePath = Util.getInstallPath(TextAreaListener.allpath).get(0);
                     if (cmd.isSideload()){
                         cmd.CMDCommand(Util.getCommand(name)+filePath);
-                        Application.setOutText(cmd.getResult());
+                        //Application.setOutText(cmd.getResult());
                     }else {
                         Application.setOutText("设备未连接，请先检查sideload！");
                     }

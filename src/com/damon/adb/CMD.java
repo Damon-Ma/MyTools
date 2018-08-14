@@ -20,8 +20,15 @@ class CMD {
                     if (result == null || result == "") {
                         result = line;
                     } else {
+                   //     System.out.println(line);
                         result = String.format("%s\n%s", result, line);
-                        // System.out.println(line);
+
+                        //在这里获取刷机的实时进度
+                        if (line.matches("(.*)%(.*)")){
+                            Application.setOutText(line);
+                        }else if(line.startsWith("Total")){
+                            Application.setOutText("刷机包安装成功，请重启设备！");
+                        }
                     }
                 }
             }
