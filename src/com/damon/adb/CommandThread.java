@@ -212,7 +212,7 @@ public class CommandThread extends Thread{
             case "monitor":
                 Application.setOutText("正在运行 Dalvik Debug Monitor Service（DDMS）...");
                 cmd.CMDCommand("monitor");
-                Application.setOutText("DDMS OVER！");
+                Application.setOutText("DDMS 已关闭！");
                 break;
         }
 
