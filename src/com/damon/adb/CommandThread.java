@@ -209,6 +209,11 @@ public class CommandThread extends Thread{
                     JOptionPane.showMessageDialog(null,"请将刷机包拖进输出台！","提示",JOptionPane.WARNING_MESSAGE);
                 }
                 break;
+            case "monitor":
+                Application.setOutText("正在运行 Dalvik Debug Monitor Service（DDMS）...");
+                cmd.CMDCommand("monitor");
+                Application.setOutText("DDMS OVER！");
+                break;
         }
 
 

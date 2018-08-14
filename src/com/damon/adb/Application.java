@@ -40,7 +40,7 @@ public class Application extends JFrame{
 
         Bt3.add(button.toHome);
         Bt3.add(button.isSideload);
-        Bt3.add(button.other);
+        Bt3.add(button.monitor);
         Bt3.add(button.other);
 
         Bt4 = new JPanel();
