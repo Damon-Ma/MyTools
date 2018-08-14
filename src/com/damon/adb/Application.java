@@ -104,8 +104,8 @@ public class Application extends JFrame{
     //    p.add(new JLabel());
 
         add(p,BorderLayout.CENTER);
-
-
+        //获取图片设置图标
+        setIconImage(new ImageIcon(this.getClass().getClassLoader().getResource("1.jpg")).getImage() );
         setTitle("Tools");
         setSize(700,550);
         setLocationRelativeTo(null);

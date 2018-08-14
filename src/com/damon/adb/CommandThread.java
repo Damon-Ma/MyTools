@@ -20,11 +20,11 @@ public class CommandThread extends Thread{
             case "spdevices":
 
                 Application.setOutText("正在连接...");
-                String devResult ;
+        //        String devResult ;
 
                 cmd.CMDCommand(Util.getCommand(name));
-                devResult = cmd.getResult();
-                System.out.println("devResult:"+devResult);
+        //        devResult = cmd.getResult();
+        //        System.out.println("devResult:"+devResult);
 
                 if (cmd.getResult().endsWith("device")){
                     cmd.CMDCommand(Util.getCommand("system"));
