@@ -75,11 +75,11 @@ public class CommandThread extends Thread{
                        if (filesPath.size()!=0)
                            for (String installFile : filesPath){
                                fileName = Util.getFileName(installFile);
-                               System.out.println("获取到的installFile："+installFile);
+                   //            System.out.println("获取到的installFile："+installFile);
                                if (installFile.endsWith(".apk")){
                                    Application.setOutText("正在安装\""+fileName+"\"请稍后。。。");
                                    cmd.CMDCommand(Util.getCommand(name)+"\""+installFile+"\"");
-                                   System.out.println("安装完了");
+                    //               System.out.println("安装完了");
                                    Application.setOutText("安装结果："+Util.getLastLine(cmd.getResult()));
                                }else{
                                    JOptionPane.showMessageDialog(null, Util.getFileName(installFile)+"不是正确的安装包！", "提示",JOptionPane.WARNING_MESSAGE);
@@ -102,8 +102,6 @@ public class CommandThread extends Thread{
                     cmd.CMDCommand(Util.getCommand(name));
                     String ADBresult = cmd.getResult();
                     String PAAresult = Util.getPackage(ADBresult);
-//                    System.out.println("ADBresult: "+ADBresult);
-//                    System.out.println("result : "+PAAresult);
                     String[] split = PAAresult.split("/");
                     if (split.length>1){
                         String thispackage = split[0];
@@ -112,16 +110,13 @@ public class CommandThread extends Thread{
                         Application.setOutText("当前运行程序package/Activity：\n"+PAAresult);
                         Application.setOutText("package："+thispackage+"\n"+"Activity："+thisActivity);
                         Application.setOutText("=========================================================");
-
                     }else
                         Application.setOutText("当前没有运行的程序！");
                 }else
                     Application.setOutText("设备未连接！");
                 break;
 
-
             case "send":
-
                     String text = Application.getInputText();
                     String s = "";
 
@@ -131,7 +126,6 @@ public class CommandThread extends Thread{
                     //判断输入的文字中是否有非法字符
                     for (int i = 0;i<text.length();i++){
                         s = text.substring(i,i+1);
-
                         //判断空格
                         isBlank = s.matches("[\\u0020]");
                         //判断其他字符
@@ -189,7 +183,7 @@ public class CommandThread extends Thread{
             case "isSideload":
                 Application.setOutText("检查连接...");
                 cmd.CMDCommand("adb devices");
-                System.out.println(cmd.getResult());
+            //    System.out.println(cmd.getResult());
                 if (cmd.getResult().startsWith("*")||!cmd.getResult().startsWith("List")){
                     Application.setOutText("再点一下~~");
                 }else if (cmd.getResult().endsWith("sideload")){
@@ -199,16 +193,20 @@ public class CommandThread extends Thread{
                 }
                 break;
             case "sideload":
-
-                //获取刷机包的路径
-
-
-
-                if (cmd.isSideload()){
-                    cmd.CMDCommand(Util.getCommand(name));
-                    Application.setOutText(cmd.getResult());
+                //当前面板显示内容
+                String labelText = Application.textArea.textArea.getText();
+                System.out.println(labelText);
+                if (labelText.endsWith("--------\n")){
+                    //获取刷机包的路径
+                    String filePath = Util.getInstallPath(TextAreaListener.allpath).get(0);
+                    if (cmd.isSideload()){
+                        cmd.CMDCommand(Util.getCommand(name)+filePath);
+                        Application.setOutText(cmd.getResult());
+                    }else {
+                        Application.setOutText("设备未连接，请先检查sideload！");
+                    }
                 }else {
-                    Application.setOutText("设备未连接，请先检查sideload！");
+                    JOptionPane.showMessageDialog(null,"请将刷机包拖进输出台！","提示",JOptionPane.WARNING_MESSAGE);
                 }
                 break;
         }

@@ -106,20 +106,12 @@ public class Application extends JFrame{
         add(p,BorderLayout.CENTER);
 
 
-
-
-
-
-
-
         setTitle("Tools");
-        setSize(700,500);
+        setSize(700,520);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
-
-
 
 
 
@@ -137,6 +129,7 @@ public class Application extends JFrame{
         //设置光标移到最后一行
         textArea.textArea.setCaretPosition(textArea.textArea.getDocument().getLength());
     }
+
     //设置输出台字体、、textArea不能单独设置字体颜色，可以使用html样式的TextPane
 //    public static void setOutTextFont(int size){
 //        //textArea.textArea.setFont(new Font("Dialog",0,size));

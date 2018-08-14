@@ -15,7 +15,7 @@ public class TextAreaListener {
     String path;
     String fileName;
     String filesName;
-    List<String > apkMsgs;
+    List<String> apkMsgs;
     public void OutputLabelListener(JTextArea textArea){
 
         //输出台拖拽监听
@@ -61,7 +61,6 @@ public class TextAreaListener {
                                     filesName = filesName +"\n" + fileName;
                                 }
                             }else if (path.endsWith("zip")){
-
                                 //给allpath赋值
                                 if (allpath==null||allpath==""||allpath==" "){
                                     allpath = path;
@@ -69,9 +68,6 @@ public class TextAreaListener {
                                 }else if (!path.equals(allpath)){        // 如果不止一个值allpath会不等于path，这里做一个拦截
                                     JOptionPane.showMessageDialog(null, "只能拖入一个刷机包！", "提示",JOptionPane.WARNING_MESSAGE);
                                 }
-
-
-
                                 //在这里截取一下刷机包的名称
                                 String[] names = filesName.split("_");
                                 if (names.length<9){
@@ -100,10 +96,6 @@ public class TextAreaListener {
                                             "\n点击sideload开始刷刷机包：\n"+filesName);
                                     Application.setOutText("----------------------------------");
                                 }
-
-
-
-
                             }else{
                                 JOptionPane.showMessageDialog(null, fileName+"不是正确的安装包！", "提示",JOptionPane.WARNING_MESSAGE);
                                 //Application.setOutText(path+"不是正确的安装包");
