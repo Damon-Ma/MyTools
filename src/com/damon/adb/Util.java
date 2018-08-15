@@ -2,8 +2,6 @@ package com.damon.adb;
 
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
@@ -138,6 +136,7 @@ public class Util {
         String version = Util.getMyAPKMsg(filePath,msgName);
         return version;
     }
+
     //获取当前class路径
     public static String getThisPath(String fileName){
         String s =  Util.class.getClassLoader().getResource(fileName).getFile();

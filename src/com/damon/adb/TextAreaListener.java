@@ -44,14 +44,18 @@ public class TextAreaListener {
 
                             if (path.endsWith("apk")){
                                 apkMsgs = Util.getAPKMsg(path);
-//                                String apkMsg = Util.getAPKMsg(path);
+                                String apkName = Util.getApkName(path);
+                                String apkVersion = Util.getApkVersion(path);
+                                String apkPackage = Util.getApkPackage(path);
+                                String apkActivity = Util.getApkActivity(path);
+
+
 //                                System.out.println("---------\n"+apkMsg+"\n-------");
-                               // Application.setOutText("-----------------------------------------------------");
                                 Application.setOutText("------------------------------安装包“"+fileName+"”信息------------------------------");
-                                Application.setOutText("应用名称："+Util.getApkName(path));
-                                Application.setOutText("应用版本："+Util.getApkVersion(path));
-                                Application.setOutText("应用包名："+Util.getApkPackage(path));
-                                Application.setOutText("MainActivity：'"+Util.getApkActivity(path)+"'");
+                                Application.setOutText("应用名称："+apkName);
+                                Application.setOutText("应用版本："+apkVersion);
+                                Application.setOutText("应用包名："+apkPackage);
+                                Application.setOutText("MainActivity："+apkActivity);
                                 Application.setOutText(" ");
                                 if(allpath==null||allpath==""||allpath==" ") {
                                     allpath = path;
