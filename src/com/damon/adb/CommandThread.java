@@ -2,6 +2,7 @@ package com.damon.adb;
 
 import javax.swing.*;
 import java.util.List;
+import java.util.UUID;
 
 public class CommandThread extends Thread{
 
@@ -18,14 +19,15 @@ public class CommandThread extends Thread{
         switch (name){
             case "devices"  :
             case "spdevices":
-
                 Application.setOutText("正在连接...");
-        //        String devResult ;
-
-                cmd.CMDCommand(Util.getCommand(name));
-        //        devResult = cmd.getResult();
-        //        System.out.println("devResult:"+devResult);
-
+                if (name.equals("devices")){
+                    //        String devResult ;
+                    cmd.CMDCommand(Util.getCommand(name));
+                    //        devResult = cmd.getResult();
+                    //        System.out.println("devResult:"+devResult);
+                }else {
+                    cmd.CMDCommand(Util.getThisPath("adb/adb.exe")+" "+Util.getCommand(name));
+                }
                 if (cmd.getResult().endsWith("device")){
                     cmd.CMDCommand(Util.getCommand("system"));
                     if (cmd.getResult().equals("")){
@@ -96,7 +98,6 @@ public class CommandThread extends Thread{
                }
                 break;
 
-
             case "getpackage":
                 if (cmd.isConnect()){
                     cmd.CMDCommand(Util.getCommand(name));
@@ -156,7 +157,6 @@ public class CommandThread extends Thread{
                             Application.setOutText("输入有误，请检查："+text);
                         }
                     }
-
                 break;
             case "recovery":
                 if (cmd.isConnect()){
@@ -215,7 +215,5 @@ public class CommandThread extends Thread{
                 Application.setOutText("DDMS 已关闭！");
                 break;
         }
-
-
     }
 }

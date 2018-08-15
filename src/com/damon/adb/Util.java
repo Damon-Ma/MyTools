@@ -3,6 +3,7 @@ package com.damon.adb;
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
@@ -40,16 +41,7 @@ public class Util {
     }
 
     //获取当前运行路径
-    public static String getThisPath(){
-        File directory = new File("");//参数为空
-        String courseFile = null;
-        try {
-            courseFile = directory.getCanonicalPath();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return courseFile;
-    }
+
 
 //    获取所有安装包路径
     public static List<String> getInstallPath(String allPath){
@@ -74,7 +66,7 @@ public class Util {
     //将apk信息截取成List
     public static List<String> getAPKMsg(String filePath){
         CMD cmd = new CMD();
-        cmd.CMDCommand(Util.getCommand("getapkmsg")+"\""+filePath+"\"");
+        cmd.CMDCommand(Util.getThisPath("adb/aapt.exe")+" "+Util.getCommand("getapkmsg")+"\""+filePath+"\"");
         String APKMsgs = cmd.getResult();
         String[] s = APKMsgs.split("\n");
         l = Arrays.asList(s);
@@ -144,4 +136,11 @@ public class Util {
         String version = Util.getMyAPKMsg(filePath,msgName);
         return version;
     }
+    //获取当前class路径
+    public static String getThisPath(String fileName){
+        String s =  Util.class.getClassLoader().getResource(fileName).getPath();
+        s = s.substring(1,s.length());
+        return s;
+    }
+
 }
