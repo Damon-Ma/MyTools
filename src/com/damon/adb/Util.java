@@ -141,9 +141,7 @@ public class Util {
     public static String getThisPath(String fileName){
         String s =  Util.class.getClassLoader().getResource(fileName).getFile();
        //s = s.substring(1,s.length());
-        Application.setOutText("获取到的文件是："+s);
+       // Application.setOutText("获取到的文件是："+s);
         return s;
     }
-
-
 }
