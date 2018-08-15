@@ -2,7 +2,6 @@ package com.damon.adb;
 
 import javax.swing.*;
 import java.util.List;
-import java.util.UUID;
 
 public class CommandThread extends Thread{
 
@@ -11,23 +10,20 @@ public class CommandThread extends Thread{
     public CommandThread(String name){
         this.name = name;
     }
-
     static Object ob = "aa";
-
     @Override
     public void run(){
         switch (name){
             case "devices"  :
             case "spdevices":
+
                 Application.setOutText("正在连接...");
-                if (name.equals("devices")){
-                    //        String devResult ;
-                    cmd.CMDCommand(Util.getCommand(name));
-                    //        devResult = cmd.getResult();
-                    //        System.out.println("devResult:"+devResult);
-                }else {
-                    cmd.CMDCommand(Util.getThisPath("adb/adb.exe")+" "+Util.getCommand(name));
-                }
+        //        String devResult ;
+
+                cmd.CMDCommand(Util.getCommand(name));
+        //        devResult = cmd.getResult();
+        //        System.out.println("devResult:"+devResult);
+
                 if (cmd.getResult().endsWith("device")){
                     cmd.CMDCommand(Util.getCommand("system"));
                     if (cmd.getResult().equals("")){
@@ -97,6 +93,7 @@ public class CommandThread extends Thread{
                    Application.setOutText("设备未连接！");
                }
                 break;
+
 
             case "getpackage":
                 if (cmd.isConnect()){
@@ -215,5 +212,7 @@ public class CommandThread extends Thread{
                 Application.setOutText("DDMS 已关闭！");
                 break;
         }
+
+
     }
 }

@@ -66,7 +66,9 @@ public class Util {
     //将apk信息截取成List
     public static List<String> getAPKMsg(String filePath){
         CMD cmd = new CMD();
-        cmd.CMDCommand(Util.getThisPath("adb/aapt.exe")+" "+Util.getCommand("getapkmsg")+"\""+filePath+"\"");
+        cmd.CMDCommand(Util.getCommand("getapkmsg")+"\""+filePath+"\"");
+
+
         String APKMsgs = cmd.getResult();
         String[] s = APKMsgs.split("\n");
         l = Arrays.asList(s);
@@ -138,9 +140,11 @@ public class Util {
     }
     //获取当前class路径
     public static String getThisPath(String fileName){
-        String s =  Util.class.getClassLoader().getResource(fileName).getPath();
-        s = s.substring(1,s.length());
+        String s =  Util.class.getClassLoader().getResource(fileName).getFile();
+       //s = s.substring(1,s.length());
+        Application.setOutText("获取到的文件是："+s);
         return s;
     }
+
 
 }
