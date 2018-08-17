@@ -8,7 +8,7 @@ class CMD {
     void CMDCommand(String cmd){
         result = "";
         String cmd1 = "cmd /c\"  "+cmd;
-        Application.setOutText(cmd);
+//        Application.setOutText(cmd);
         System.out.println(cmd);
         try {
             Process p = Runtime.getRuntime().exec(cmd1);
