@@ -13,7 +13,7 @@ import java.util.List;
 public class TextAreaListener {
     public static String allpath;
     String path;
-    String fileName;
+    public static String fileName;
     String filesName;
     List<String> apkMsgs;
     public void OutputLabelListener(JTextArea textArea){
@@ -77,6 +77,16 @@ public class TextAreaListener {
                                 if (names.length<9){
                                     JOptionPane.showMessageDialog(null, fileName+"不是正确的刷机包！", "提示",JOptionPane.WARNING_MESSAGE);
                                 }else {
+                                    //获取一下当前OS版本
+//                                    String osVersion = Util.getOS();
+//                                    if (!osVersion.startsWith(names[0])){
+//                                        JOptionPane.showMessageDialog(null,
+//                                                "请确定OS是否与机型匹配！\n当前机型："+osVersion.split("_")[0]+"\n刷机包："+names[0],
+//                                                "提示",JOptionPane.WARNING_MESSAGE);
+//                                    }
+                                    JOptionPane.showMessageDialog(null,
+                                                "当前OS适用机型："+names[0],
+                                                "提示",JOptionPane.WARNING_MESSAGE);
                                     //机型
                                     String name = names[0];
                                     //定制版本

@@ -22,13 +22,10 @@ public class CommandThread extends Thread{
             }
 
             if (cmd.getResult().endsWith("device")){
-                cmd.CMDCommand(Util.getCommand("system"));
-                if (cmd.getResult().equals("")){
-                    cmd.CMDCommand(Util.getCommand("system6.0"));
-                    Application.setOutText("连接成功："+cmd.getResult());
-                }else {
-                    Application.setOutText("连接成功："+cmd.getResult());
-                }
+                //获取OS版本
+                Application.setOutText("连接成功！");
+                String osVersion = Util.getOS();
+                Application.setOutText("系统版本："+osVersion);
             } else if (cmd.getResult().endsWith("offline")){
                 Application.setOutText("请断开数据线重新连接！");
             } else{

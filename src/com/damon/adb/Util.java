@@ -150,4 +150,14 @@ public class Util {
  //       Application.setOutText("获取到的路径是："+s);
         return s;
     }
+
+    //获取当前OS版本
+    public static String getOS() {
+        CMD cmd = new CMD();
+        cmd.CMDCommand(Util.getCommand("system"));
+        if (cmd.getResult().equals("")) {
+            cmd.CMDCommand(Util.getCommand("system6.0"));
+        }
+        return cmd.getResult();
+    }
 }
