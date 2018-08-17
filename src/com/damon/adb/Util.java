@@ -64,7 +64,7 @@ public class Util {
     //将apk信息截取成List
     public static List<String> getAPKMsg(String filePath){
         CMD cmd = new CMD();
-        cmd.CMDCommand(Util.getCommand("getapkmsg")+"\""+filePath+"\"");
+        cmd.CMDCommand(Util.getThisPath()+Util.getCommand("getapkmsg")+"\""+filePath+"\"");
 
 
         String APKMsgs = cmd.getResult();
@@ -138,10 +138,14 @@ public class Util {
     }
 
     //获取当前class路径
-    public static String getThisPath(String fileName){
-        String s =  Util.class.getClassLoader().getResource(fileName).getFile();
-       //s = s.substring(1,s.length());
-       // Application.setOutText("获取到的文件是："+s);
+    public static String getThisPath(){
+        String s =  Util.class.getClassLoader().getResource("1.jpg").getPath();
+        //s=  file:/    C:/Users/Malik/Desktop/    MyTools.jar!/1.jpg
+        s = s.split("file:/")[1].split("MyTools.jar!")[0];
+        //将/换成\
+        s = s.replace("/","\\");
+
+ //       Application.setOutText("获取到的路径是："+s);
         return s;
     }
 }

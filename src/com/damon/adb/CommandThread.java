@@ -15,7 +15,11 @@ public class CommandThread extends Thread{
     public void run(){
         if (name==Keys.DEVICES||name==Keys.spdevices){
             Application.setOutText("正在连接...");
-            cmd.CMDCommand(Util.getCommand(name.getName()));
+            if (name==Keys.DEVICES){
+                cmd.CMDCommand(Util.getCommand(name.getName()));
+            }else if (name==Keys.spdevices){
+                cmd.CMDCommand(Util.getThisPath()+Util.getCommand(name.getName()));
+            }
 
             if (cmd.getResult().endsWith("device")){
                 cmd.CMDCommand(Util.getCommand("system"));
@@ -25,6 +29,8 @@ public class CommandThread extends Thread{
                 }else {
                     Application.setOutText("连接成功："+cmd.getResult());
                 }
+            } else if (cmd.getResult().endsWith("offline")){
+                Application.setOutText("请断开数据线重新连接！");
             } else{
                 Application.setOutText("设备未连接！");
             }
