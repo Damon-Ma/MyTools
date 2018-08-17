@@ -18,7 +18,7 @@ public class CommandThread extends Thread{
             if (name==Keys.DEVICES){
                 cmd.CMDCommand(Util.getCommand(name.getName()));
             }else if (name==Keys.spdevices){
-                cmd.CMDCommand("\""+Util.getThisPath()+"libs\\adb.exe "+Util.getCommand(name.getName()));
+                cmd.CMDCommand("\""+Util.getThisPath()+"libs\\adb.exe\"\" devices");
             }
 
             if (cmd.getResult().endsWith("device")){

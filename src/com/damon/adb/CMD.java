@@ -20,7 +20,7 @@ class CMD {
                     if (result == null || result == "") {
                         result = line;
                     } else {
-                   //     System.out.println(line);
+                        System.out.println(line);
                         result = String.format("%s\n%s", result, line);
 
                         //在这里获取刷机的实时进度
