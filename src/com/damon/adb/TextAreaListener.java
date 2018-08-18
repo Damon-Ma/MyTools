@@ -74,10 +74,27 @@ public class TextAreaListener {
                                 }
                                 //在这里截取一下刷机包的名称
                                 String[] names = filesName.split("_");
-                                if (names.length<9){
+                                if (names.length<9&&!filesName.matches(".*[Recovery].*")){
                                     JOptionPane.showMessageDialog(null, fileName+"不是正确的刷机包！", "提示",JOptionPane.WARNING_MESSAGE);
+                                }else if (filesName.matches(".*S.*2.N.*")){
+                                    JOptionPane.showMessageDialog(null,
+                                            "添加的是签名转非签包！",
+                                            "提示",JOptionPane.WARNING_MESSAGE);
+                                    Application.setOutText("----------------------------------\n" +
+                                            "点击开始刷入转换包：\n" +
+                                            fileName +
+                                            "\n----------------------------------");
+                                }else if (filesName.matches(".*N.*2.S.*")){
+                                    JOptionPane.showMessageDialog(null,
+                                            "添加的是非签转签名包！",
+                                            "提示",JOptionPane.WARNING_MESSAGE);
+                                    Application.setOutText("----------------------------------\n" +
+                                            "点击开始刷入转换包：\n" +
+                                            fileName +
+                                            "\n----------------------------------");
                                 }else {
                                     //获取一下当前OS版本
+                                    //进入recovery模式之后获取不到os版本信息
 //                                    String osVersion = Util.getOS();
 //                                    if (!osVersion.startsWith(names[0])){
 //                                        JOptionPane.showMessageDialog(null,
