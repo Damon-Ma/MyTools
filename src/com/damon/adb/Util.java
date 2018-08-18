@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Util {
 
@@ -37,10 +39,6 @@ public class Util {
         File com=fsv.getHomeDirectory();    //这便是读取桌面路径的方法了
         return com.getAbsolutePath();
     }
-
-    //获取当前运行路径
-
-
 //    获取所有安装包路径
     public static List<String> getInstallPath(String allPath){
         List<String> filepathList = Arrays.asList(allPath.split("\n"));
@@ -60,7 +58,6 @@ public class Util {
         String fileName = s[s.length-1];
         return fileName;
     }
-
     //将apk信息截取成List
     public static List<String> getAPKMsg(String filePath){
         CMD cmd = new CMD();
@@ -136,7 +133,6 @@ public class Util {
         String version = Util.getMyAPKMsg(filePath,msgName);
         return version;
     }
-
     //获取当前class路径
     public static String getThisPath(){
         String s =  Util.class.getClassLoader().getResource("1.jpg").getPath();
@@ -150,7 +146,6 @@ public class Util {
  //       Application.setOutText("获取到的路径是："+s);
         return s;
     }
-
     //获取当前OS版本
     public static String getOS() {
         CMD cmd = new CMD();
@@ -159,5 +154,16 @@ public class Util {
             cmd.CMDCommand(Util.getCommand("system6.0"));
         }
         return cmd.getResult();
+    }
+    //正则匹配OS信息
+    public static String getOSMsg(String osName,String regex){
+        // 创建 Pattern 对象
+        Pattern r = Pattern.compile(regex);
+        // 现在创建 matcher 对象
+        Matcher m = r.matcher(osName);
+        if (m.find()){
+            return m.group();
+        }
+        return null;
     }
 }

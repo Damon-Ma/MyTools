@@ -105,15 +105,15 @@ public class TextAreaListener {
                                                 "当前OS适用机型："+names[0],
                                                 "提示",JOptionPane.WARNING_MESSAGE);
                                     //机型
-                                    String name = names[0];
+                                    String name = Util.getOSMsg(fileName,"SQ\\d+[A-Z]*");
                                     //定制版本
-                                    String whos = names[1];
+                                    String whos = Util.getOSMsg(fileName,"[A-Z]{3,}|[X][X]|[W][D]");
                                     //发布日期
-                                    String date = names[2];
+                                    String date = Util.getOSMsg(fileName,"\\d{6}");
                                     //是否签名
-                                    String Sign = names[4];
+                                    String Sign = Util.getOSMsg(fileName,"_[SN]_");
                                     String isSign;
-                                    if (Sign.equals("S")){
+                                    if (Sign.equals("_S_")){
                                         isSign = "签名";
                                     }else {
                                         isSign = "非签名";
