@@ -5,10 +5,11 @@ import java.io.InputStreamReader;
 
 class CMD {
     private String result;
+    private String errorResult;
     void CMDCommand(String cmd){
         result = "";
         String cmd1 = "cmd /c\"  "+cmd;
-        Application.setOutText(cmd);
+    //    Application.setOutText(cmd);
         System.out.println(cmd);
         try {
             Process p = Runtime.getRuntime().exec(cmd1);
@@ -20,7 +21,7 @@ class CMD {
                     if (result == null || result == "") {
                         result = line;
                     } else {
-                        System.out.println(line);
+            //            System.out.println(line);
                         result = String.format("%s\n%s", result, line);
 
                         //在这里获取刷机的实时进度

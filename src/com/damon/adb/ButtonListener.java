@@ -68,6 +68,7 @@ public class ButtonListener implements ActionListener {
                 isSideload.start();
                 break;
             case "预留":
+
                 break;
             case "monitor":
                 CommandThread monitor = new CommandThread(Keys.monitor);

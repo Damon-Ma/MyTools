@@ -74,9 +74,9 @@ public class TextAreaListener {
                                 }
                                 //在这里截取一下刷机包的名称
                                 String[] names = filesName.split("_");
-                                if (names.length<9&&!filesName.matches(".*[Recovery].*")){
+                                if (names.length<7&&!filesName.matches(".*[Recovery].*")){
                                     JOptionPane.showMessageDialog(null, fileName+"不是正确的刷机包！", "提示",JOptionPane.WARNING_MESSAGE);
-                                }else if (filesName.matches(".*S.*2.N.*")){
+                                }else if (filesName.matches(".*[OS].*2.N.*")){
                                     JOptionPane.showMessageDialog(null,
                                             "添加的是签名转非签包！",
                                             "提示",JOptionPane.WARNING_MESSAGE);
@@ -84,7 +84,7 @@ public class TextAreaListener {
                                             "点击开始刷入转换包：\n" +
                                             fileName +
                                             "\n----------------------------------");
-                                }else if (filesName.matches(".*N.*2.S.*")){
+                                }else if (filesName.matches(".*[ON].*2.S.*")){
                                     JOptionPane.showMessageDialog(null,
                                             "添加的是非签转签名包！",
                                             "提示",JOptionPane.WARNING_MESSAGE);
@@ -107,7 +107,7 @@ public class TextAreaListener {
                                     //机型
                                     String name = Util.getOSMsg(fileName,"SQ\\d+[A-Z]*");
                                     //定制版本
-                                    String whos = Util.getOSMsg(fileName,"[A-Z]{3,}|[X][X]|[W][D]");
+                                    String whos = Util.getOSMsg(fileName,"[A-Z]{3,}|XX|WD");
                                     //发布日期
                                     String date = Util.getOSMsg(fileName,"\\d{6}");
                                     //是否签名
@@ -129,7 +129,6 @@ public class TextAreaListener {
                                 }
                             }else{
                                 JOptionPane.showMessageDialog(null, fileName+"不是正确的安装包！", "提示",JOptionPane.WARNING_MESSAGE);
-                                //Application.setOutText(path+"不是正确的安装包");
                             }
 
                          //   System.out.println("allpath:"+allpath);
