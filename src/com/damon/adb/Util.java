@@ -166,4 +166,13 @@ public class Util {
         }
         return null;
     }
+    //判断是否含中文
+    public static boolean isContainChinese(String str) {
+        Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
+        Matcher m = p.matcher(str);
+        if (m.find()) {
+            return true;
+        }
+        return false;
+    }
 }

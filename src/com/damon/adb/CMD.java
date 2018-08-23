@@ -9,7 +9,7 @@ class CMD {
     void CMDCommand(String cmd){
         result = "";
         String cmd1 = "cmd /c\"  "+cmd;
-    //     Application.setOutText(cmd);
+        //Application.setOutText(cmd);
         // System.out.println(cmd);
         try {
             Process p = Runtime.getRuntime().exec(cmd1);
@@ -60,7 +60,7 @@ class CMD {
       //  System.out.println(devicesResult.length);
         if (devicesResult.length>1){
             String last2Result = devicesResult[devicesResult.length-2];
-            if (last2Result.endsWith("device")||last2Result.equals("offline")){
+            if (last2Result.endsWith("device")||last2Result.endsWith("offline")||last2Result.endsWith("unauthorized")){
                 Application.setOutText("只支持连接一台设备，请检查...");
                 return false;
             }else {

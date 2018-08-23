@@ -42,6 +42,18 @@ public class TextAreaListener {
                             path = f.getAbsolutePath();
                             fileName = Util.getFileName(path);
 
+                            if (Util.isContainChinese(path)){
+                                JOptionPane.showMessageDialog(null,
+                                        "路径中不能包含中文！",
+                                        "提示",
+                                        JOptionPane.WARNING_MESSAGE);
+                                Application.setOutText("路径中包含中文，请检查！\n" +
+                                        "路径：" +
+                                        path);
+                                break;
+                            }
+
+
                             if (path.endsWith("apk")){
                                 apkMsgs = Util.getAPKMsg(path);
                                 String apkName = Util.getApkName(path);
@@ -70,11 +82,14 @@ public class TextAreaListener {
                                     allpath = path;
                                     filesName = fileName;
                                 }else if (!path.equals(allpath)){        // 如果不止一个值allpath会不等于path，这里做一个拦截
-                                    JOptionPane.showMessageDialog(null, "只能拖入一个刷机包！", "提示",JOptionPane.WARNING_MESSAGE);
+                                    JOptionPane.showMessageDialog(null,
+                                            "只能拖入一个刷机包！",
+                                            "提示",
+                                            JOptionPane.WARNING_MESSAGE);
                                 }
                                 //在这里截取一下刷机包的名称
                                 String[] names = filesName.split("_");
-                                if (names.length<7&&!filesName.matches(".*[Recovery].*")){
+                                if (names.length<7&&!filesName.matches(".*[Recovery].*")&&!filesName.matches(".*SE.*")){
                                     JOptionPane.showMessageDialog(null, fileName+"不是正确的刷机包！", "提示",JOptionPane.WARNING_MESSAGE);
                                 }else if (filesName.matches(".*[OS].*2.N.*")){
                                     JOptionPane.showMessageDialog(null,
@@ -113,10 +128,14 @@ public class TextAreaListener {
                                     //是否签名
                                     String Sign = Util.getOSMsg(fileName,"_[SN]_");
                                     String isSign;
-                                    if (Sign.equals("_S_")){
-                                        isSign = "签名";
-                                    }else {
-                                        isSign = "非签名";
+                                    try {
+                                        if (Sign.equals("_S_")){
+                                            isSign = "签名";
+                                        }else {
+                                            isSign = "非签名";
+                                        }
+                                    }catch (NullPointerException e){
+                                        isSign = "";
                                     }
                                     Application.setOutText("----------------------------------\n" +
                                             "适用机型：" +name+
