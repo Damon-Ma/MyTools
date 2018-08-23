@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 
 class CMD {
     private String result;
-    private String errorResult;
     void CMDCommand(String cmd){
         result = "";
         String cmd1 = "cmd /c\"  "+cmd;

@@ -22,8 +22,11 @@ public class CommandThread extends Thread{
             }
 
             if (cmd.getResult().endsWith("device")){
-                //获取OS版本
                 Application.setOutText("连接成功！");
+                //获取设备型号
+                cmd.CMDCommand("adb shell getprop ro.product.model");
+                Application.setOutText("设备型号："+cmd.getResult());
+                //获取OS版本
                 String osVersion = Util.getOS();
                 Application.setOutText("系统版本："+osVersion);
             } else if (cmd.getResult().endsWith("offline")){
