@@ -59,9 +59,13 @@ class CMD {
         String[] devicesResult = this.getResult().split("\n");
       //  System.out.println(devicesResult.length);
         if (devicesResult.length>1){
+            String lastResult = devicesResult[devicesResult.length-1];
             String last2Result = devicesResult[devicesResult.length-2];
-            if (last2Result.endsWith("device")||last2Result.endsWith("offline")||last2Result.endsWith("unauthorized")){
+            if (last2Result.endsWith("device")||last2Result.endsWith("offline")){
                 Application.setOutText("只支持连接一台设备，请检查...");
+                return false;
+            }else if (lastResult.endsWith("unauthorized")){
+                Application.setOutText("unauthorized");
                 return false;
             }else {
                 return this.getResult().endsWith("device");
