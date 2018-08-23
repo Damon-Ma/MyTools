@@ -32,6 +32,14 @@ class CMD {
                     }
                 }
             }
+
+            BufferedReader	errorbufferedReader = new BufferedReader
+                    (new InputStreamReader(p.getErrorStream()));
+            String errorline;
+            while ((errorline = errorbufferedReader.readLine()) != null) {
+                Application.setOutText("错误："+errorline);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
