@@ -21,12 +21,13 @@ public class CommandThread extends Thread{
                 cmd.CMDCommand("\""+Util.getThisPath()+"libs\\adb.exe\"\" devices");
             }
 
-            if (cmd.getResult().endsWith("device")){
+            if (cmd.isConnect()){
                 Application.setOutText("连接成功！");
                 //获取设备型号
                 cmd.CMDCommand("adb shell getprop ro.product.model");
                 if (cmd.getResult()==null||cmd.getResult().equals("")){
                     Application.setOutText("获取设备型号错误！");
+                    Application.setOutText(cmd.getErrorResult());
                 }else {
                     Application.setOutText("设备型号："+cmd.getResult());
                 }
@@ -34,13 +35,12 @@ public class CommandThread extends Thread{
                 String osVersion = Util.getOS();
                 if (osVersion.equals("")){
                     Application.setOutText("获取系统版本错误！");
+                    Application.setOutText(cmd.getErrorResult());
                 }else {
                     Application.setOutText("系统版本："+osVersion);
                 }
             } else if (cmd.getResult().endsWith("offline")){
                 Application.setOutText("请断开数据线重新连接！");
-            } else{
-                Application.setOutText("设备未连接！");
             }
         }else if (name==Keys.kill_server){
             cmd.CMDCommand(Util.getCommand(name.getName()));
@@ -55,14 +55,12 @@ public class CommandThread extends Thread{
 
                 cmd.CMDCommand(Util.getCommand(name.getName())+filePath);
                 Application.setOutText("抓取成功："+filePath);
-            }else
-                Application.setOutText("设备未连接！");
+            }
         }else if (name==Keys.cleanLog){
             if (cmd.isConnect()){
                 cmd.CMDCommand(Util.getCommand(name.getName()));
                 Application.setOutText("清除成功！");
-            }else
-                Application.setOutText("设备未连接！");
+            }
         }else if (name==Keys.install){
             //获取到面板上的文件路径
             String thisText = Application.textArea.textArea.getText();
@@ -79,15 +77,17 @@ public class CommandThread extends Thread{
                                 cmd.CMDCommand(Util.getCommand(name.getName())+"\""+installFile+"\"");
                                 Application.setOutText("安装结果："+Util.getLastLine(cmd.getResult()));
                             }else{
-                                JOptionPane.showMessageDialog(null, Util.getFileName(installFile)+"不是正确的安装包！", "提示",JOptionPane.WARNING_MESSAGE);
+                                JOptionPane.showMessageDialog(null,
+                                        Util.getFileName(installFile)+"不是正确的安装包！",
+                                        "提示",JOptionPane.WARNING_MESSAGE);
                             }
                         }
                 }else{
-                    JOptionPane.showMessageDialog(null, "请将apk文件拖入输出台！", "提示",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "请将apk文件拖入输出台！",
+                            "提示",JOptionPane.WARNING_MESSAGE);
                     Application.setOutText("请将apk文件拖入输出台！");
                 }
-            }else{
-                Application.setOutText("设备未连接！");
             }
         }else if (name==Keys.getpackage){
             if (cmd.isConnect()){
@@ -104,8 +104,7 @@ public class CommandThread extends Thread{
                     Application.setOutText("=========================================================");
                 }else
                     Application.setOutText("当前没有运行的程序！");
-            }else
-                Application.setOutText("设备未连接！");
+            }
         }else if (name==Keys.send){
             String text = Application.getInputText();
             String s = "";
@@ -136,12 +135,16 @@ public class CommandThread extends Thread{
                 }
             }else {
                 if (s.equals(" ")){
-                    JOptionPane.showMessageDialog(null, "输入字符有误！不能发送空格", "提示",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "输入字符有误！不能发送空格",
+                            "提示",JOptionPane.WARNING_MESSAGE);
                     Application.setOutText("输入包含空格，请检查："+text);
                 }
                 else{
                     //弹窗提示
-                    JOptionPane.showMessageDialog(null, "输入字符有误！请检查：\n"+s, "提示",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "输入字符有误！请检查：\n"+s,
+                            "提示",JOptionPane.WARNING_MESSAGE);
                     //输入框显示
                     Application.setOutText("输入有误，请检查："+text);
                 }
@@ -149,22 +152,21 @@ public class CommandThread extends Thread{
         }else if (name==Keys.recovery){
             if (cmd.isConnect()){
                 //弹出提示框，返回的是按钮的index i=0或者1
-                int n = JOptionPane.showConfirmDialog(null, "确认进入recovery模式?", "提示",JOptionPane.YES_NO_OPTION);
+                int n = JOptionPane.showConfirmDialog(null,
+                        "确认进入recovery模式?",
+                        "提示",JOptionPane.YES_NO_OPTION);
                 if (n==0){
                     cmd.CMDCommand(Util.getCommand(name.getName()));
                     Application.setOutText("OOOOOOOOOOOOOK!");
                 }else {
                     Application.setOutText("干嘛取消！！");
                 }
-            }else
-                Application.setOutText("设备未连接！");
+            }
         }else if (name==Keys.toHome){
             if (cmd.isConnect()){
                 cmd.CMDCommand(Util.getCommand(name.getName()));
                 cmd.CMDCommand(Util.getCommand("toHome2"));
                 Application.setOutText("OOOOOOOOOOOOOOVER!");
-            }else {
-                Application.setOutText("设备未连接！");
             }
         }else if (name==Keys.isSideload){
             Application.setOutText("检查连接...");
@@ -191,7 +193,9 @@ public class CommandThread extends Thread{
                     Application.setOutText("设备未连接，请先检查sideload！");
                 }
             }else {
-                JOptionPane.showMessageDialog(null,"请将刷机包拖进输出台！","提示",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "请将刷机包拖进输出台！",
+                        "提示",JOptionPane.WARNING_MESSAGE);
             }
         }else if (name==Keys.monitor){
             Application.setOutText("正在运行 Dalvik Debug Monitor Service（DDMS）...");
