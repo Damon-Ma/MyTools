@@ -42,16 +42,16 @@ public class TextAreaListener {
                             path = f.getAbsolutePath();
                             fileName = Util.getFileName(path);
 
-                            if (Util.isContainChinese(path)){
-                                JOptionPane.showMessageDialog(null,
-                                        "路径中不能包含中文！",
-                                        "提示",
-                                        JOptionPane.WARNING_MESSAGE);
-                                Application.setOutText("路径中包含中文，请检查！\n" +
-                                        "路径：" +
-                                        path);
-                                break;
-                            }
+//                            if (Util.isContainChinese(path)){
+//                                JOptionPane.showMessageDialog(null,
+//                                        "路径中不能包含中文！",
+//                                        "提示",
+//                                        JOptionPane.WARNING_MESSAGE);
+//                                Application.setOutText("路径中包含中文，请检查！\n" +
+//                                        "路径：" +
+//                                        path);
+//                                break;
+//                            }
 
 
                             if (path.endsWith("apk")){
