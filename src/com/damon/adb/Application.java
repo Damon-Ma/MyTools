@@ -9,6 +9,7 @@ public class Application extends JFrame{
     static MyLabel label = new MyLabel();
     static MyTextArea textArea = new MyTextArea();
     static MyTextField textField = new MyTextField();
+    static MyComboBox comboBox = new MyComboBox();
     static JScrollPane text2;
 
 
@@ -17,8 +18,8 @@ public class Application extends JFrame{
         JPanel BtJpanel = new JPanel();
         BtJpanel.setBorder(BorderFactory.createEtchedBorder()); //添加蚀刻边框
         BtJpanel.setLayout(new GridLayout(1,4,5,5));
-        //定义四个按钮面板
-        JPanel Bt1,Bt2,Bt3,Bt4;
+        //定义五个按钮面板
+        JPanel Bt1,Bt2,Bt3,Bt4,Bt5;
         Bt1 = new JPanel();
         Bt1.setLayout(new GridLayout(4,1,5,5));
         //将按钮加到面板上
@@ -49,6 +50,15 @@ public class Application extends JFrame{
         Bt4.add(button.installBt);
         Bt4.add(button.sideloadBt);
 
+        Bt5 = new JPanel();
+        Bt5.setLayout(new GridLayout(4,1,5,5));
+
+        Bt5.add(label.devices);
+        Bt5.add(label.deviceNmb);
+        Bt5.add(label.choose);
+        Bt5.add(comboBox.comboBox);
+
+        BtJpanel.add(Bt5);
         BtJpanel.add(Bt1);
         BtJpanel.add(Bt2);
         BtJpanel.add(Bt3);
@@ -136,6 +146,24 @@ public class Application extends JFrame{
 //        //textArea.textArea.setFont(new Font("Dialog",0,size));
 //        //textArea.textArea.setForeground(Color.BLUE);
 //    }
+    //设置连接数量
+    public static void setDevicesNmb(String nmb){
+        label.deviceNmb.setText(nmb);
+        if (!nmb.equals("0")){
+            label.deviceNmb.setForeground(Color.GREEN);
+        }else {
+            label.deviceNmb.setForeground(Color.RED);
+        }
+    }
+    //设置下拉框
+    public static void addItem(String msg){
+        comboBox.comboBox.addItem(msg);
+    }
+    //清除下拉框
+    public static void rmItem(){
+        comboBox.comboBox.removeAllItems();
+    }
+
 
     public static void cleanOutText(){
         textArea.textArea.setText("");
@@ -149,12 +177,8 @@ public class Application extends JFrame{
 
     public static void main(String[] args) throws InterruptedException {
         Application panel = new Application();
-
-//        frame.setTitle("Tools");
-//        frame.setSize(700,500);
-//        frame.setLocationRelativeTo(null);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setVisible(true);
     }
+
+
 
 }

@@ -91,7 +91,7 @@ public class TextAreaListener {
                                 String[] names = filesName.split("_");
                                 if (names.length<7&&!filesName.matches(".*[Recovery].*")&&!filesName.matches(".*SE.*")){
                                     JOptionPane.showMessageDialog(null, fileName+"不是正确的刷机包！", "提示",JOptionPane.WARNING_MESSAGE);
-                                }else if (filesName.matches(".*[OS].*2.N.*")){
+                                }else if (filesName.matches(".*[OS].*-2.N.*")){
                                     JOptionPane.showMessageDialog(null,
                                             "添加的是签名转非签包！",
                                             "提示",JOptionPane.WARNING_MESSAGE);
@@ -99,7 +99,7 @@ public class TextAreaListener {
                                             "点击开始刷入转换包：\n" +
                                             fileName +
                                             "\n----------------------------------");
-                                }else if (filesName.matches(".*[ON].*2.S.*")){
+                                }else if (filesName.matches(".*[ON].*-2.S.*")){
                                     JOptionPane.showMessageDialog(null,
                                             "添加的是非签转签名包！",
                                             "提示",JOptionPane.WARNING_MESSAGE);
@@ -108,6 +108,7 @@ public class TextAreaListener {
                                             fileName +
                                             "\n----------------------------------");
                                 }else {
+
                                     //获取一下当前OS版本
                                     //进入recovery模式之后获取不到os版本信息
 //                                    String osVersion = Util.getOS();

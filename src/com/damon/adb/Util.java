@@ -147,11 +147,11 @@ public class Util {
         return s;
     }
     //获取当前OS版本
-    public static String getOS() {
+    public static String getOS(String getChoose) {
         CMD cmd = new CMD();
-        cmd.CMDCommand(Util.getCommand("system"));
+        cmd.CMDCommand("adb -s "+getChoose+" "+Util.getCommand("system"));
         if (cmd.getResult().equals("")) {
-            cmd.CMDCommand(Util.getCommand("system6.0"));
+            cmd.CMDCommand("adb -s "+getChoose+" "+Util.getCommand("system6.0"));
         }
         return cmd.getResult();
     }
