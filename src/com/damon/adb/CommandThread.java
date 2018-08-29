@@ -127,8 +127,6 @@ public class CommandThread extends Thread{
                 if (cmd.isConnect()){
                     cmd.CMDCommand("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName())+text);
                     Application.setOutText("输入成功："+text);
-                }else {
-                    Application.setOutText("设备未连接！");
                 }
             }else {
                 if (s.equals(" ")){

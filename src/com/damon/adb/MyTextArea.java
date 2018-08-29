@@ -7,7 +7,7 @@ public class MyTextArea {
     public JTextArea textArea ;
     TextAreaListener listener = new TextAreaListener();
     public MyTextArea(){
-        textArea = new JTextArea(" ===========================================使用说明==========================================\n" +
+        textArea = new MJTextArea(" ===========================================使用说明==========================================\n" +
                 "   1.检查连接：检查普通adb连接的设备状态\n" +
                 "   2.定制系统连接：检查需要定制adb连接的设备状态\n" +
                 "   3.断开连接：断开adb连接，即结束adb进程\n" +

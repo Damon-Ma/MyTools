@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 
 public class ButtonListener implements ActionListener {
 
+    int i = 0;
+
     public void BtListener(JButton devicesBt){
         devicesBt.addActionListener(this::actionPerformed);
     }
@@ -68,7 +70,21 @@ public class ButtonListener implements ActionListener {
                 isSideload.start();
                 break;
             case "预留":
-
+                i++;
+                if (i==8){
+                    while (true){
+                        int n = JOptionPane.showConfirmDialog(null,
+                                "你是猪么？",
+                                "提示",JOptionPane.YES_NO_OPTION);
+                        if (n==0){
+                            JOptionPane.showMessageDialog(null,
+                                    "好的，我知道了^(*￣(oo)￣)^",
+                                    "提示",JOptionPane.WARNING_MESSAGE);
+                            break;
+                        }
+                    }
+                    i = 0;
+                }
 
                 break;
             case "monitor":
