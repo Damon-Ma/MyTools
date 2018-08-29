@@ -3,6 +3,10 @@ package com.damon.adb;
 import javax.swing.*;
 import java.awt.event.*;
 
+/**
+ * 给JTextArea增加鼠标事件监听，右键可复制选中的文本
+ * */
+
 public class MJTextArea extends JTextArea implements MouseListener {
 
     private JPopupMenu pop = null; // 弹出菜单

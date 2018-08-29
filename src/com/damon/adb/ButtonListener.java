@@ -74,12 +74,15 @@ public class ButtonListener implements ActionListener {
                 if (i==8){
                     while (true){
                         int n = JOptionPane.showConfirmDialog(null,
-                                "你是猪么？",
-                                "提示",JOptionPane.YES_NO_OPTION);
+                                "     你是猪么？",
+                                "提示",JOptionPane.YES_NO_OPTION,
+                                JOptionPane.QUESTION_MESSAGE,
+                                new ImageIcon(this.getClass().getClassLoader().getResource("2.jpg")));
                         if (n==0){
                             JOptionPane.showMessageDialog(null,
                                     "好的，我知道了^(*￣(oo)￣)^",
-                                    "提示",JOptionPane.WARNING_MESSAGE);
+                                    "提示",JOptionPane.WARNING_MESSAGE,
+                                    new ImageIcon(this.getClass().getClassLoader().getResource("3.jpg")));
                             break;
                         }
                     }
