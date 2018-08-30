@@ -43,6 +43,7 @@ public class MyComboBox {
         //获取设备型号
         CMD cmd = new CMD();
         cmd.CMDCommand("adb -s "+this.getChoose()+" shell getprop ro.product.model");
+        Application.setOutText("=========================================================");
         if (cmd.getResult()==null||cmd.getResult().equals("")){
             Application.setOutText("获取设备型号错误："+cmd.getErrorResult());
         }else {
@@ -56,6 +57,7 @@ public class MyComboBox {
         }else {
             Application.setOutText("系统版本："+osVersion);
         }
+        Application.setOutText("=========================================================");
     }
 
 }

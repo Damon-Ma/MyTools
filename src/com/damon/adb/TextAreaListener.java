@@ -117,9 +117,21 @@ public class TextAreaListener {
 //                                                "请确定OS是否与机型匹配！\n当前机型："+osVersion.split("_")[0]+"\n刷机包："+names[0],
 //                                                "提示",JOptionPane.WARNING_MESSAGE);
 //                                    }
+
+                                    //判断一下单卡双卡
+                                    String simType = "";
+                                    String sim = Util.getOSMsg(filesName,"(M2)?[SD]S");
+                                    if (sim!=null){
+                                        if (sim.equals("M2SS")||sim.equals("SS")){
+                                            simType = " 单卡设备";
+                                        }else if (sim.equals("M2DS")||sim.equals("DS")){
+                                            simType = " 双卡设备";
+                                        }
+                                    }
                                     JOptionPane.showMessageDialog(null,
-                                                "当前OS适用机型："+names[0],
-                                                "提示",JOptionPane.WARNING_MESSAGE);
+                                            "当前OS适用机型："+names[0]+simType,
+                                            "提示",JOptionPane.WARNING_MESSAGE);
+
                                     //机型
                                     String name = Util.getOSMsg(fileName,"SQ\\d+[A-Z]*");
                                     //定制版本
