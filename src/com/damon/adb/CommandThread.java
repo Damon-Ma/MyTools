@@ -181,6 +181,7 @@ public class CommandThread extends Thread{
             }
             if (j==0){
                 Application.setOutText("请确认设备是否在adb刷机界面！");
+                Application.setOutText("先检查连接，选择设备，再检查sideload");
             }
 
 

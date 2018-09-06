@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+/**
+ * 下拉选项框，添加监听，并获取到所选选项
+ * */
+
 public class MyComboBox {
     JComboBox comboBox;
     public static String choose;
@@ -38,7 +42,6 @@ public class MyComboBox {
 
 
 
-
     private void getDeviceMsg(){
         //获取设备型号
         CMD cmd = new CMD();
@@ -57,6 +60,17 @@ public class MyComboBox {
         }else {
             Application.setOutText("系统版本："+osVersion);
         }
+
+        //获取SN号
+        cmd.CMDCommand("adb -s "+this.getChoose()+" shell getprop persist.sys.product.serialno");
+        if (cmd.getResult().equals("")){
+            Application.setOutText("获取设备SN号错误："+cmd.getErrorResult());
+        }else {
+            Application.setOutText("SN："+cmd.getResult());
+            cmd.CMDCommand("adb -s "+this.getChoose()+" shell getprop persist.sys.product.tusn");
+            Application.setOutText("TUSN："+cmd.getResult());
+        }
+
         Application.setOutText("=========================================================");
     }
 
