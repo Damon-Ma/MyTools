@@ -37,6 +37,8 @@ public class CommandThread extends Thread{
             this.sideload();
         }else if (name==Keys.monitor){
             this.monitor();
+        }else if (name==Keys.shell){
+            this.shell();
         }
     }
     //检查连接
@@ -255,6 +257,12 @@ public class CommandThread extends Thread{
     private void killServer(){
         cmd.CMDCommand(Util.getCommand(name.getName()));
         Application.setOutText("OOOOOOOOOOOOOOK!");
+    }
+    //adb shell
+    private void shell(){
+        if (cmd.isConnect()){
+            cmd.CMDCommand("start adb -s "+MyComboBox.choose+" shell");
+        }
     }
 
 }

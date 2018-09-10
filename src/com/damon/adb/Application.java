@@ -42,7 +42,7 @@ public class Application extends JFrame{
         Bt3.add(button.toHome);
         Bt3.add(button.isSideload);
         Bt3.add(button.monitor);
-        Bt3.add(button.other);
+        Bt3.add(button.shell);
 
         Bt4 = new JPanel();
         Bt4.setLayout(new GridLayout(2,1,5,5));

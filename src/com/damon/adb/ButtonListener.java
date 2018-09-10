@@ -69,31 +69,36 @@ public class ButtonListener implements ActionListener {
                 CommandThread isSideload = new CommandThread(Keys.isSideload);
                 isSideload.start();
                 break;
-            case "预留":
-                i++;
-                if (i==8){
-                    while (true){
-                        int n = JOptionPane.showConfirmDialog(null,
-                                "     你是猪么？",
-                                "提示",JOptionPane.YES_NO_OPTION,
-                                JOptionPane.QUESTION_MESSAGE,
-                                new ImageIcon(this.getClass().getClassLoader().getResource("2.jpg")));
-                        if (n==0){
-                            JOptionPane.showMessageDialog(null,
-                                    "好的，我知道了^(*￣(oo)￣)^",
-                                    "提示",JOptionPane.WARNING_MESSAGE,
-                                    new ImageIcon(this.getClass().getClassLoader().getResource("3.jpg")));
-                            break;
-                        }
-                    }
-                    i = 0;
-                }
-
+            case "adb shell":
+                CommandThread shell = new CommandThread(Keys.shell);
+                shell.start();
                 break;
             case "monitor":
                 CommandThread monitor = new CommandThread(Keys.monitor);
                 monitor.start();
                 break;
+        }
+    }
+
+
+    private void hello(){
+        i++;
+        if (i==8){
+            while (true){
+                int n = JOptionPane.showConfirmDialog(null,
+                        "     你是猪么？",
+                        "提示",JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        new ImageIcon(this.getClass().getClassLoader().getResource("2.jpg")));
+                if (n==0){
+                    JOptionPane.showMessageDialog(null,
+                            "好的，我知道了^(*￣(oo)￣)^",
+                            "提示",JOptionPane.WARNING_MESSAGE,
+                            new ImageIcon(this.getClass().getClassLoader().getResource("3.jpg")));
+                    break;
+                }
+            }
+            i = 0;
         }
     }
 }
