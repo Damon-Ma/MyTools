@@ -83,6 +83,10 @@ public class CommandThread extends Thread{
     }
     //安装
     private void install(){
+
+        int sum = 0; //计数
+        int successNu = 0; //安装成功数量
+
         //获取到面板上的文件路径
         String thisText = Application.textArea.textArea.getText();
         if (cmd.isConnect()){
@@ -90,19 +94,30 @@ public class CommandThread extends Thread{
             if (thisText.endsWith("---------\n")){
                 String fileName;
                 List<String> filesPath = Util.getInstallPath(TextAreaListener.allpath);
-                if (filesPath.size()!=0)
-                    for (String installFile : filesPath){
+
+                sum = filesPath.size();
+
+                if (filesPath.size()!=0) {
+                    for (String installFile : filesPath) {
                         fileName = Util.getFileName(installFile);
-                        if (installFile.endsWith(".apk")){
-                            Application.setOutText("正在安装\""+fileName+"\"请稍后。。。");
-                            cmd.CMDCommand("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName())+"\""+installFile+"\"");
-                            Application.setOutText("安装结果："+Util.getLastLine(cmd.getResult()));
-                        }else{
+                        if (installFile.endsWith(".apk")) {
+                            Application.setOutText("正在安装\"" + fileName + "\"请稍后。。。");
+                            cmd.CMDCommand("adb -s " + MyComboBox.choose + " " + Util.getCommand(name.getName()) + "\"" + installFile + "\"");
+                            Application.setOutText("安装结果：" + Util.getLastLine(cmd.getResult()));
+
+                            if (Util.getLastLine(cmd.getResult()).equals("Success")) {
+                                successNu++;
+                            }
+                        } else {
                             JOptionPane.showMessageDialog(null,
-                                    Util.getFileName(installFile)+"不是正确的安装包！",
-                                    "提示",JOptionPane.WARNING_MESSAGE);
+                                    Util.getFileName(installFile) + "不是正确的安装包！",
+                                    "提示", JOptionPane.WARNING_MESSAGE);
                         }
                     }
+                    Application.setOutText("-----------------------------------------\n" +
+                            "共"+sum+"个安装包，安装成功"+successNu+"个，失败"+(sum-successNu)+"个\n" +
+                            "-----------------------------------------");
+                }
             }else{
                 JOptionPane.showMessageDialog(null,
                         "请将apk文件拖入输出台！",
