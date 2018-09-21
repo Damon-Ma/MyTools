@@ -84,7 +84,7 @@ public class TableListener {
                                         MyJTable.dtm.setValueAt(path,Config.rowsNum,0);
                                     }else {
                                         JOptionPane.showConfirmDialog(null,
-                                                "已存在同名apk文件，请检查！",
+                                                "已存在同名apk文件，请检查："+Util.getApkName(path),
                                                 "提示",JOptionPane.WARNING_MESSAGE);
                                     }
                                 }
