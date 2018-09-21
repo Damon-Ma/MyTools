@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MyLabel {
-    public JLabel input,devices,deviceNmb,choose;
+    public JLabel input,devices,deviceNmb,choose,installResult;
     public MyLabel() {
         input = new JLabel("inputText");
 
@@ -15,6 +15,7 @@ public class MyLabel {
         deviceNmb.setForeground(Color.RED);
 
         choose = new JLabel("请选择要连接的设备：");
+        installResult = new JLabel();
     }
 
 }

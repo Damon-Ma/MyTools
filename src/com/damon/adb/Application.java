@@ -104,6 +104,7 @@ public class Application extends JFrame{
         p3.setLayout(new BorderLayout(3,3));
         JScrollPane table2 = new JScrollPane(table.table);
         p3.add(table2,BorderLayout.CENTER);
+        p3.add(label.installResult,BorderLayout.SOUTH);
 
         //添加标签
         tabbedPane = new MyJTabbedPane(p2,p3);
@@ -179,7 +180,10 @@ public class Application extends JFrame{
         textField.inputText.setText("");
     }
 
-
+    //设置安装结束文字
+    public static void setInstallResult(String result){
+        label.installResult.setText("安装结果："+result);
+    }
 
     public static void main(String[] args) throws InterruptedException {
         Application panel = new Application();
