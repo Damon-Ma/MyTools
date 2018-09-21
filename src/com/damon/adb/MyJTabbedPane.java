@@ -5,6 +5,9 @@ import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+/**
+ * 选项卡
+ */
 public class MyJTabbedPane  extends JPanel {
 
     private JTabbedPane jTabbedpane = new JTabbedPane();// 存放选项卡的组件

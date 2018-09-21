@@ -2,6 +2,8 @@ package com.damon.adb;
 
 import javax.swing.*;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CommandThread extends Thread{
 
@@ -143,12 +145,20 @@ public class CommandThread extends Thread{
             if (allFilesPath!=null) {
                 int count = 0;
                 for (Object installFile : allFilesPath) {
-                    MyJTable.dtm.setValueAt("正在安装",count,1);
+                    MyJTable.dtm.setValueAt("正在安装...",count,1);
                     cmd.CMDCommand("adb -s " + MyComboBox.choose + " " + Util.getCommand(name.getName()) + "\"" + installFile + "\"");
                     if (cmd.getResult().endsWith("Success")){
                         MyJTable.dtm.setValueAt("安装成功",count++,1);
                     }else {
-                        MyJTable.dtm.setValueAt(cmd.getResult(),count++,1);
+
+                        Pattern r = Pattern.compile("\\[.*\\]");
+                        Matcher m = r.matcher(cmd.getResult());
+                        if (m.find()){
+                            MyJTable.dtm.setValueAt(m.group(),count++,1);
+                        }else {
+                            //MyJTable.dtm.setValueAt(cmd.getResult(),count++,1);
+                            MyJTable.dtm.setValueAt(cmd.getErrorResult(),count++,1);
+                        }
                     }
                 }
             }else {

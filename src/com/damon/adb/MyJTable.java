@@ -7,8 +7,10 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.util.EventObject;
-import java.util.Vector;
 
+/**
+ * 表格
+ */
 public class MyJTable{
     public static DefaultTableModel dtm;
     public JTable table;
@@ -24,13 +26,13 @@ public class MyJTable{
 
         //设置DefaultTableModel的列数和行数
         dtm.setColumnCount(2);
-        dtm.setRowCount(100);
+        dtm.setRowCount(30);
 
         //设置行宽
         TableColumn column0 = table.getColumnModel().getColumn(0);
         TableColumn column1 = table.getColumnModel().getColumn(1);
         column0.setPreferredWidth(800);
-        column1.setPreferredWidth(100);
+        column1.setPreferredWidth(400);
         column0.setCellEditor(this.cellEditor());
         column1.setCellEditor(this.cellEditor());
     }
