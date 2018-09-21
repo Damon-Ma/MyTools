@@ -67,8 +67,6 @@ public class TableListener {
                                 }
 
 
-
-
                                 //判断是否存在相同的数据
                                 boolean isEqualData = false; //存储结果，true为存在相同数据
 
@@ -86,6 +84,10 @@ public class TableListener {
                                         MyJTable.dtm.setValueAt(path,Config.rowsNum,0);
                                     }
                                 }
+                            }else {
+                                JOptionPane.showConfirmDialog(null,
+                                        "请拖入正确的apk文件",
+                                        "提示", JOptionPane.WARNING_MESSAGE);
                             }
                         }
 
