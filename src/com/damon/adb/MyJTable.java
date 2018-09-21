@@ -34,7 +34,7 @@ public class MyJTable{
         TableColumn column0 = table.getColumnModel().getColumn(0);
         TableColumn column1 = table.getColumnModel().getColumn(1);
         column0.setPreferredWidth(800);
-        column1.setPreferredWidth(400);
+        column1.setPreferredWidth(200);
         column0.setCellEditor(this.cellEditor());
         column1.setCellEditor(this.cellEditor());
     }
