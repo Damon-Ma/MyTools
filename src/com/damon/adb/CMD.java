@@ -1,5 +1,6 @@
 package com.damon.adb;
 
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -56,6 +57,9 @@ class CMD {
 
     Boolean isConnect(){
         if (MyComboBox.choose==null){
+            JOptionPane.showMessageDialog(null,
+                    "请先检查连接，选择需要连接的设备！",
+                    "提示", JOptionPane.WARNING_MESSAGE);
             Application.setOutText("请先检查连接，选择需要连接的设备！");
             return false;
         }else {

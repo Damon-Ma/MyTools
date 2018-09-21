@@ -22,7 +22,7 @@ public class CommandThread extends Thread{
         }else if (name==Keys.cleanLog){
             this.cleanLog();
         }else if (name==Keys.install){
-            this.install();
+            this.tableInstall();
         }else if (name==Keys.getpackage){
             this.getpackage();
         }else if (name==Keys.send){
@@ -81,7 +81,7 @@ public class CommandThread extends Thread{
         }
 
     }
-    //安装
+    //控制台安装
     private void install(){
 
         int sum = 0; //计数
@@ -93,7 +93,7 @@ public class CommandThread extends Thread{
             //判断面板是否进行过其他操作
             if (thisText.endsWith("---------\n")){
                 String fileName;
-                List<String> filesPath = Util.getInstallPath(TextAreaListener.allpath);
+                List<String> filesPath = Util.getInstallPath(Config.allpath);
 
                 sum = filesPath.size();
 
@@ -123,6 +123,37 @@ public class CommandThread extends Thread{
                         "请将apk文件拖入输出台！",
                         "提示",JOptionPane.WARNING_MESSAGE);
                 Application.setOutText("请将apk文件拖入输出台！");
+            }
+        }
+    }
+    //表格安装
+    private void tableInstall(){
+
+        //清空一下状态栏
+        for (int i =0;i<20;i++){
+            MyJTable.dtm.setValueAt(null,i,1);
+        }
+        //获取到表格的文件路径
+        List allFilesPath = Util.getRowsData();
+        //获取行号
+        int rowsNum = Util.getRowsNum();
+        //安装结果
+        String result;
+        if (cmd.isConnect()){
+            System.out.println(allFilesPath);
+            if (allFilesPath!=null) {
+                int count = 0;
+                for (Object installFile : allFilesPath) {
+                    MyJTable.dtm.setValueAt("正在安装",count,1);
+                    cmd.CMDCommand("adb -s " + MyComboBox.choose + " " + Util.getCommand(name.getName()) + "\"" + installFile + "\"");
+                    if (cmd.getResult().endsWith("Success")){
+                        MyJTable.dtm.setValueAt("安装成功",count++,1);
+                    }
+                }
+            }else {
+                JOptionPane.showMessageDialog(null,
+                        "请先将apk文件拖入安装程序显示框！",
+                        "提示", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
@@ -214,6 +245,9 @@ public class CommandThread extends Thread{
     //检查sideload模式
     private void isSideload(){
         cmd.CMDCommand("adb start-server");
+        cmd.CMDCommand("adb start-server");
+        cmd.CMDCommand("adb start-server");
+        cmd.CMDCommand("adb start-server");
         cmd.CMDCommand("adb devices");
 
         if (cmd.getResult().startsWith("*")||!cmd.getResult().startsWith("List")){
@@ -240,7 +274,7 @@ public class CommandThread extends Thread{
         System.out.println(labelText);
         if (labelText.endsWith("--------\n")){
             //获取刷机包的路径
-            String filePath = Util.getInstallPath(TextAreaListener.allpath).get(0);
+            String filePath = Util.getInstallPath(Config.allpath).get(0);
             if (cmd.isSideload()){
                 cmd.CMDCommand("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName())+filePath);
                 if (cmd.getErrorResult() != null){

@@ -11,6 +11,8 @@ public class Application extends JFrame{
     static MyTextField textField = new MyTextField();
     static MyComboBox comboBox = new MyComboBox();
     static JScrollPane text2;
+    static MyJTabbedPane tabbedPane;
+    static MyJTable table = new MyJTable();
 
 
     public Application(){
@@ -77,7 +79,6 @@ public class Application extends JFrame{
         inputBt.add(button.sendBt);
         inputBt.add(button.cleanInputBt);
 
-
         inputPanel.add(label.input,BorderLayout.WEST);
         inputPanel.add(textField.inputText,BorderLayout.CENTER);
         inputPanel.add(inputBt,BorderLayout.EAST);
@@ -86,9 +87,9 @@ public class Application extends JFrame{
         JPanel p2 = new JPanel();
 
         //设置边框
-        TitledBorder tb = BorderFactory.createTitledBorder("输出台");
-        tb.setTitleJustification(TitledBorder.CENTER);
-        p2.setBorder(tb);
+//        TitledBorder tb = BorderFactory.createTitledBorder("输出台");
+//        tb.setTitleJustification(TitledBorder.CENTER);
+//        p2.setBorder(tb);
 
         p2.setLayout(new BorderLayout(3,3));
 
@@ -98,12 +99,22 @@ public class Application extends JFrame{
         text2.doLayout();
         p2.add(text2,BorderLayout.CENTER);
 
-        //输入框+p2
+        //安装标签页
+        JPanel p3 = new JPanel();
+        p3.setLayout(new BorderLayout(3,3));
+        JScrollPane table2 = new JScrollPane(table.table);
+        p3.add(table2,BorderLayout.CENTER);
+
+        //添加标签
+        tabbedPane = new MyJTabbedPane(p2,p3);
+
+
+        //输入框+标签
         JPanel p1 = new JPanel();
         p1.setLayout(new BorderLayout(5,5));
 
         p1.add(inputPanel,BorderLayout.NORTH);
-        p1.add(p2,BorderLayout.CENTER);
+        p1.add(tabbedPane,BorderLayout.CENTER);
 
         //
         JPanel p = new JPanel();
@@ -112,6 +123,7 @@ public class Application extends JFrame{
         p.add(BtJpanel,BorderLayout.NORTH);
         p.add(p1,BorderLayout.CENTER);
     //    p.add(new JLabel());
+
 
         add(p,BorderLayout.CENTER);
         //获取图片设置图标
@@ -140,12 +152,6 @@ public class Application extends JFrame{
         //设置光标移到最后一行
         textArea.textArea.setCaretPosition(textArea.textArea.getDocument().getLength());
     }
-
-    //设置输出台字体、、textArea不能单独设置字体颜色，可以使用html样式的TextPane
-//    public static void setOutTextFont(int size){
-//        //textArea.textArea.setFont(new Font("Dialog",0,size));
-//        //textArea.textArea.setForeground(Color.BLUE);
-//    }
     //设置连接数量
     public static void setDevicesNmb(String nmb){
         label.deviceNmb.setText(nmb);

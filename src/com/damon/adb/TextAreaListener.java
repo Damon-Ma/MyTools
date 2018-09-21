@@ -11,10 +11,9 @@ import java.util.Iterator;
 import java.util.List;
 
 public class TextAreaListener {
-    public static String allpath;
+
     String path;
-    public static String fileName;
-    String filesName;
+    String fileName;
     List<String> apkMsgs;
     public void OutputLabelListener(JTextArea textArea){
 
@@ -36,7 +35,7 @@ public class TextAreaListener {
                         dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
                         java.util.List list = (List)tr.getTransferData(DataFlavor.javaFileListFlavor);
                         Iterator it = list.iterator();
-                        allpath = "";
+                        Config.allpath = "";
                         while (it.hasNext()){
                             File f = (File) it.next();
                             path = f.getAbsolutePath();
@@ -68,38 +67,37 @@ public class TextAreaListener {
                                 Application.setOutText("应用版本："+apkVersion);
                                 Application.setOutText("应用包名："+apkPackage);
                                 Application.setOutText("MainActivity："+apkActivity);
-                                Application.setOutText(" ");
-                                if(allpath==null||allpath==""||allpath==" ") {
-                                    allpath = path;
-                                    filesName = fileName;
+                                Application.setOutText("------------------------------------------------------------------");
+                                if(Config.allpath==null||Config.allpath==""||Config.allpath==" ") {
+                                    Config.allpath = path;
+                                    Config.filesName = fileName;
                                 } else {
-                                    allpath = allpath + "\n" + path;
-                                    filesName = filesName +"\n" + fileName;
+                                    Config.allpath = Config.allpath + "\n" + path;
+                                    Config.filesName = Config.filesName +"\n" + fileName;
                                 }
                             }else if (path.endsWith("zip")){
                                 //给allpath赋值
-                                if (allpath==null||allpath==""||allpath==" "){
-                                    allpath = path;
-                                    filesName = fileName;
-                                }else if (!path.equals(allpath)){        // 如果不止一个值allpath会不等于path，这里做一个拦截
+                                if (Config.allpath==null||Config.allpath==""||Config.allpath==" "){
+                                    Config.allpath = path;
+                                    Config.filesName = fileName;
+                                }else if (!path.equals(Config.allpath)){        // 如果不止一个值allpath会不等于path，这里做一个拦截
                                     JOptionPane.showMessageDialog(null,
                                             "只能拖入一个刷机包！",
                                             "提示",
                                             JOptionPane.WARNING_MESSAGE);
                                 }
                                 //在这里截取一下刷机包的名称
-                                String[] names = filesName.split("_");
-                                if (names.length<7&&!filesName.matches(".*[Recovery].*")&&!filesName.matches(".*SE.*")){
+                                String[] names = Config.filesName.split("_");
+                                if (names.length<7&&!Config.filesName.matches(".*[Recovery].*")&&!Config.filesName.matches(".*SE.*")){
                                     JOptionPane.showMessageDialog(null, fileName+"不是正确的刷机包！", "提示",JOptionPane.WARNING_MESSAGE);
-                                }else if (filesName.matches(".*[OS].*-2.N.*")){
+                                }else if (Config.filesName.matches(".*[OS].*-2.N.*")){
                                     JOptionPane.showMessageDialog(null,
                                             "添加的是签名转非签包！",
                                             "提示",JOptionPane.WARNING_MESSAGE);
                                     Application.setOutText("----------------------------------\n" +
                                             "点击开始刷入转换包：\n" +
-                                            fileName +
                                             "\n----------------------------------");
-                                }else if (filesName.matches(".*[ON].*-2.S.*")){
+                                }else if (Config.filesName.matches(".*[ON].*-2.S.*")){
                                     JOptionPane.showMessageDialog(null,
                                             "添加的是非签转签名包！",
                                             "提示",JOptionPane.WARNING_MESSAGE);
@@ -120,7 +118,7 @@ public class TextAreaListener {
 
                                     //判断一下单卡双卡
                                     String simType = "";
-                                    String sim = Util.getOSMsg(filesName,"(M2)?[SD]S");
+                                    String sim = Util.getOSMsg(Config.filesName,"(M2)?[SD]S");
                                     if (sim!=null){
                                         if (sim.equals("M2SS")||sim.equals("SS")){
                                             simType = " 单卡设备";
@@ -156,7 +154,7 @@ public class TextAreaListener {
                                             "\n发布日期：" +date+
                                             "\n是否签名版本：" +isSign+
                                             "\n----------------------------------" +
-                                            "\n点击sideload开始刷刷机包：\n"+filesName);
+                                            "\n点击sideload开始刷刷机包：\n"+Config.filesName);
                                     Application.setOutText("----------------------------------");
                                 }
                             }else{
@@ -167,15 +165,7 @@ public class TextAreaListener {
 
                         }
                         dtde.dropComplete(true);
-                            if (!allpath.equals("")&&!allpath.endsWith("zip")){
 
-                                Application.setOutText(
-                                        "----------------------------------\n"
-                                        +"点击开始安装：\n"
-                                        +filesName
-                                        +"\n----------------------------------"
-                                );
-                            }
 
                     }else {
                         dtde.rejectDrop();

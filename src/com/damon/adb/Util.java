@@ -3,10 +3,7 @@ package com.damon.adb;
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -175,4 +172,33 @@ public class Util {
         }
         return false;
     }
+
+    //获取一下表格中有数据的行数
+    public static int getRowsNum(){
+        int row=0;
+        for (int i=0;i <20;i++){
+            if (MyJTable.dtm.getValueAt(i,0)!=null){
+                row++;
+            }
+            Config.rowsNum = row;
+        }
+        return row;
+    }
+    //获取表格所有数据
+    public static List getRowsData(){
+        List rowsData = new ArrayList(); //存放数据
+        Object rowData; //存放每行数据
+
+        if (Util.getRowsNum()==0){
+            return  null;
+        }else {
+            for (int i =0;i<Util.getRowsNum();i++){
+                rowData = MyJTable.dtm.getValueAt(i,0);
+                rowsData.add(rowData);
+            }
+            return rowsData;
+        }
+    }
+
+
 }

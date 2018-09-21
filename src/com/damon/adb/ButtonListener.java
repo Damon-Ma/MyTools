@@ -60,6 +60,11 @@ public class ButtonListener implements ActionListener {
                 break;
             case "清空":
                 Application.cleanInputBox();
+                //清空表格
+                for (int i=0;i<20;i++){
+                    MyJTable.dtm.setValueAt(null,i,0);
+                    MyJTable.dtm.setValueAt(null,i,1);
+                }
                 break;
             case "返回主界面":
                 CommandThread toHome = new CommandThread(Keys.toHome);

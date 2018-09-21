@@ -44,13 +44,17 @@ public class MyComboBox {
 
     private void getDeviceMsg(){
         //获取设备型号
+        String phoneType;
         CMD cmd = new CMD();
         cmd.CMDCommand("adb -s "+this.getChoose()+" shell getprop ro.product.model");
         Application.setOutText("=========================================================");
         if (cmd.getResult()==null||cmd.getResult().equals("")){
             Application.setOutText("获取设备型号错误："+cmd.getErrorResult());
+            phoneType=cmd.getErrorResult();
         }else {
             Application.setOutText("设备型号："+cmd.getResult());
+            phoneType=cmd.getResult();
+
         }
 
         //获取OS版本
@@ -62,16 +66,25 @@ public class MyComboBox {
         }
 
         //获取SN号
+        String snNum;
         cmd.CMDCommand("adb -s "+this.getChoose()+" shell getprop persist.sys.product.serialno");
         if (cmd.getResult().equals("")){
-            Application.setOutText("获取设备SN号错误："+cmd.getErrorResult());
+            snNum=cmd.getErrorResult();
+            Application.setOutText("获取设备SN号错误："+snNum);
         }else {
-            Application.setOutText("SN："+cmd.getResult());
+            snNum=cmd.getResult();
+            Application.setOutText("SN："+snNum);
             cmd.CMDCommand("adb -s "+this.getChoose()+" shell getprop persist.sys.product.tusn");
             Application.setOutText("TUSN："+cmd.getResult());
         }
 
         Application.setOutText("=========================================================");
+
+        JOptionPane.showMessageDialog(null,
+                "设备型号："+phoneType+
+                        "\n系统版本："+osVersion+
+                        "\nSN："+snNum,
+                "提示", JOptionPane.WARNING_MESSAGE);
     }
 
 }
