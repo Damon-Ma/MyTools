@@ -21,12 +21,14 @@ public class MyJTable{
         listener.OutputLabelListener(table);
 
         //设置列名
-        dtm.addColumn("路径");
-        dtm.addColumn("状态");
+        dtm.addColumn("文件名");
+        dtm.addColumn("安装状态");
 
         //设置DefaultTableModel的列数和行数
         dtm.setColumnCount(2);
         dtm.setRowCount(30);
+
+        table.setRowHeight(20);
 
         //设置行宽
         TableColumn column0 = table.getColumnModel().getColumn(0);
