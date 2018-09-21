@@ -128,7 +128,6 @@ public class CommandThread extends Thread{
     }
     //表格安装
     private void tableInstall(){
-
         //清空一下状态栏
         for (int i =0;i<20;i++){
             MyJTable.dtm.setValueAt(null,i,1);
@@ -148,6 +147,8 @@ public class CommandThread extends Thread{
                     cmd.CMDCommand("adb -s " + MyComboBox.choose + " " + Util.getCommand(name.getName()) + "\"" + installFile + "\"");
                     if (cmd.getResult().endsWith("Success")){
                         MyJTable.dtm.setValueAt("安装成功",count++,1);
+                    }else {
+                        MyJTable.dtm.setValueAt(cmd.getResult(),count++,1);
                     }
                 }
             }else {
@@ -255,8 +256,8 @@ public class CommandThread extends Thread{
         }else {
             String[] devicesResult = cmd.getResult().split("\n");
             int j = 0; //初始化一个j，如果选择的设备不为sideload模式，则j为0
-            for (int i=0;i<devicesResult.length;i++){
-                if (devicesResult[i].endsWith("sideload")&&devicesResult[i].split("\t")[0].equals(MyComboBox.choose)){
+            for (String aDevicesResult : devicesResult) {
+                if (aDevicesResult.endsWith("sideload") && aDevicesResult.split("\t")[0].equals(MyComboBox.choose)) {
                     Application.setOutText("请将刷机包托到输出台，点击sideload开始刷机！");
                     j++;
                 }

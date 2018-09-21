@@ -67,6 +67,9 @@ class CMD {
             if (this.getErrorResult()==null){
                 return true;
             }else{
+                JOptionPane.showMessageDialog(null,
+                        "设备未连接！",
+                        "提示", JOptionPane.WARNING_MESSAGE);
                 Application.setOutText("设备未连接！");
                 return false;
             }
