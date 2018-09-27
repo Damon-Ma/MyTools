@@ -20,6 +20,7 @@ public class MyComboBox {
         comboBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
+                MyJTabbedPane.jTabbedpane.setSelectedIndex(0);
                 switch (e.getStateChange()) {
                     case ItemEvent.SELECTED:
                         choose = String.valueOf(e.getItem());
@@ -79,12 +80,6 @@ public class MyComboBox {
         }
 
         Application.setOutText("=========================================================");
-
-        JOptionPane.showMessageDialog(null,
-                "设备型号："+phoneType+
-                        "\n系统版本："+osVersion+
-                        "\nSN："+snNum,
-                "提示", JOptionPane.WARNING_MESSAGE);
     }
 
 }

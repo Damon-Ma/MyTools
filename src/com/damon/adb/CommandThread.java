@@ -43,6 +43,8 @@ public class CommandThread extends Thread{
             this.shell();
         }else if (name==Keys.screen){
             this.screen();
+        }else if (name==Keys.installCellAKP){
+            this.installCellAKP();
         }
     }
 
@@ -55,13 +57,21 @@ public class CommandThread extends Thread{
             //日期
             String date = Util.getDate();
             //文件名
-            String fileName = "screen"+date+".png";
+            String screenName = "screen"+date+".png";
             //sdcard中路径
-            String sdPath = "/sdcard/"+fileName;
+            String sdPath = "/sdcard/"+screenName;
+            //文件保存路径
+            String screenPath = path+"\\"+screenName;
+
             cmd.CMDCommand("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName())+sdPath);
             cmd.CMDCommand("adb -s "+MyComboBox.choose+" pull "+sdPath+" "+path);
-
-            Application.setOutText("截图成功："+path+"\\screen"+date+".png");
+            cmd.CMDCommand(screenPath);
+            System.out.println(cmd.getErrorResult());
+            if (cmd.getErrorResult().matches("(.*[bytes].*)")){
+                Application.setOutText("截图成功，文件保存在："+screenPath);
+            }else {
+                Application.setOutText("截图失败！！");
+            }
         }
     }
 
@@ -200,8 +210,11 @@ public class CommandThread extends Thread{
                 String thispackage = split[0];
                 String thisActivity = split[1];
                 Application.setOutText("=========================================================");
-                Application.setOutText("当前运行程序package/Activity：\n"+PAAresult);
-                Application.setOutText("package："+thispackage+"\n"+"Activity："+thisActivity);
+                Application.setOutText("当前运行程序:\n"+
+                        "package："+thispackage+
+                        "\nActivity："+thisActivity+
+                        "\npackage/Activity："+PAAresult
+                );
                 Application.setOutText("=========================================================");
             }else
                 Application.setOutText("当前没有运行的程序！");
@@ -262,7 +275,7 @@ public class CommandThread extends Thread{
                 cmd.CMDCommand("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName()));
                 Application.setOutText("OOOOOOOOOOOOOK!");
             }else {
-                Application.setOutText("干嘛取消！！");
+                Application.setOutText("取消！！");
             }
         }
     }
@@ -345,5 +358,26 @@ public class CommandThread extends Thread{
             cmd.CMDCommand("start adb -s "+MyComboBox.choose+" shell");
         }
     }
+    //安装单个apk
+    private void installCellAKP(){
+        if (cmd.isConnect()){
+            //把行号存起来，不然不同线程调用的时候会乱
+            int row = Config.row;
+            MyJTable.dtm.setValueAt("正在安装...",row,1);
+            cmd.CMDCommand("adb -s " + MyComboBox.choose + " install -r \"" + Config.cellVal + "\"");
+            if (cmd.getResult().endsWith("Success")){
+                MyJTable.dtm.setValueAt("安装成功",row,1);
+            }else {
+                Pattern r = Pattern.compile("\\[.*\\]");
+                Matcher m = r.matcher(cmd.getResult());
+                if (m.find()){
+                    MyJTable.dtm.setValueAt(m.group(),row,1);
+                }else {
+                    MyJTable.dtm.setValueAt(cmd.getErrorResult(),row,1);
+                }
+            }
+        }
+    }
+
 
 }

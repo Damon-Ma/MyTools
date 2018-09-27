@@ -6,6 +6,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.EventObject;
 
 /**
@@ -37,6 +39,28 @@ public class MyJTable{
         column1.setPreferredWidth(200);
         column0.setCellEditor(this.cellEditor());
         column1.setCellEditor(this.cellEditor());
+
+        /**
+         * 添加双击监听
+         */
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                if(e.getClickCount() == 2){
+
+                    Config.row =((JTable)e.getSource()).rowAtPoint(e.getPoint()); //获得行位置
+                    Config.cellVal=(table.getValueAt(Config.row,0)).toString(); //获得点击单元格数据
+
+                    if (Config.cellVal!=null){
+                        CommandThread thread = new CommandThread(Keys.installCellAKP);
+                        thread.start();
+                    }
+                }
+            }
+        });
+
+
     }
 
 
@@ -88,5 +112,6 @@ public class MyJTable{
         };
         return cellEditor;
     }
+
 
 }

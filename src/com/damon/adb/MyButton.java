@@ -3,7 +3,7 @@ package com.damon.adb;
 import javax.swing.*;
 
 public class MyButton {
-    public JButton devicesBt,killBt,specialBt,logcatBt,recoveryBt,packageBt,
+    public static JButton devicesBt,killBt,specialBt,logcatBt,recoveryBt,packageBt,
             installBt,sendBt,cleanLogBt,sideloadBt,cleanOutBt,cleanInputBt,toHome,other,isSideload,monitor,shell,screen;
     public MyButton(){
         ButtonListener listener = new ButtonListener();

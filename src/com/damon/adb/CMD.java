@@ -59,17 +59,16 @@ class CMD {
         if (MyComboBox.choose==null){
             JOptionPane.showMessageDialog(null,
                     "请先检查连接，选择需要连接的设备！",
-                    "提示", JOptionPane.WARNING_MESSAGE);
-            Application.setOutText("请先检查连接，选择需要连接的设备！");
+                    "提示",
+                    JOptionPane.WARNING_MESSAGE);
+
+            //Application.setOutText("请先检查连接，选择需要连接的设备！");
             return false;
         }else {
             this.CMDCommand("adb -s "+MyComboBox.choose+" root");
             if (this.getErrorResult()==null){
                 return true;
             }else{
-                JOptionPane.showMessageDialog(null,
-                        "设备未连接！",
-                        "提示", JOptionPane.WARNING_MESSAGE);
                 Application.setOutText("设备未连接！");
                 return false;
             }

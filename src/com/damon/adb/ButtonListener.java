@@ -16,30 +16,37 @@ public class ButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()){
             case "检查连接":
+                MyJTabbedPane.jTabbedpane.setSelectedIndex(0);
                 CommandThread devices = new CommandThread(Keys.DEVICES);
                 devices.start();
                 break;
             case "断开连接":
+                MyJTabbedPane.jTabbedpane.setSelectedIndex(0);
                 CommandThread kill = new CommandThread(Keys.kill_server);
                 kill.start();
                 break;
             case "定制系统连接":
-               CommandThread spAdb = new CommandThread(Keys.spdevices);
+                MyJTabbedPane.jTabbedpane.setSelectedIndex(0);
+                CommandThread spAdb = new CommandThread(Keys.spdevices);
                spAdb.start();
                break;
             case "抓取日志":
+                MyJTabbedPane.jTabbedpane.setSelectedIndex(0);
                 CommandThread logcat = new CommandThread(Keys.logcat);
                 logcat.start();
                 break;
             case "recovery模式":
+                MyJTabbedPane.jTabbedpane.setSelectedIndex(0);
                 CommandThread recovery = new CommandThread(Keys.recovery);
                 recovery.start();
                 break;
             case "当前运行包名":
+                MyJTabbedPane.jTabbedpane.setSelectedIndex(0);
                 CommandThread thispackage = new CommandThread(Keys.getpackage);
                 thispackage.start();
                 break;
             case "安装":
+                MyJTabbedPane.jTabbedpane.setSelectedIndex(1);
                 CommandThread install = new CommandThread(Keys.install);
                 install.start();
                 break;
@@ -48,17 +55,21 @@ public class ButtonListener implements ActionListener {
                 send.start();
                 break;
             case "清除日志":
+                MyJTabbedPane.jTabbedpane.setSelectedIndex(0);
                 CommandThread cleanLog = new CommandThread(Keys.cleanLog);
                 cleanLog.start();
                 break;
             case "sideload":
+                MyJTabbedPane.jTabbedpane.setSelectedIndex(0);
                 CommandThread sideload = new CommandThread(Keys.sideload);
                 sideload.start();
                 break;
             case "清屏":
+                MyJTabbedPane.jTabbedpane.setSelectedIndex(0);
                 Application.cleanOutText();
                 break;
             case "清空":
+                MyJTabbedPane.jTabbedpane.setSelectedIndex(1);
                 Application.cleanInputBox();
                 //清空表格
                 for (int i=0;i<20;i++){
@@ -67,10 +78,12 @@ public class ButtonListener implements ActionListener {
                 }
                 break;
             case "返回主界面":
+                MyJTabbedPane.jTabbedpane.setSelectedIndex(0);
                 CommandThread toHome = new CommandThread(Keys.toHome);
                 toHome.start();
                 break;
             case "检查sideload":
+                MyJTabbedPane.jTabbedpane.setSelectedIndex(0);
                 CommandThread isSideload = new CommandThread(Keys.isSideload);
                 isSideload.start();
                 break;
@@ -83,6 +96,7 @@ public class ButtonListener implements ActionListener {
                 monitor.start();
                 break;
             case "截图":
+                MyJTabbedPane.jTabbedpane.setSelectedIndex(0);
                 CommandThread screen = new CommandThread(Keys.screen);
                 screen.start();
                 break;
