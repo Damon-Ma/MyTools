@@ -15,14 +15,12 @@ public class Util {
 
     public static String getDate(){
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd_hh_mm_ss");
-        String date = df.format(System.currentTimeMillis());
-        return date;
+        return df.format(System.currentTimeMillis());
         }
     //获取安装结果
     public static String getLastLine(String s){
         String[] strings = s.split("\n");
-        String lastLine = strings[strings.length-1];
-        return lastLine;
+        return strings[strings.length-1];
     }
     //从配置文件中获取命令
     public static String getCommand(String key){
@@ -38,22 +36,19 @@ public class Util {
     }
 //    获取所有安装包路径
     public static List<String> getInstallPath(String allPath){
-        List<String> filepathList = Arrays.asList(allPath.split("\n"));
-        return filepathList;
+        return Arrays.asList(allPath.split("\n"));
     }
 //     获取包名和Activity
     public static String getPackage(String s){
 
         String [] s1  = s.split(" ");
         String s2 = s1[s1.length-1];
-        String s3 = s2.substring(0,s2.length()-1);
-        return s3;
+        return s2.substring(0,s2.length()-1);
     }
     //截取文件名
     public static String getFileName(String filePath){
         String[] s = filePath.split("\\\\");
-        String fileName = s[s.length-1];
-        return fileName;
+        return s[s.length-1];
     }
     //将apk信息截取成List
     public static List<String> getAPKMsg(String filePath){
@@ -69,11 +64,10 @@ public class Util {
     //字符串通过空格截取成List
     public static List<String> getStrList(String str){
         String[] strings = str.split(" ");
-        List<String> StrList = Arrays.asList(strings);
-        return StrList;
+        return Arrays.asList(strings);
     }
     //获取应用名、包名、MainActivity
-    public static String getMyAPKMsg(String filePath,String msgName){
+    public static String getMyAPKMsg(String msgName){
         String apkName;
         String apkActivity;
 //        List<String> l = Util.getAPKMsg(filePath);
@@ -107,27 +101,27 @@ public class Util {
         return null;
     }
     //获取应用名称
-    public static String getApkName(String filePath){
+    public static String getApkName(){
         String msgName = Keys.getAPKName.getName();
-        String apkName = Util.getMyAPKMsg(filePath,msgName);
+        String apkName = Util.getMyAPKMsg(msgName);
         return apkName;
     }
     //获取应用包名
-    public static String getApkPackage(String filePath){
+    public static String getApkPackage(){
         String msgName = Keys.getAPKPackageName.getName();
-        String packageName = Util.getMyAPKMsg(filePath,msgName);
+        String packageName = Util.getMyAPKMsg(msgName);
         return packageName;
     }
     //获取应用MainActivity
-    public static String getApkActivity(String filePath){
+    public static String getApkActivity(){
         String msgName = Keys.getAPKActivity.getName();
-        String activityName = Util.getMyAPKMsg(filePath,msgName);
+        String activityName = Util.getMyAPKMsg(msgName);
         return activityName;
     }
     //获取应用版本
-    public static String getApkVersion(String filePath){
+    public static String getApkVersion(){
         String msgName = Keys.getAPKVersion.getName();
-        String version = Util.getMyAPKMsg(filePath,msgName);
+        String version = Util.getMyAPKMsg(msgName);
         return version;
     }
     //获取当前class路径
@@ -167,10 +161,7 @@ public class Util {
     public static boolean isContainChinese(String str) {
         Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
         Matcher m = p.matcher(str);
-        if (m.find()) {
-            return true;
-        }
-        return false;
+        return m.find();
     }
 
     //获取一下表格中有数据的行数

@@ -82,6 +82,10 @@ public class ButtonListener implements ActionListener {
                 CommandThread monitor = new CommandThread(Keys.monitor);
                 monitor.start();
                 break;
+            case "截图":
+                CommandThread screen = new CommandThread(Keys.screen);
+                screen.start();
+                break;
         }
     }
 

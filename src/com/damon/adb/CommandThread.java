@@ -41,8 +41,30 @@ public class CommandThread extends Thread{
             this.monitor();
         }else if (name==Keys.shell){
             this.shell();
+        }else if (name==Keys.screen){
+            this.screen();
         }
     }
+
+    private void screen() {
+        if (cmd.isConnect()){
+            Application.setOutText("正在截图...");
+            //截图文件路径
+            String path = Util.getDesktopPath()+"\\screen";
+            cmd.CMDCommand("mkdir "+path);
+            //日期
+            String date = Util.getDate();
+            //文件名
+            String fileName = "screen"+date+".png";
+            //sdcard中路径
+            String sdPath = "/sdcard/"+fileName;
+            cmd.CMDCommand("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName())+sdPath);
+            cmd.CMDCommand("adb -s "+MyComboBox.choose+" pull "+sdPath+" "+path);
+
+            Application.setOutText("截图成功："+path+"\\screen"+date+".png");
+        }
+    }
+
     //检查连接
     private void devices(){
         Application.setOutText("正在连接...");
@@ -136,10 +158,9 @@ public class CommandThread extends Thread{
         }
         //获取到表格的文件路径
         List allFilesPath = Util.getRowsData();
-        //获取行号
-        int rowsNum = Util.getRowsNum();
-        //安装结果
-        String result;
+        //初始化行数
+        Util.getRowsNum();
+
         if (cmd.isConnect()){
             System.out.println(allFilesPath);
             if (allFilesPath!=null) {

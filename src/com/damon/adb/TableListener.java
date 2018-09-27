@@ -83,13 +83,13 @@ public class TableListener {
                                     if (!isEqualData){
                                         MyJTable.dtm.setValueAt(path,Config.rowsNum,0);
                                     }else {
-                                        JOptionPane.showConfirmDialog(null,
+                                        JOptionPane.showMessageDialog(null,
                                                 "已存在同名apk文件，请检查：\n\""+Util.getFileName(path)+"\"",
                                                 "提示",JOptionPane.WARNING_MESSAGE);
                                     }
                                 }
                             }else {
-                                JOptionPane.showConfirmDialog(null,
+                                JOptionPane.showMessageDialog(null,
                                         "请拖入正确的apk文件",
                                         "提示", JOptionPane.WARNING_MESSAGE);
                             }

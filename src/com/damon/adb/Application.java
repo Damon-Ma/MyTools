@@ -47,9 +47,10 @@ public class Application extends JFrame{
         Bt3.add(button.shell);
 
         Bt4 = new JPanel();
-        Bt4.setLayout(new GridLayout(2,1,5,5));
+        Bt4.setLayout(new GridLayout(3,1,5,5));
 
         Bt4.add(button.installBt);
+        Bt4.add(button.screen);
         Bt4.add(button.sideloadBt);
 
         Bt5 = new JPanel();

@@ -35,6 +35,7 @@ public class TextAreaListener {
                         dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
                         java.util.List list = (List)tr.getTransferData(DataFlavor.javaFileListFlavor);
                         Iterator it = list.iterator();
+                        //每一次拖拽都初始化一下allpath
                         Config.allpath = "";
                         while (it.hasNext()){
                             File f = (File) it.next();
@@ -55,10 +56,10 @@ public class TextAreaListener {
 
                             if (path.endsWith("apk")){
                                 apkMsgs = Util.getAPKMsg(path);
-                                String apkName = Util.getApkName(path);
-                                String apkVersion = Util.getApkVersion(path);
-                                String apkPackage = Util.getApkPackage(path);
-                                String apkActivity = Util.getApkActivity(path);
+                                String apkName = Util.getApkName();
+                                String apkVersion = Util.getApkVersion();
+                                String apkPackage = Util.getApkPackage();
+                                String apkActivity = Util.getApkActivity();
 
 
 //                                System.out.println("---------\n"+apkMsg+"\n-------");
