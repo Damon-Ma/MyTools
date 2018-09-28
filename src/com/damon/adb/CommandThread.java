@@ -76,7 +76,6 @@ public class CommandThread extends Thread{
             }
         }
     }
-
     //检查连接
     private void devices(){
         Application.setOutText("正在连接...");
@@ -380,6 +379,4 @@ public class CommandThread extends Thread{
             }
         }
     }
-
-
 }
