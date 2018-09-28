@@ -88,10 +88,10 @@ public class CommandThread extends Thread{
         int deviceNmb = 0;   //连接数量
         if (devicesResult.length>1){
             Application.rmItem();   //清除下拉框内容
-            for (int i=0;i<devicesResult.length;i++){
-                if (devicesResult[i].endsWith("device")||devicesResult[i].endsWith("sideload")){
-                    deviceNmb = deviceNmb +1;
-                    Application.addItem(deviceNmb+"、"+devicesResult[i].split("\t")[0]);
+            for (String result : devicesResult) {
+                if (result.endsWith("device") || result.endsWith("sideload")) {
+                    deviceNmb = deviceNmb + 1;
+                    Application.addItem(deviceNmb + "、" + result.split("\t")[0]);
                 }
             }
             Application.setDevicesNmb(String.valueOf(deviceNmb));
@@ -179,11 +179,11 @@ public class CommandThread extends Thread{
                 for (Object installFile : allFilesPath) {
                     MyJTable.dtm.setValueAt("正在安装...",count,1);
                     cmd.CMDCommand("adb -s " + MyComboBox.choose + " " + Util.getCommand(name.getName()) + "\"" + installFile + "\"");
-                    if (cmd.getResult().endsWith("Success")){
+                    if (cmd.getResult().endsWith("Success1")){
                         MyJTable.dtm.setValueAt("安装成功",count++,1);
                     }else {
 
-                        Pattern r = Pattern.compile("\\[.*\\]");
+                        Pattern r = Pattern.compile("\\[.*]");
                         Matcher m = r.matcher(cmd.getResult());
                         if (m.find()){
                             MyJTable.dtm.setValueAt(m.group(),count++,1);
@@ -369,7 +369,7 @@ public class CommandThread extends Thread{
             if (cmd.getResult().endsWith("Success")){
                 MyJTable.dtm.setValueAt("安装成功",row,1);
             }else {
-                Pattern r = Pattern.compile("\\[.*\\]");
+                Pattern r = Pattern.compile("\\[.*]");
                 Matcher m = r.matcher(cmd.getResult());
                 if (m.find()){
                     MyJTable.dtm.setValueAt(m.group(),row,1);
