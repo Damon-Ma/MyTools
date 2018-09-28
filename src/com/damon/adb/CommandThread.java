@@ -47,7 +47,7 @@ public class CommandThread extends Thread{
             this.installCellAKP();
         }
     }
-
+    //截图
     private void screen() {
         if (cmd.isConnect()){
             Application.setOutText("正在截图...");
@@ -65,6 +65,8 @@ public class CommandThread extends Thread{
 
             cmd.CMDCommand("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName())+sdPath);
             cmd.CMDCommand("adb -s "+MyComboBox.choose+" pull "+sdPath+" "+path);
+            //删除终端中的文件
+            cmd.CMDCommand("adb -s "+MyComboBox.choose+" shell rm -rf "+sdPath);
             cmd.CMDCommand(screenPath);
             System.out.println(cmd.getErrorResult());
             if (cmd.getErrorResult().matches("(.*[bytes].*)")){
