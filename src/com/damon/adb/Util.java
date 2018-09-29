@@ -14,7 +14,7 @@ public class Util {
 
 
     public static String getDate(){
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd_hh_mm_ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd_HH_mm_ss");
         return df.format(System.currentTimeMillis());
         }
     //获取安装结果

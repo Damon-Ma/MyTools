@@ -52,12 +52,12 @@ public class CommandThread extends Thread{
         if (cmd.isConnect()){
             Application.setOutText("正在截图...");
             //截图文件路径
-            String path = Util.getDesktopPath()+"\\screen";
+            String path = Util.getDesktopPath()+"\\Screenshots";
             cmd.CMDCommand("mkdir "+path);
             //日期
             String date = Util.getDate();
             //文件名
-            String screenName = "screen"+date+".png";
+            String screenName = "Screenshot_"+date+".png";
             //sdcard中路径
             String sdPath = "/sdcard/"+screenName;
             //文件保存路径
