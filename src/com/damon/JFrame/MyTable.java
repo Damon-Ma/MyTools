@@ -1,4 +1,9 @@
-package com.damon.adb;
+package com.damon.JFrame;
+
+import com.damon.Listener.TableListener;
+import com.damon.adb.CommandThread;
+import com.damon.Util.Config;
+import com.damon.Util.Keys;
 
 import javax.swing.*;
 import javax.swing.event.CellEditorListener;
@@ -13,10 +18,10 @@ import java.util.EventObject;
 /**
  * 表格
  */
-public class MyJTable{
+public class MyTable{
     public static DefaultTableModel dtm;
-    public JTable table;
-    public MyJTable(){
+    public static JTable table;
+    public MyTable(){
         dtm = new DefaultTableModel();
         table = new JTable(dtm);
         TableListener listener = new TableListener();
@@ -40,9 +45,7 @@ public class MyJTable{
         column0.setCellEditor(this.cellEditor());
         column1.setCellEditor(this.cellEditor());
 
-        /**
-         * 添加双击监听
-         */
+        //添加双击监听
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -66,10 +69,10 @@ public class MyJTable{
 
     /**
      * 设置表格不可编辑
-     * @return
+     * @return cellEditor
      */
-    TableCellEditor cellEditor() {
-        TableCellEditor cellEditor = new TableCellEditor() {
+    private TableCellEditor cellEditor() {
+        return new TableCellEditor() {
             @Override
             public Object getCellEditorValue() {
                 return null;
@@ -106,11 +109,10 @@ public class MyJTable{
             }
 
             @Override
-            public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            public Component getTableCellEditorComponent(JTable table1, Object value, boolean isSelected, int row, int column) {
                 return null;
             }
         };
-        return cellEditor;
     }
 
 

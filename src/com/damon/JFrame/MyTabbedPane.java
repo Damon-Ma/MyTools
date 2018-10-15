@@ -1,20 +1,18 @@
-package com.damon.adb;
+package com.damon.JFrame;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  * 选项卡
  */
-public class MyJTabbedPane  extends JPanel {
+public class MyTabbedPane  extends JPanel {
 
     public static JTabbedPane jTabbedpane = new JTabbedPane();// 存放选项卡的组件
 
-    public MyJTabbedPane(JPanel jpanelFirst,JPanel jpanelSecond) {
+    public MyTabbedPane(JPanel jpanelFirst,JPanel jpanelSecond) {
 
         // 第一个标签下的JPanel
         jTabbedpane.addTab("输出台",null, jpanelFirst, "输出台页面");// 加入第一个页面

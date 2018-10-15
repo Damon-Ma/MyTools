@@ -1,4 +1,8 @@
-package com.damon.adb;
+package com.damon.Listener;
+
+import com.damon.JFrame.MyTable;
+import com.damon.Util.Config;
+import com.damon.Util.Util;
 
 import javax.swing.*;
 import java.awt.datatransfer.DataFlavor;
@@ -12,17 +16,14 @@ import java.util.List;
 
 public class TableListener {
 
-    String path;
-    String fileName;
-    List<String> apkMsgs;
-    static int count = 0;
+    private String path;
+    private String fileName;
 
     public void OutputLabelListener(JTable table){
 
 
         //输出台拖拽监听
         DropTarget dt = new DropTarget(table,new DropTargetListener() {
-            //int count=0; //计数,行数
             @Override
             public void dragEnter(DropTargetDragEvent dtde) {
 
@@ -71,7 +72,7 @@ public class TableListener {
                                 boolean isEqualData = false; //存储结果，true为存在相同数据
 
                                 if (Util.getRowsData()==null){
-                                    MyJTable.dtm.setValueAt(path,0,0);
+                                    MyTable.dtm.setValueAt(path,0,0);
                                 }else {
                                     for (Object rowData : Util.getRowsData()){
                                         String rowName = Util.getFileName(rowData.toString());
@@ -81,7 +82,7 @@ public class TableListener {
                                     }
                                     //写数据
                                     if (!isEqualData){
-                                        MyJTable.dtm.setValueAt(path,Config.rowsNum,0);
+                                        MyTable.dtm.setValueAt(path,Config.rowsNum,0);
                                     }else {
                                         JOptionPane.showMessageDialog(null,
                                                 "已存在同名apk文件，请检查：\n\""+Util.getFileName(path)+"\"",

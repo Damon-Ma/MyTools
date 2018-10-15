@@ -1,10 +1,12 @@
-package com.damon.adb;
+package com.damon.JFrame;
+
+import com.damon.Listener.ButtonListener;
 
 import javax.swing.*;
 
 public class MyButton {
     public static JButton devicesBt,killBt,specialBt,logcatBt,recoveryBt,packageBt,
-            installBt,sendBt,cleanLogBt,sideloadBt,cleanOutBt,cleanInputBt,toHome,other,isSideload,monitor,shell,screen;
+            installBt,sendBt,cleanLogBt,sideloadBt,cleanOutBt,cleanInputBt,toHome,isSideload,monitor,shell,screen;
     public MyButton(){
         ButtonListener listener = new ButtonListener();
 

@@ -1,4 +1,7 @@
-package com.damon.adb;
+package com.damon.Util;
+
+import com.damon.JFrame.MyTable;
+import com.damon.adb.CMD;
 
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
@@ -168,7 +171,7 @@ public class Util {
     public static int getRowsNum(){
         int row=0;
         for (int i=0;i <20;i++){
-            if (MyJTable.dtm.getValueAt(i,0)!=null){
+            if (MyTable.dtm.getValueAt(i,0)!=null){
                 row++;
             }
             Config.rowsNum = row;
@@ -184,7 +187,7 @@ public class Util {
             return  null;
         }else {
             for (int i =0;i<Util.getRowsNum();i++){
-                rowData = MyJTable.dtm.getValueAt(i,0);
+                rowData = MyTable.dtm.getValueAt(i,0);
                 rowsData.add(rowData);
             }
             return rowsData;

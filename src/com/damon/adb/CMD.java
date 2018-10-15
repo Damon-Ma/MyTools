@@ -1,13 +1,16 @@
 package com.damon.adb;
 
+import com.damon.JFrame.MyComboBox;
+import com.damon.JFrame.MyTextArea;
+
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-class CMD {
+public class CMD {
     private String result;
     private String errorResult;
-    void CMDCommand(String cmd){
+    public void CMDCommand(String cmd){
         result = "";
         String cmd1 = "cmd /c\"  "+cmd;
         //Application.setOutText(cmd);
@@ -21,16 +24,16 @@ class CMD {
                 //Application.setOutText(line);
                 System.out.println(line);
                 if (!line.equals("")) {
-                    if (result == null || result == "") {
+                    if (result == null || result.equals("")) {
                         result = line;
                     } else {
                         result = String.format("%s\n%s", result, line);
 
                         //在这里获取刷机的实时进度
                         if (line.matches("(.*)%(.*)")){
-                            Application.setOutText(line);
+                            MyTextArea.setOutText(line);
                         }else if(line.startsWith("Total")){
-                            Application.setOutText("刷机包安装成功，请重启设备！");
+                            MyTextArea.setOutText("刷机包安装结束，请重启设备！");
                         }
                     }
                 }
@@ -48,10 +51,10 @@ class CMD {
             e.printStackTrace();
         }
     }
-    String getResult(){
+    public String getResult(){
         return result;
     }
-    String getErrorResult(){
+    public String getErrorResult(){
         return errorResult;
     }
 
@@ -69,18 +72,17 @@ class CMD {
             if (this.getErrorResult()==null){
                 return true;
             }else{
-                Application.setOutText("设备未连接！");
+                MyTextArea.setOutText("设备未连接！");
                 return false;
             }
         }
-
     }
     Boolean isSideload(){
-        Application.setOutText("检查连接...");
+        MyTextArea.setOutText("检查连接...");
         this.CMDCommand("adb devices");
         String[] devicesResult = this.getResult().split("\n");
-        for (int i=0;i<devicesResult.length;i++){
-            if (devicesResult[i].endsWith("sideload")&&devicesResult[i].split("\t")[0].equals(MyComboBox.choose)){
+        for (String result : devicesResult) {
+            if (result.endsWith("sideload") && result.split("\t")[0].equals(MyComboBox.choose)) {
                 return true;
             }
         }

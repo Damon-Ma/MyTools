@@ -1,4 +1,8 @@
-package com.damon.adb;
+package com.damon.Listener;
+
+import com.damon.JFrame.MyTextArea;
+import com.damon.Util.Config;
+import com.damon.Util.Util;
 
 import javax.swing.*;
 import java.awt.datatransfer.DataFlavor;
@@ -12,13 +16,12 @@ import java.util.List;
 
 public class TextAreaListener {
 
-    String path;
-    String fileName;
-    List<String> apkMsgs;
+    private String path;
+    private String fileName;
     public void OutputLabelListener(JTextArea textArea){
 
         //输出台拖拽监听
-        DropTarget dt = new DropTarget(textArea,new DropTargetListener() {
+        new DropTarget(textArea,new DropTargetListener() {
             @Override
             public void dragEnter(DropTargetDragEvent dtde) { }
             @Override
@@ -55,21 +58,20 @@ public class TextAreaListener {
 
 
                             if (path.endsWith("apk")){
-                                apkMsgs = Util.getAPKMsg(path);
+                                Util.getAPKMsg(path);
                                 String apkName = Util.getApkName();
                                 String apkVersion = Util.getApkVersion();
                                 String apkPackage = Util.getApkPackage();
                                 String apkActivity = Util.getApkActivity();
 
 
-//                                System.out.println("---------\n"+apkMsg+"\n-------");
-                                Application.setOutText("------------------------------安装包“"+fileName+"”信息------------------------------");
-                                Application.setOutText("应用名称："+apkName);
-                                Application.setOutText("应用版本："+apkVersion);
-                                Application.setOutText("应用包名："+apkPackage);
-                                Application.setOutText("MainActivity："+apkActivity);
-                                Application.setOutText("------------------------------------------------------------------");
-                                if(Config.allpath==null||Config.allpath==""||Config.allpath==" ") {
+                                MyTextArea.setOutText("------------------------------安装包“"+fileName+"”信息------------------------------"+
+                                    "\n应用名称："+apkName+
+                                    "\n应用版本："+apkVersion+
+                                    "\n应用包名："+apkPackage+
+                                    "\nMainActivity："+apkActivity+
+                                    "\n------------------------------------------------------------------");
+                                if((Config.allpath == null) || Config.allpath.equals("")) {
                                     Config.allpath = path;
                                     Config.filesName = fileName;
                                 } else {
@@ -78,7 +80,7 @@ public class TextAreaListener {
                                 }
                             }else if (path.endsWith("zip")){
                                 //给allpath赋值
-                                if (Config.allpath==null||Config.allpath==""||Config.allpath==" "){
+                                if (Config.allpath==null|| Config.allpath.equals("") || Config.allpath.equals(" ")){
                                     Config.allpath = path;
                                     Config.filesName = fileName;
                                 }else if (!path.equals(Config.allpath)){        // 如果不止一个值allpath会不等于path，这里做一个拦截
@@ -89,20 +91,20 @@ public class TextAreaListener {
                                 }
                                 //在这里截取一下刷机包的名称
                                 String[] names = Config.filesName.split("_");
-                                if (names.length<7&&!Config.filesName.matches(".*[Recovery].*")&&!Config.filesName.matches(".*SE.*")){
+                                if ((names.length < 7) && !Config.filesName.matches(".*[Recovery].*") && !Config.filesName.matches(".*SE.*")){
                                     JOptionPane.showMessageDialog(null, fileName+"不是正确的刷机包！", "提示",JOptionPane.WARNING_MESSAGE);
                                 }else if (Config.filesName.matches(".*[OS].*-2.N.*")){
                                     JOptionPane.showMessageDialog(null,
                                             "添加的是签名转非签包！",
                                             "提示",JOptionPane.WARNING_MESSAGE);
-                                    Application.setOutText("----------------------------------\n" +
+                                    MyTextArea.setOutText("----------------------------------\n" +
                                             "点击开始刷入转换包：\n" +
                                             "\n----------------------------------");
                                 }else if (Config.filesName.matches(".*[ON].*-2.S.*")){
                                     JOptionPane.showMessageDialog(null,
                                             "添加的是非签转签名包！",
                                             "提示",JOptionPane.WARNING_MESSAGE);
-                                    Application.setOutText("----------------------------------\n" +
+                                    MyTextArea.setOutText("----------------------------------\n" +
                                             "点击开始刷入转换包：\n" +
                                             fileName +
                                             "\n----------------------------------");
@@ -141,6 +143,7 @@ public class TextAreaListener {
                                     String Sign = Util.getOSMsg(fileName,"_[SN]_");
                                     String isSign;
                                     try {
+                                        assert Sign != null;
                                         if (Sign.equals("_S_")){
                                             isSign = "签名";
                                         }else {
@@ -149,14 +152,14 @@ public class TextAreaListener {
                                     }catch (NullPointerException e){
                                         isSign = "";
                                     }
-                                    Application.setOutText("----------------------------------\n" +
+                                    MyTextArea.setOutText("----------------------------------\n" +
                                             "适用机型：" +name+
                                             "\n项目名称：" +whos+
                                             "\n发布日期：" +date+
                                             "\n是否签名版本：" +isSign+
                                             "\n----------------------------------" +
                                             "\n点击sideload开始刷刷机包：\n"+Config.filesName);
-                                    Application.setOutText("----------------------------------");
+                                    MyTextArea.setOutText("----------------------------------");
                                 }
                             }else{
                                 JOptionPane.showMessageDialog(null, fileName+"不是正确的安装包！", "提示",JOptionPane.WARNING_MESSAGE);
