@@ -1,10 +1,27 @@
 package com.damon.Util;
 
-public enum Keys {
-    DEVICES("devices"),spdevices("spdevices"),kill_server("kill_server"),logcat("logcat"),install("install"),
-    sideload("sideload"),recovery("recovery"),cleanLog("cleanLog"),send("send"),getpackage("getpackage"),
-    getAPKPackageName("package"),getAPKActivity("activity"),getAPKName("apkName"),getAPKVersion("appVersion"),
-    toHome("toHome"),isSideload("isSideload"),monitor("monitor"),shell("shell"),screen("screen"),installCellAKP("installCellAKP");
+public enum  Keys {
+
+    DEVICES("devices"),
+    SP_DEVICES("spdevices"),
+    KILL_SERVER("kill_server"),
+    LOGCAT("logcat"),
+    INSTALL("install"),
+    SIDELOAD("sideload"),
+    RECOVERY("recovery"),
+    CLEAN_LOG("cleanLog"),
+    SEND("send"),
+    PACKAGE("getpackage"),
+    APN_PACKAGE_NAME("package"),
+    APK_ACTIVITY_NAME("activity"),
+    APK_NAME("apkName"),
+    APK_VERSION("appVersion"),
+    MAIN_ACTIVITY("toHome"),
+    IS_SIDELOAD("isSideload"),
+    DDMS("monitor"),
+    SHELL("shell"),
+    SCREEN("screen"),
+    INSTALL_CELL_APK("installCellAKP");
 
     private final String name;
 

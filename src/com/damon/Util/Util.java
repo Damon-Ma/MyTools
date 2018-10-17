@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 public class Util {
 
     static ResourceBundle bundle;
-    private static List<String> l;      //获取到的apk信息
 
 
     public static String getDate(){
@@ -58,11 +57,9 @@ public class Util {
         CMD cmd = new CMD();
         cmd.CMDCommand("\""+Util.getThisPath()+"libs\\aapt.exe\" "+Util.getCommand("getapkmsg")+"\""+filePath+"\"");
 
-
         String APKMsgs = cmd.getResult();
         String[] s = APKMsgs.split("\n");
-        l = Arrays.asList(s);
-        return l;
+        return Arrays.asList(s);
     }
     //字符串通过空格截取成List
     public static List<String> getStrList(String str){
@@ -70,10 +67,10 @@ public class Util {
         return Arrays.asList(strings);
     }
     //获取应用名、包名、MainActivity
-    public static String getMyAPKMsg(String msgName){
+    public static String getMyAPKMsg(String filePath,String msgName){
         String apkName;
         String apkActivity;
-//        List<String> l = Util.getAPKMsg(filePath);
+        List<String> l = Util.getAPKMsg(filePath);
         for (String msg : l){
 //            System.out.println("msg:"+msg);
             //用冒号截取名称
@@ -104,32 +101,28 @@ public class Util {
         return null;
     }
     //获取应用名称
-    public static String getApkName(){
-        String msgName = Keys.getAPKName.getName();
-        String apkName = Util.getMyAPKMsg(msgName);
-        return apkName;
+    public static String getApkName(String filePath){
+        String msgName = Keys.APK_NAME.getName();
+        return Util.getMyAPKMsg(filePath,msgName);
     }
     //获取应用包名
-    public static String getApkPackage(){
-        String msgName = Keys.getAPKPackageName.getName();
-        String packageName = Util.getMyAPKMsg(msgName);
-        return packageName;
+    public static String getApkPackage(String filePath){
+        String msgName = Keys.APN_PACKAGE_NAME.getName();
+        return Util.getMyAPKMsg(filePath,msgName);
     }
     //获取应用MainActivity
-    public static String getApkActivity(){
-        String msgName = Keys.getAPKActivity.getName();
-        String activityName = Util.getMyAPKMsg(msgName);
-        return activityName;
+    public static String getApkActivity(String filePath){
+        String msgName = Keys.APK_ACTIVITY_NAME.getName();
+        return Util.getMyAPKMsg(filePath,msgName);
     }
     //获取应用版本
-    public static String getApkVersion(){
-        String msgName = Keys.getAPKVersion.getName();
-        String version = Util.getMyAPKMsg(msgName);
-        return version;
+    public static String getApkVersion(String filePath){
+        String msgName = Keys.APK_VERSION.getName();
+        return Util.getMyAPKMsg(filePath,msgName);
     }
     //获取当前class路径
     public static String getThisPath(){
-        String s =  Util.class.getClassLoader().getResource("1.jpg").getPath();
+        String s =  Objects.requireNonNull(Util.class.getClassLoader().getResource("1.jpg")).getPath();
         //s=  file:/C:/Users/Malik/Desktop/MyTools.jar!/1.jpg
         s = s.split("file:/")[1].split("MyTools.jar!")[0];
         //将/换成\

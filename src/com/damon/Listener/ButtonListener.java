@@ -28,46 +28,46 @@ public class ButtonListener implements ActionListener {
                 break;
             case "断开连接":
                 MyTabbedPane.jTabbedpane.setSelectedIndex(0);
-                CommandThread kill = new CommandThread(Keys.kill_server);
+                CommandThread kill = new CommandThread(Keys.KILL_SERVER);
                 kill.start();
                 break;
             case "定制系统连接":
                 MyTabbedPane.jTabbedpane.setSelectedIndex(0);
-                CommandThread spAdb = new CommandThread(Keys.spdevices);
+                CommandThread spAdb = new CommandThread(Keys.SP_DEVICES);
                spAdb.start();
                break;
             case "抓取日志":
                 MyTabbedPane.jTabbedpane.setSelectedIndex(0);
-                CommandThread logcat = new CommandThread(Keys.logcat);
+                CommandThread logcat = new CommandThread(Keys.LOGCAT);
                 logcat.start();
                 break;
             case "recovery模式":
                 MyTabbedPane.jTabbedpane.setSelectedIndex(0);
-                CommandThread recovery = new CommandThread(Keys.recovery);
+                CommandThread recovery = new CommandThread(Keys.RECOVERY);
                 recovery.start();
                 break;
             case "当前运行包名":
                 MyTabbedPane.jTabbedpane.setSelectedIndex(0);
-                CommandThread thispackage = new CommandThread(Keys.getpackage);
+                CommandThread thispackage = new CommandThread(Keys.PACKAGE);
                 thispackage.start();
                 break;
             case "安装":
                 MyTabbedPane.jTabbedpane.setSelectedIndex(1);
-                CommandThread install = new CommandThread(Keys.install);
+                CommandThread install = new CommandThread(Keys.INSTALL);
                 install.start();
                 break;
             case "发送":
-                CommandThread send = new CommandThread(Keys.send);
+                CommandThread send = new CommandThread(Keys.SEND);
                 send.start();
                 break;
             case "清除日志":
                 MyTabbedPane.jTabbedpane.setSelectedIndex(0);
-                CommandThread cleanLog = new CommandThread(Keys.cleanLog);
+                CommandThread cleanLog = new CommandThread(Keys.CLEAN_LOG);
                 cleanLog.start();
                 break;
             case "sideload":
                 MyTabbedPane.jTabbedpane.setSelectedIndex(0);
-                CommandThread sideload = new CommandThread(Keys.sideload);
+                CommandThread sideload = new CommandThread(Keys.SIDELOAD);
                 sideload.start();
                 break;
             case "清屏":
@@ -85,25 +85,25 @@ public class ButtonListener implements ActionListener {
                 break;
             case "返回主界面":
                 MyTabbedPane.jTabbedpane.setSelectedIndex(0);
-                CommandThread toHome = new CommandThread(Keys.toHome);
+                CommandThread toHome = new CommandThread(Keys.MAIN_ACTIVITY);
                 toHome.start();
                 break;
             case "检查sideload":
                 MyTabbedPane.jTabbedpane.setSelectedIndex(0);
-                CommandThread isSideload = new CommandThread(Keys.isSideload);
+                CommandThread isSideload = new CommandThread(Keys.IS_SIDELOAD);
                 isSideload.start();
                 break;
             case "adb shell":
-                CommandThread shell = new CommandThread(Keys.shell);
+                CommandThread shell = new CommandThread(Keys.SHELL);
                 shell.start();
                 break;
             case "monitor":
-                CommandThread monitor = new CommandThread(Keys.monitor);
+                CommandThread monitor = new CommandThread(Keys.DDMS);
                 monitor.start();
                 break;
             case "截图":
                 MyTabbedPane.jTabbedpane.setSelectedIndex(0);
-                CommandThread screen = new CommandThread(Keys.screen);
+                CommandThread screen = new CommandThread(Keys.SCREEN);
                 screen.start();
                 break;
         }

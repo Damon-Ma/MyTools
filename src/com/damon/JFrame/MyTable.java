@@ -56,7 +56,7 @@ public class MyTable{
                     Config.cellVal=(table.getValueAt(Config.row,0)).toString(); //获得点击单元格数据
 
                     if (Config.cellVal!=null){
-                        CommandThread thread = new CommandThread(Keys.installCellAKP);
+                        CommandThread thread = new CommandThread(Keys.INSTALL_CELL_APK);
                         thread.start();
                     }
                 }

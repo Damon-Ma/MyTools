@@ -58,11 +58,11 @@ public class TextAreaListener {
 
 
                             if (path.endsWith("apk")){
-                                Util.getAPKMsg(path);
-                                String apkName = Util.getApkName();
-                                String apkVersion = Util.getApkVersion();
-                                String apkPackage = Util.getApkPackage();
-                                String apkActivity = Util.getApkActivity();
+
+                                String apkName = Util.getApkName(path);
+                                String apkVersion = Util.getApkVersion(path);
+                                String apkPackage = Util.getApkPackage(path);
+                                String apkActivity = Util.getApkActivity(path);
 
 
                                 MyTextArea.setOutText("------------------------------安装包“"+fileName+"”信息------------------------------"+

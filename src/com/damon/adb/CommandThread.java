@@ -20,35 +20,35 @@ public class CommandThread extends Thread{
     }
     @Override
     public void run(){
-        if (name==Keys.DEVICES||name==Keys.spdevices){
+        if (name==Keys.DEVICES||name==Keys.SP_DEVICES){
             this.devices();
-        }else if (name==Keys.kill_server){
+        }else if (name==Keys.KILL_SERVER){
             this.killServer();
-        }else if (name==Keys.logcat){
+        }else if (name==Keys.LOGCAT){
             this.logcat();
-        }else if (name==Keys.cleanLog){
+        }else if (name==Keys.CLEAN_LOG){
             this.cleanLog();
-        }else if (name==Keys.install){
+        }else if (name==Keys.INSTALL){
             this.tableInstall();
-        }else if (name==Keys.getpackage){
+        }else if (name==Keys.PACKAGE){
             this.getpackage();
-        }else if (name==Keys.send){
+        }else if (name==Keys.SEND){
             this.sendText();
-        }else if (name==Keys.recovery){
+        }else if (name==Keys.RECOVERY){
             this.recovery();
-        }else if (name==Keys.toHome){
+        }else if (name==Keys.MAIN_ACTIVITY){
             this.toHome();
-        }else if (name==Keys.isSideload){
+        }else if (name==Keys.IS_SIDELOAD){
             this.isSideload();
-        }else if (name==Keys.sideload){
+        }else if (name==Keys.SIDELOAD){
             this.sideload();
-        }else if (name==Keys.monitor){
+        }else if (name==Keys.DDMS){
             this.monitor();
-        }else if (name==Keys.shell){
+        }else if (name==Keys.SHELL){
             this.shell();
-        }else if (name==Keys.screen){
+        }else if (name==Keys.SCREEN){
             this.screen();
-        }else if (name==Keys.installCellAKP){
+        }else if (name==Keys.INSTALL_CELL_APK){
             this.installCellAKP();
         }
     }
@@ -86,7 +86,7 @@ public class CommandThread extends Thread{
         MyTextArea.setOutText("正在连接...");
         if (name==Keys.DEVICES){
             cmd.CMDCommand(Util.getCommand(name.getName()));
-        }else if (name==Keys.spdevices){
+        }else if (name==Keys.SP_DEVICES){
             cmd.CMDCommand("\""+Util.getThisPath()+"libs\\adb.exe\"\" devices");
         }
         String[] devicesResult = cmd.getResult().split("\n");
@@ -254,6 +254,7 @@ public class CommandThread extends Thread{
         cmd.CMDCommand("adb kill-server");
         cmd.CMDCommand("adb kill-server");
         cmd.CMDCommand("adb kill-server");
+        cmd.CMDCommand("adb start-server");
         cmd.CMDCommand("adb start-server");
         cmd.CMDCommand("adb start-server");
         cmd.CMDCommand("adb start-server");
