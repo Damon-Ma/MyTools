@@ -251,34 +251,26 @@ public class CommandThread extends Thread{
     //检查sideload模式
     private void isSideload(){
         MyTextArea.setOutText("正在连接...");
-        cmd.CMDCommand("adb kill-server");
-        cmd.CMDCommand("adb kill-server");
-        cmd.CMDCommand("adb kill-server");
-        cmd.CMDCommand("adb start-server");
-        cmd.CMDCommand("adb start-server");
-        cmd.CMDCommand("adb start-server");
-        cmd.CMDCommand("adb start-server");
-        cmd.CMDCommand("adb start-server");
+        do {
+            cmd.CMDCommand("adb start-server");
+        }while (!cmd.getResult().startsWith("*"));
+
         cmd.CMDCommand("adb devices");
 
-        if (cmd.getResult().startsWith("*")||!cmd.getResult().startsWith("List")){
-            MyTextArea.setOutText("再点一下~~");
-        }else {
-            String[] devicesResult = cmd.getResult().split("\n");
-            boolean isSideload = false; //初始化一个isSideload，如果选择的设备不为sideload模式，则isSideload=false
-            for (String aDevicesResult : devicesResult) {
-                if (aDevicesResult.endsWith("sideload") && aDevicesResult.split("\t")[0].equals(MyComboBox.choose)) {
-                    MyTextArea.setOutText("请将刷机包托到输出台，点击sideload开始刷机！");
-                    isSideload = true;
-                }
-            }
-            if (!isSideload){
-                MyTextArea.setOutText("请确认设备是否在adb刷机界面！");
-                MyTextArea.setOutText("先检查连接，选择设备，再检查sideload");
+        String[] devicesResult = cmd.getResult().split("\n");
+        boolean isSideload = false; //初始化一个isSideload，如果选择的设备不为sideload模式，则isSideload=false
+        for (String aDevicesResult : devicesResult) {
+            if (aDevicesResult.endsWith("sideload") && aDevicesResult.split("\t")[0].equals(MyComboBox.choose)) {
+                MyTextArea.setOutText("请将刷机包托到输出台，点击sideload开始刷机！");
+                isSideload = true;
             }
         }
+        if (!isSideload){
+            MyTextArea.setOutText("请确认设备是否在adb刷机界面！");
+            MyTextArea.setOutText("先检查连接，选择设备，再检查sideload");
+        }
     }
-    //刷机 sideload
+//刷机 sideload
     private void sideload(){
 
         if (cmd.isSideload()){
