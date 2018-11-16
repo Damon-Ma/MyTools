@@ -272,7 +272,7 @@ public class CommandThread extends Thread{
             MyTextArea.setOutText("先检查连接，选择设备，再检查sideload");
         }
     }
-//刷机 sideload
+    //刷机 sideload
     private void sideload(){
 
         if (cmd.isSideload()){
