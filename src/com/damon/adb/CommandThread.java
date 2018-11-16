@@ -251,9 +251,11 @@ public class CommandThread extends Thread{
     //检查sideload模式
     private void isSideload(){
         MyTextArea.setOutText("正在连接...");
+        //adb刷机时偶尔会因为adb意外停止而断开，所以在这里尝试启动adb，检查是否会自动停止
         do {
             cmd.CMDCommand("adb start-server");
-        }while (!cmd.getResult().startsWith("*"));
+        }while (cmd.getResult().startsWith("*"));
+        MyTextArea.setOutText("连接成功！");
 
         cmd.CMDCommand("adb devices");
 

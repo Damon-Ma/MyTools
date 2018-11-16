@@ -62,6 +62,7 @@ public class ButtonListener implements ActionListener {
                 break;
             case "清除日志":
                 MyTabbedPane.jTabbedpane.setSelectedIndex(0);
+
                 CommandThread cleanLog = new CommandThread(Keys.CLEAN_LOG);
                 cleanLog.start();
                 break;

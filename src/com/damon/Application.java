@@ -129,7 +129,8 @@ public class Application extends JFrame{
 
         add(p,BorderLayout.CENTER);
         //获取图片设置图标
-
+        //Image img = Toolkit.getDefaultToolkit ().getImage ("1.jpg");
+        //setIconImage(img);
         setIconImage(new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("1.jpg"))).getImage());
         setTitle("Tools");
         setSize(700,550);
