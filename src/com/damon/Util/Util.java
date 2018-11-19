@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 public class Util {
 
     static ResourceBundle bundle;
+    static CMD cmd = new CMD();
 
 
     public static String getDate(){
@@ -55,9 +56,9 @@ public class Util {
     //将apk信息截取成List
     public static List<String> getAPKMsg(String filePath){
         CMD cmd = new CMD();
-        cmd.CMDCommand("\""+Util.getThisPath()+"libs\\aapt.exe\" "+Util.getCommand("getapkmsg")+"\""+filePath+"\"");
+        Process p = cmd.Cmd("\""+Util.getThisPath()+"libs\\aapt.exe\" "+Util.getCommand("getapkmsg")+"\""+filePath+"\"");
 
-        String APKMsgs = cmd.getResult();
+        String APKMsgs = cmd.getResult(p);
         String[] s = APKMsgs.split("\n");
         return Arrays.asList(s);
     }
@@ -135,12 +136,13 @@ public class Util {
     }
     //获取当前OS版本
     public static String getOS(String getChoose) {
-        CMD cmd = new CMD();
-        cmd.CMDCommand("adb -s "+getChoose+" "+Util.getCommand("system"));
-        if (cmd.getResult().equals("")) {
-            cmd.CMDCommand("adb -s "+getChoose+" "+Util.getCommand("system6.0"));
+        Process p;
+        p = cmd.Cmd("adb -s "+getChoose+" "+Util.getCommand("system"));
+        System.out.println("错误结果："+cmd.getResult(p)+"--");
+        if (cmd.getResult(p)==null) {
+            p = cmd.Cmd("adb -s "+getChoose+" "+Util.getCommand("system6.0"));
         }
-        return cmd.getResult();
+        return cmd.getResult(p);
     }
     //正则匹配OS信息
     public static String getOSMsg(String osName,String regex){
@@ -159,7 +161,22 @@ public class Util {
         Matcher m = p.matcher(str);
         return m.find();
     }
-
+    //获取设备型号
+    public static String getMode(String getChoose){
+        Process p;
+        p = cmd.Cmd("adb -s "+getChoose+" shell getprop ro.product.model");
+        return cmd.getResult(p);
+    }
+    //获取SN号
+    public static String getSnNum(String getChoose){
+        Process p = cmd.Cmd("adb -s "+getChoose+" shell getprop persist.sys.product.serialno");
+        return cmd.getResult(p);
+    }
+    //获取TUSN
+    public static String getTusnNum(String getChoose){
+        Process p = cmd.Cmd("adb -s "+getChoose+" shell getprop persist.sys.product.tusn");
+        return cmd.getResult(p);
+    }
     //获取一下表格中有数据的行数
     public static int getRowsNum(){
         int row=0;
@@ -167,7 +184,7 @@ public class Util {
             if (MyTable.dtm.getValueAt(i,0)!=null){
                 row++;
             }
-            Config.rowsNum = row;
+            //Config.rowsNum = row;
         }
         return row;
     }
@@ -185,6 +202,17 @@ public class Util {
             }
             return rowsData;
         }
+    }
+    //获取当前连接设备
+    public static Object[] getConnectDevice(String cmdResult){
+        List connectDevice = new ArrayList();
+        String[] cmdResults = cmdResult.split("\n");
+        for (String device : cmdResults){
+            if (device.endsWith("device") || device.endsWith("sideload")){
+                connectDevice.add(device.split("\t")[0]);
+            }
+        }
+        return connectDevice.toArray();
     }
 
 

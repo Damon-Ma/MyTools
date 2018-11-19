@@ -14,6 +14,7 @@ public class CommandThread extends Thread{
 
     private Keys name;
     private CMD cmd;
+    private Process publicP;
     public CommandThread(Keys name){
         this.name = name;
         cmd = new CMD();
@@ -55,10 +56,10 @@ public class CommandThread extends Thread{
     //截图
     private void screen() {
         if (cmd.isConnect()){
+
             MyTextArea.setOutText("正在截图...");
             //截图文件路径
             String path = Util.getDesktopPath()+"\\Screenshots";
-            cmd.CMDCommand("mkdir "+path);
             //日期
             String date = Util.getDate();
             //文件名
@@ -67,14 +68,18 @@ public class CommandThread extends Thread{
             String sdPath = "/sdcard/"+screenName;
             //文件保存路径
             String screenPath = path+"\\"+screenName;
-
-            cmd.CMDCommand("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName())+sdPath);
-            cmd.CMDCommand("adb -s "+MyComboBox.choose+" pull "+sdPath+" "+path);
+            publicP = cmd.Cmd("mkdir "+path);
+            cmd.getResult(publicP);
+            publicP = cmd.Cmd("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName())+sdPath);
+            cmd.getResult(publicP);
+            publicP = cmd.Cmd("adb -s "+MyComboBox.choose+" pull "+sdPath+" "+path);
+            cmd.getResult(publicP);
             //删除终端中的文件
-            cmd.CMDCommand("adb -s "+MyComboBox.choose+" shell rm -rf "+sdPath);
-            cmd.CMDCommand(screenPath);
-            System.out.println(cmd.getErrorResult());
-            if (cmd.getErrorResult().matches("(.*[bytes].*)")){
+            publicP = cmd.Cmd("adb -s "+MyComboBox.choose+" shell rm -rf "+sdPath);
+            cmd.getResult(publicP);
+            //打开截图文件
+            publicP = cmd.Cmd(screenPath);
+            if (cmd.getErrorResult(publicP)==null){
                 MyTextArea.setOutText("截图成功，文件保存在："+screenPath);
             }else {
                 MyTextArea.setOutText("截图失败！！");
@@ -84,24 +89,23 @@ public class CommandThread extends Thread{
     //检查连接
     private void devices(){
         MyTextArea.setOutText("正在连接...");
+        Process p = null;
         if (name==Keys.DEVICES){
-            cmd.CMDCommand(Util.getCommand(name.getName()));
+            p = cmd.Cmd(Util.getCommand(name.getName()));
         }else if (name==Keys.SP_DEVICES){
-            cmd.CMDCommand("\""+Util.getThisPath()+"libs\\adb.exe\"\" devices");
+            p = cmd.Cmd("\""+Util.getThisPath()+"libs\\adb.exe\"\" devices");
         }
-        String[] devicesResult = cmd.getResult().split("\n");
-        int deviceNmb = 0;   //连接数量
-        if (devicesResult.length>1){
-            MyComboBox.rmItem();   //清除下拉框内容
-            for (String result : devicesResult) {
-                if (result.endsWith("device") || result.endsWith("sideload")) {
-                    deviceNmb = deviceNmb + 1;
-                    MyComboBox.addItem(deviceNmb + "、" + result.split("\t")[0]);
-                }
+
+        Object[] deviceResult = Util.getConnectDevice(cmd.getResult(p));
+        MyLabel.setDevicesNmb(String.valueOf(deviceResult.length));
+        int deviceNmb = 0;   //连接序号
+        if (deviceResult.length>0){
+            MyComboBox.rmItem();
+            for (Object ob : deviceResult){
+                deviceNmb++;
+                MyComboBox.addItem(deviceNmb + "、" + ob);
             }
-            MyLabel.setDevicesNmb(String.valueOf(deviceNmb));
-        }
-        if (deviceNmb==0){
+        }else{
             MyLabel.setDevicesNmb(String.valueOf(deviceNmb));
             MyComboBox.rmItem();   //清除下拉框内容
             MyTextArea.setOutText("设备未连接！");
@@ -113,10 +117,11 @@ public class CommandThread extends Thread{
             MyTextArea.setOutText("正在抓取日志...");
             //日志文件路径
             String path = Util.getDesktopPath()+"\\logcat";
-            cmd.CMDCommand("mkdir "+path);
             String filePath = path+"\\logcat"+Util.getDate()+".txt";
-
-            cmd.CMDCommand("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName())+filePath);
+            publicP = cmd.Cmd("mkdir "+path);
+            cmd.getResult(publicP);
+            publicP = cmd.Cmd("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName())+filePath);
+            cmd.getResult(publicP);
             MyTextArea.setOutText("抓取成功："+filePath);
         }
 
@@ -130,7 +135,7 @@ public class CommandThread extends Thread{
         //获取到表格的文件路径
         List allFilesPath = Util.getRowsData();
         //初始化行数
-        Util.getRowsNum();
+        //Util.getRowsNum();
 
         if (cmd.isConnect()){
             System.out.println(allFilesPath);
@@ -138,18 +143,17 @@ public class CommandThread extends Thread{
                 int count = 0;
                 for (Object installFile : allFilesPath) {
                     MyTable.dtm.setValueAt("正在安装...",count,1);
-                    cmd.CMDCommand("adb -s " + MyComboBox.choose + " " + Util.getCommand(name.getName()) + "\"" + installFile + "\"");
-                    if (cmd.getResult().endsWith("Success")){
+                    Process p = cmd.Cmd("adb -s " + MyComboBox.choose + " " + Util.getCommand(name.getName()) + "\"" + installFile + "\"");
+                    if (cmd.getResult(p).endsWith("Success")){
                         MyTable.dtm.setValueAt("安装成功",count++,1);
                     }else {
-
                         Pattern r = Pattern.compile("\\[.*]");
-                        Matcher m = r.matcher(cmd.getResult());
+                        Matcher m = r.matcher(cmd.getResult(p));
                         if (m.find()){
                             MyTable.dtm.setValueAt(m.group(),count++,1);
                         }else {
                             //MyJTable.dtm.setValueAt(cmd.getResult(),count++,1);
-                            MyTable.dtm.setValueAt(cmd.getErrorResult(),count++,1);
+                            MyTable.dtm.setValueAt(cmd.getErrorResult(p),count++,1);
                         }
                     }
                 }
@@ -163,8 +167,8 @@ public class CommandThread extends Thread{
     //获取当前应用
     private void getpackage(){
         if (cmd.isConnect()){
-            cmd.CMDCommand("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName()));
-            String ADBresult = cmd.getResult();
+            Process p = cmd.Cmd("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName()));
+            String ADBresult = cmd.getResult(p);
             String PAAresult = Util.getPackage(ADBresult);
             String[] split = PAAresult.split("/");
             if (split.length>1){
@@ -205,7 +209,7 @@ public class CommandThread extends Thread{
         }
         if (isASCII&&!isBlank&&!isOther){
             if (cmd.isConnect()){
-                cmd.CMDCommand("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName())+text);
+                cmd.Cmd("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName())+text);
                 MyTextArea.setOutText("输入成功："+text);
             }
         }else {
@@ -233,7 +237,7 @@ public class CommandThread extends Thread{
                     "确认进入recovery模式?",
                     "提示",JOptionPane.YES_NO_OPTION);
             if (n==0){
-                cmd.CMDCommand("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName()));
+                cmd.Cmd("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName()));
                 MyTextArea.setOutText("OOOOOOOOOOOOOK!");
             }else {
                 MyTextArea.setOutText("取消！！");
@@ -243,23 +247,21 @@ public class CommandThread extends Thread{
     //返回桌面
     private void toHome(){
         if (cmd.isConnect()){
-            cmd.CMDCommand("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName()));
-            cmd.CMDCommand("adb -s "+MyComboBox.choose+" "+Util.getCommand("toHome2"));
-            MyTextArea.setOutText("OOOOOOOOOOOOOOVER!");
+            cmd.Cmd("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName()));
+            cmd.Cmd("adb -s "+MyComboBox.choose+" "+Util.getCommand("toHome2"));
+            MyTextArea.setOutText("返回主界面!");
         }
     }
     //检查sideload模式
     private void isSideload(){
         MyTextArea.setOutText("正在连接...");
         //adb刷机时偶尔会因为adb意外停止而断开，所以在这里尝试启动adb，检查是否会自动停止
+        Process p;
         do {
-            cmd.CMDCommand("adb start-server");
-        }while (cmd.getResult().startsWith("*"));
-        MyTextArea.setOutText("连接成功！");
+            p = cmd.Cmd("adb start-server");
+        }while (cmd.getResult(p)!=null);
 
-        cmd.CMDCommand("adb devices");
-
-        String[] devicesResult = cmd.getResult().split("\n");
+        String[] devicesResult = cmd.getResult(cmd.Cmd("adb devices")).split("\n");
         boolean isSideload = false; //初始化一个isSideload，如果选择的设备不为sideload模式，则isSideload=false
         for (String aDevicesResult : devicesResult) {
             if (aDevicesResult.endsWith("sideload") && aDevicesResult.split("\t")[0].equals(MyComboBox.choose)) {
@@ -284,10 +286,11 @@ public class CommandThread extends Thread{
                         "请将刷机包拖进输出台！",
                         "提示",JOptionPane.WARNING_MESSAGE);
             }
-            cmd.CMDCommand("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName())+Config.OSPath);
+            Process p = cmd.Cmd("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName())+Config.OSPath);
+            cmd.printRealResult(p);
             Config.OSPath = null;
-            if (cmd.getErrorResult() != null){
-                MyTextArea.setOutText(cmd.getErrorResult());
+            if (cmd.getErrorResult(p) != null){
+                MyTextArea.setOutText(cmd.getErrorResult(p));
             }
         }else {
             MyTextArea.setOutText("设备未连接，请先检查sideload！");
@@ -296,27 +299,28 @@ public class CommandThread extends Thread{
     //打开DDMS
     private void monitor(){
         MyTextArea.setOutText("正在运行 Dalvik Debug Monitor Service（DDMS）...");
-        cmd.CMDCommand("monitor");
+        Process ddms = cmd.Cmd("monitor");
+        cmd.getResult(ddms);
         MyTextArea.setOutText("DDMS 已关闭！");
     }
     //清除日志
     private void cleanLog(){
         if (cmd.isConnect()){
-            cmd.CMDCommand("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName()));
+            cmd.Cmd("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName()));
             MyTextArea.setOutText("清除成功！");
         }
     }
     //结束adb
     private void killServer(){
-        cmd.CMDCommand(Util.getCommand(name.getName()));
-        cmd.CMDCommand(Util.getCommand(name.getName()));
-        cmd.CMDCommand(Util.getCommand(name.getName()));
+        cmd.Cmd(Util.getCommand(name.getName()));
+        cmd.Cmd(Util.getCommand(name.getName()));
+        cmd.Cmd(Util.getCommand(name.getName()));
         MyTextArea.setOutText("OOOOOOOOOOOOOOK!");
     }
     //adb shell
     private void shell(){
         if (cmd.isConnect()){
-            cmd.CMDCommand("start adb -s "+MyComboBox.choose+" shell");
+            cmd.Cmd("start adb -s "+MyComboBox.choose+" shell");
         }
     }
     //安装单个apk
@@ -325,16 +329,16 @@ public class CommandThread extends Thread{
             //把行号存起来，不然不同线程调用的时候会乱
             int row = Config.row;
             MyTable.dtm.setValueAt("正在安装...",row,1);
-            cmd.CMDCommand("adb -s " + MyComboBox.choose + " install -r \"" + Config.cellVal + "\"");
-            if (cmd.getResult().endsWith("Success")){
+            Process p = cmd.Cmd("adb -s " + MyComboBox.choose + " install -r \"" + Config.cellVal + "\"");
+            if (cmd.getResult(p).endsWith("Success")){
                 MyTable.dtm.setValueAt("安装成功",row,1);
             }else {
                 Pattern r = Pattern.compile("\\[.*]");
-                Matcher m = r.matcher(cmd.getResult());
+                Matcher m = r.matcher(cmd.getResult(p));
                 if (m.find()){
                     MyTable.dtm.setValueAt(m.group(),row,1);
                 }else {
-                    MyTable.dtm.setValueAt(cmd.getErrorResult(),row,1);
+                    MyTable.dtm.setValueAt(cmd.getErrorResult(p),row,1);
                 }
             }
         }

@@ -82,7 +82,7 @@ public class TableListener {
                                     }
                                     //写数据
                                     if (!isEqualData){
-                                        MyTable.dtm.setValueAt(path,Config.rowsNum,0);
+                                        MyTable.dtm.setValueAt(path,Util.getRowsNum(),0);
                                     }else {
                                         JOptionPane.showMessageDialog(null,
                                                 "已存在同名apk文件，请检查：\n\""+Util.getFileName(path)+"\"",
