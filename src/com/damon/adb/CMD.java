@@ -2,6 +2,7 @@ package com.damon.adb;
 
 import com.damon.JFrame.MyComboBox;
 import com.damon.JFrame.MyTextArea;
+import com.damon.Util.Log;
 
 import javax.swing.*;
 import java.io.BufferedReader;
@@ -13,7 +14,7 @@ public class CMD {
 
     public Process Cmd(String command){
         String cmd = "cmd /c\"  "+command;
-        System.out.println("执行："+cmd);
+        Log.logger.info("执行："+command);
         try {
             Process process = Runtime.getRuntime().exec(cmd);
             return process;
@@ -40,7 +41,7 @@ public class CMD {
             e.printStackTrace();
             return null;
         }
-        System.out.println("执行结果："+result);
+        Log.logger.info("执行结果："+result);
         return result;
     }
     //打印实时结果
@@ -69,6 +70,7 @@ public class CMD {
         }catch (IOException e){
             e.printStackTrace();
         }
+        Log.logger.error("异常结果："+errorResult);
         return errorResult;
     }
 

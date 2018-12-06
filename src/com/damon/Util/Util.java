@@ -137,12 +137,15 @@ public class Util {
     //获取当前OS版本
     public static String getOS(String getChoose) {
         Process p;
+        String result;
         p = cmd.Cmd("adb -s "+getChoose+" "+Util.getCommand("system"));
-        System.out.println("错误结果："+cmd.getResult(p)+"--");
-        if (cmd.getResult(p)==null) {
+        result = cmd.getResult(p);
+        //System.out.println("错误结果："+cmd.getResult(p)+"--");
+        if (result==null) {
             p = cmd.Cmd("adb -s "+getChoose+" "+Util.getCommand("system6.0"));
+            result = cmd.getResult(p);
         }
-        return cmd.getResult(p);
+        return result;
     }
     //正则匹配OS信息
     public static String getOSMsg(String osName,String regex){

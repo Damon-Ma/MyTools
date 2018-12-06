@@ -1,10 +1,7 @@
 package com.damon.Listener;
 
 
-import com.damon.JFrame.MyTabbedPane;
-import com.damon.JFrame.MyTable;
-import com.damon.JFrame.MyTextArea;
-import com.damon.JFrame.MyTextField;
+import com.damon.JFrame.*;
 import com.damon.Util.Keys;
 import com.damon.adb.*;
 
@@ -106,6 +103,16 @@ public class ButtonListener implements ActionListener {
                 MyTabbedPane.jTabbedpane.setSelectedIndex(0);
                 CommandThread screen = new CommandThread(Keys.SCREEN);
                 screen.start();
+                break;
+            case "登录":
+                break;
+            case "上传":
+                break;
+            case "原文件下载" :
+                break;
+            case "签名文件下载":
+                break;
+            case "刷新文件列表":
                 break;
         }
     }

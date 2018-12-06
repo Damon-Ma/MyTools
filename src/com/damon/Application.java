@@ -16,6 +16,7 @@ public class Application extends JFrame{
         new MyComboBox();
         new MyLabel();
         new MyTable();
+        new MyJProgressBar();
 
         //按钮 网格
         JPanel BtJpanel = new JPanel();
@@ -108,8 +109,47 @@ public class Application extends JFrame{
         p3.add(table2,BorderLayout.CENTER);
         p3.add(MyLabel.installResult,BorderLayout.SOUTH);
 
+        //签名页
+        JPanel sign_p = new JPanel();
+        sign_p.setLayout(new BorderLayout(3,3));
+        sign_p.setBorder(BorderFactory.createEtchedBorder()); //添加蚀刻边框
+
+        JPanel sign_p_1 = new JPanel(); //第一行
+        JPanel sign_p_2 = new JPanel(); //中左
+        sign_p_2.setMinimumSize(new Dimension(800,500));
+        JPanel sign_p_3 = new JPanel(); //中右
+        sign_p_3.setLayout(new BorderLayout(0,0));
+        JPanel sign_p_4 = new JPanel(); //底部
+
+
+        sign_p_1.add(MyButton.signInBt);
+        sign_p_1.add(MyLabel.chooseMessage);
+        sign_p_1.add(MyComboBox.signType);
+        sign_p_1.add(MyButton.uploadBt);
+        sign_p_1.add(MyButton.getFileListBt);
+
+        sign_p_2.add(MyLabel.showFile);
+        sign_p_2.setBorder(BorderFactory.createEtchedBorder());
+
+        JScrollPane fileTable = new JScrollPane(MyTable.signFileTable);
+        sign_p_3.add(fileTable);
+        sign_p_3.setBorder(BorderFactory.createEtchedBorder());
+
+        sign_p_4.add(MyLabel.fileNameLabel);
+        sign_p_4.add(MyLabel.upLoadFileName);
+        sign_p_4.add(MyLabel.tempo);
+        sign_p_4.add(MyJProgressBar.progressBar);
+        sign_p_4.add(MyLabel.uploadResultLabel);
+        sign_p_4.add(MyLabel.uploadResult);
+
+
+        sign_p.add(sign_p_1,BorderLayout.NORTH);
+        sign_p.add(sign_p_2,BorderLayout.WEST);
+        sign_p.add(sign_p_3,BorderLayout.CENTER);
+        sign_p.add(sign_p_4,BorderLayout.SOUTH);
+
         //添加标签
-        MyTabbedPane p4 = new MyTabbedPane(p2,p3);
+        MyTabbedPane p4 = new MyTabbedPane(p2,p3,sign_p);
 
         //输入框+标签
         JPanel p1 = new JPanel();

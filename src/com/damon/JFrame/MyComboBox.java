@@ -1,9 +1,11 @@
 package com.damon.JFrame;
 
+import com.damon.Util.Log;
 import com.damon.Util.Util;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 /**
  * 下拉选项框，添加监听，并获取到所选选项
@@ -11,19 +13,20 @@ import java.awt.event.ItemEvent;
 
 public class MyComboBox {
     public static JComboBox comboBox;
+    public static JComboBox signType;
     public static String choose;
+    public static String typeName;
 
 
 
-    public MyComboBox(){
+    public MyComboBox() {
         comboBox = new JComboBox();
-
         comboBox.addItemListener(e -> {
             MyTabbedPane.jTabbedpane.setSelectedIndex(0);
             switch (e.getStateChange()) {
                 case ItemEvent.SELECTED:
                     choose = String.valueOf(e.getItem());
-                    if (choose!=null) {
+                    if (choose != null) {
                         choose = choose.split("、")[1];
                     }
                     getDeviceMsg();
@@ -33,7 +36,25 @@ public class MyComboBox {
             }
         });
 
+
+        signType = new JComboBox();
+        signType.addItem("---请选择---");
+        signType.addItem("I9000");
+        signType.addItem("NEW_V2");
+        signType.addItemListener(e -> {
+            switch (e.getStateChange()) {
+                case ItemEvent.SELECTED:
+                    typeName = String.valueOf(e.getItem());
+                    Log.logger.info("选择："+typeName);
+                    break;
+                case ItemEvent.DESELECTED:
+                    break;
+
+            }
+        });
+
     }
+
 
     private String getChoose(){
         return choose;

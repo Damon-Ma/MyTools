@@ -6,7 +6,8 @@ import javax.swing.*;
 
 public class MyButton {
     public static JButton devicesBt,killBt,specialBt,logcatBt,recoveryBt,packageBt,
-            installBt,sendBt,cleanLogBt,sideloadBt,cleanOutBt,cleanInputBt,toHome,isSideload,monitor,shell,screen;
+            installBt,sendBt,cleanLogBt,sideloadBt,cleanOutBt,cleanInputBt,toHome,isSideload,monitor,shell,screen,
+            signInBt,uploadBt,odlDownloadBt,signDownloadBt,getFileListBt;
     public MyButton(){
         ButtonListener listener = new ButtonListener();
 
@@ -27,6 +28,11 @@ public class MyButton {
         shell = new JButton("adb shell");
         monitor = new JButton("monitor");
         screen = new JButton("截图");
+        signInBt = new JButton("登录");
+        uploadBt = new JButton("上传");
+        odlDownloadBt = new JButton("原文件下载");
+        signDownloadBt = new JButton("签名文件下载");
+        getFileListBt = new JButton("刷新文件列表");
 
         listener.BtListener(devicesBt);
         listener.BtListener(killBt);
@@ -45,5 +51,10 @@ public class MyButton {
         listener.BtListener(shell);
         listener.BtListener(monitor);
         listener.BtListener(screen);
+        listener.BtListener(signInBt);
+        listener.BtListener(uploadBt);
+        listener.BtListener(odlDownloadBt);
+        listener.BtListener(signDownloadBt);
+        listener.BtListener(getFileListBt);
     }
 }

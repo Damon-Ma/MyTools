@@ -12,7 +12,7 @@ public class MyTabbedPane  extends JPanel {
 
     public static JTabbedPane jTabbedpane = new JTabbedPane();// 存放选项卡的组件
 
-    public MyTabbedPane(JPanel jpanelFirst,JPanel jpanelSecond) {
+    public MyTabbedPane(JPanel jpanelFirst,JPanel jpanelSecond, JPanel jPanelThird) {
 
         // 第一个标签下的JPanel
         jTabbedpane.addTab("输出台",null, jpanelFirst, "输出台页面");// 加入第一个页面
@@ -21,6 +21,10 @@ public class MyTabbedPane  extends JPanel {
         // 第二个标签下的JPanel
         jTabbedpane.addTab("安装程序", null, jpanelSecond, "安装程序页面");// 加入第er个页面
         jTabbedpane.setMnemonicAt(1, KeyEvent.VK_1);// 设置快捷键为1
+
+        // 第三个标签下的JPanel
+        jTabbedpane.addTab("签名", null, jPanelThird, "");// 加入第san个页面
+        jTabbedpane.setMnemonicAt(2, KeyEvent.VK_2);// 设置快捷键为1
 
 
         setLayout(new GridLayout(1, 1));

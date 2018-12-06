@@ -21,9 +21,61 @@ import java.util.EventObject;
 public class MyTable{
     public static DefaultTableModel dtm;
     public static JTable table;
+
+    public static DefaultTableModel signDTM;
+    public static JTable signFileTable;
+
     public MyTable(){
+        //安装应用表格
         dtm = new DefaultTableModel();
         table = new JTable(dtm);
+        this.installTable();
+
+        //签名文件表格
+        signDTM = new DefaultTableModel();
+        signFileTable = new JTable(signDTM);
+        this.signFileTable();
+
+    }
+
+    private void signFileTable() {
+        //设置列名
+        signDTM.addColumn("文件名");
+        signDTM.addColumn("上传时间");
+        signDTM.addColumn("签名证书");
+        signDTM.addColumn("操作");
+        signDTM.addColumn("下载进度");
+
+
+        //设置DefaultTableModel的列数和行数
+        signDTM.setColumnCount(5);
+
+        signFileTable.setRowHeight(20);
+
+        //设置行宽
+        TableColumn column0 = signFileTable.getColumnModel().getColumn(0);
+        TableColumn column1 = signFileTable.getColumnModel().getColumn(1);
+        TableColumn column2 = signFileTable.getColumnModel().getColumn(2);
+        TableColumn column3 = signFileTable.getColumnModel().getColumn(3);
+        TableColumn column4 = signFileTable.getColumnModel().getColumn(4);
+
+
+        column0.setPreferredWidth(600);
+        column1.setPreferredWidth(300);
+        column2.setPreferredWidth(300);
+        column3.setPreferredWidth(600);
+        column4.setPreferredWidth(600);
+
+        column0.setCellEditor(this.cellEditor());
+        column1.setCellEditor(this.cellEditor());
+        column2.setCellEditor(this.cellEditor());
+        column3.setCellEditor(this.cellEditor());
+        column4.setCellEditor(this.cellEditor());
+    }
+
+    //安装文件表格
+    private void installTable(){
+
         TableListener listener = new TableListener();
         listener.OutputLabelListener(table);
 
@@ -62,8 +114,6 @@ public class MyTable{
                 }
             }
         });
-
-
     }
 
 
