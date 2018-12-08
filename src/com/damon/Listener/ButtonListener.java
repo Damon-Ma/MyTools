@@ -1,9 +1,12 @@
 package com.damon.Listener;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.damon.JFrame.*;
 import com.damon.Util.Keys;
+import com.damon.Util.Log;
 import com.damon.adb.*;
+import com.damon.sign.Sign;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -105,14 +108,24 @@ public class ButtonListener implements ActionListener {
                 screen.start();
                 break;
             case "登录":
+                CommandThread signLogin =  new CommandThread(Keys.SIGN_LOGIN);
+                signLogin.start();
                 break;
             case "上传":
+                CommandThread upload = new CommandThread(Keys.UPLOAD_APK);
+                upload.start();
                 break;
             case "原文件下载" :
+                CommandThread downloadRes = new CommandThread(Keys.DOWNLOAD_SRC_APK);
+                downloadRes.start();
                 break;
             case "签名文件下载":
+                CommandThread downloadSigned = new CommandThread(Keys.DOWNLOAD_SIGNED_APK);
+                downloadSigned.start();
                 break;
             case "刷新文件列表":
+                CommandThread getAPKList = new CommandThread(Keys.GET_APK_LIST);
+                getAPKList.start();
                 break;
         }
     }

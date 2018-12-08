@@ -1,9 +1,14 @@
 package com.damon.adb;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.damon.JFrame.*;
 import com.damon.Util.Config;
 import com.damon.Util.Keys;
+import com.damon.Util.Log;
 import com.damon.Util.Util;
+import com.damon.sign.Sign;
+import org.apache.commons.text.StringEscapeUtils;
 
 import javax.swing.*;
 import java.util.List;
@@ -15,6 +20,8 @@ public class CommandThread extends Thread{
     private Keys name;
     private CMD cmd;
     private Process publicP;
+
+
     public CommandThread(Keys name){
         this.name = name;
         cmd = new CMD();
@@ -51,6 +58,12 @@ public class CommandThread extends Thread{
             this.screen();
         }else if (name==Keys.INSTALL_CELL_APK){
             this.installCellAKP();
+        }else if (name==Keys.SIGN_LOGIN){
+            this.loginSignSys();
+        }else if (name==Keys.GET_APK_LIST){
+            this.getAPKList();
+        }else if (name==Keys.UPLOAD_APK){
+            this.upload();
         }
     }
     //截图
@@ -144,11 +157,12 @@ public class CommandThread extends Thread{
                 for (Object installFile : allFilesPath) {
                     MyTable.dtm.setValueAt("正在安装...",count,1);
                     Process p = cmd.Cmd("adb -s " + MyComboBox.choose + " " + Util.getCommand(name.getName()) + "\"" + installFile + "\"");
-                    if (cmd.getResult(p).endsWith("Success")){
+                    String installResult = cmd.getResult(p);
+                    if (installResult.endsWith("Success")){
                         MyTable.dtm.setValueAt("安装成功",count++,1);
                     }else {
-                        Pattern r = Pattern.compile("\\[.*]");
-                        Matcher m = r.matcher(cmd.getResult(p));
+                        Pattern r = Pattern.compile("\\[.*");
+                        Matcher m = r.matcher(installResult);
                         if (m.find()){
                             MyTable.dtm.setValueAt(m.group(),count++,1);
                         }else {
@@ -330,11 +344,12 @@ public class CommandThread extends Thread{
             int row = Config.row;
             MyTable.dtm.setValueAt("正在安装...",row,1);
             Process p = cmd.Cmd("adb -s " + MyComboBox.choose + " install -r \"" + Config.cellVal + "\"");
-            if (cmd.getResult(p).endsWith("Success")){
+            String installResult = cmd.getResult(p);
+            if (installResult.endsWith("Success")){
                 MyTable.dtm.setValueAt("安装成功",row,1);
             }else {
                 Pattern r = Pattern.compile("\\[.*]");
-                Matcher m = r.matcher(cmd.getResult(p));
+                Matcher m = r.matcher(installResult);
                 if (m.find()){
                     MyTable.dtm.setValueAt(m.group(),row,1);
                 }else {
@@ -342,5 +357,77 @@ public class CommandThread extends Thread{
                 }
             }
         }
+    }
+    //登陆签名系统
+    private void loginSignSys(){
+        MyLabel.uploadResult.setText("正在登陆...");
+        Config.sign = new Sign();
+        Boolean signResult = Config.sign.login();
+        if (signResult){
+            MyLabel.uploadResult.setText("登陆成功!");
+        }else {
+            MyLabel.uploadResult.setText("登陆失败！！");
+        }
+    }
+    //获取应用列表
+    private void getAPKList(){
+        if (Config.sign==null){
+            MyLabel.uploadResult.setText("请先登陆！");
+        }else {
+            MyLabel.uploadResult.setText("获取中...");
+
+            JSONObject resultJson = Config.sign.getFileList();
+
+            //tisohiyong
+//            JSONObject resultJson = HelloWorld.resultJson();
+
+            if (resultJson.size()==1){
+                MyLabel.uploadResult.setText(resultJson.getString("result"));
+            }else if (resultJson.size()==2){
+                //获取apk的jsonarray
+                JSONArray apkList = resultJson.getJSONArray("rows");
+                for (int i=0;i<apkList.size();i++){
+                    //获取单个apk的json对象
+                    JSONObject apkJson = apkList.getJSONObject(i);
+
+                    //id
+                    String id = apkJson.getString("id");
+                    //证书类型
+                    String signType = apkJson.getString("certificate");
+                    //文件名
+                    String apkName = apkJson.getString("fileName");
+                    //上传时间
+                    String uploadTime = apkJson.getString("uploadTimeStr");
+                    Log.logger.info("id:"+id);
+                    Log.logger.info("证书类型："+signType);
+                    Log.logger.info("文件名："+apkName);
+                    Log.logger.info("上传时间："+uploadTime);
+                    Log.logger.info("================================");
+
+                    Object[] apkMsg = {apkName,uploadTime,signType,"下载签名文件"};
+                    MyTable.signDTM.addRow(apkMsg);
+                    MyLabel.uploadResult.setText("获取成功！");
+                }
+
+
+            }else {
+                MyLabel.uploadResult.setText("获取成功，列表为空！");
+            }
+
+        }
+    }
+    //上传
+    private void upload(){
+        MyLabel.uploadResult.setText("正在上传...");
+        String uploadResult = Config.sign.upload("","");
+
+        String matchResult = Util.match(uploadResult,"(?<=<font color=\"red\">).*(?= </font>)");
+        matchResult = StringEscapeUtils.unescapeHtml4(matchResult);
+        MyLabel.uploadResult.setText(matchResult);
+    }
+    //下载签名文件
+    private void downloadSignedFile(){
+        int rowNum = Config.downloadRowNum;
+        System.out.println("下载第："+rowNum+"行");
     }
 }

@@ -21,7 +21,12 @@ public enum  Keys {
     DDMS("monitor"),
     SHELL("shell"),
     SCREEN("screen"),
-    INSTALL_CELL_APK("installCellAKP");
+    INSTALL_CELL_APK("installCellAKP"),
+    SIGN_LOGIN(""),
+    GET_APK_LIST(""),
+    UPLOAD_APK(""),
+    DOWNLOAD_SRC_APK(""),
+    DOWNLOAD_SIGNED_APK("");
 
     private final String name;
 

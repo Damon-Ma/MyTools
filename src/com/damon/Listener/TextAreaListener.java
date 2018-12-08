@@ -121,7 +121,7 @@ public class TextAreaListener {
 
                                     //判断一下单卡双卡
                                     String simType = "";
-                                    String sim = Util.getOSMsg(Config.filesName,"(M2)?[SD]S");
+                                    String sim = Util.match(Config.filesName,"(M2)?[SD]S");
                                     if (sim!=null){
                                         if (sim.equals("M2SS")||sim.equals("SS")){
                                             simType = " 单卡设备";
@@ -134,13 +134,13 @@ public class TextAreaListener {
                                             "提示",JOptionPane.WARNING_MESSAGE);
 
                                     //机型
-                                    String name = Util.getOSMsg(fileName,"SQ\\d+[A-Z]*");
+                                    String name = Util.match(fileName,"SQ\\d+[A-Z]*");
                                     //定制版本
-                                    String whos = Util.getOSMsg(fileName,"[A-Z]{3,}|XX|WD");
+                                    String whos = Util.match(fileName,"[A-Z]{3,}|XX|WD");
                                     //发布日期
-                                    String date = Util.getOSMsg(fileName,"\\d{6}");
+                                    String date = Util.match(fileName,"\\d{6}");
                                     //是否签名
-                                    String Sign = Util.getOSMsg(fileName,"_[SN]_");
+                                    String Sign = Util.match(fileName,"_[SN]_");
                                     String isSign;
                                     try {
                                         assert Sign != null;

@@ -1,5 +1,6 @@
 package com.damon.Util;
 
+
 import org.apache.log4j.Logger;
 
 /**
@@ -10,5 +11,5 @@ import org.apache.log4j.Logger;
  * @Version 1.0
  **/
 public class Log {
-    public static Logger logger = Logger.getLogger(Thread.class);
+    public static Logger logger = Logger.getLogger("");
 }

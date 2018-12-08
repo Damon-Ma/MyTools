@@ -32,14 +32,16 @@ public class MyLabel {
         fileNameLabel = new JLabel("文件名：");
 
         upLoadFileName = new JLabel();
-        upLoadFileName.setPreferredSize(new Dimension(150,10));
+        upLoadFileName.setPreferredSize(new Dimension(150,20));
 
         tempo = new JLabel("上传进度：");
 
-        uploadResultLabel = new JLabel("上传结果：");
+        uploadResultLabel = new JLabel("状态：");
 
+        //上传状态
         uploadResult = new JLabel();
-        uploadResult.setPreferredSize(new Dimension(150,10));
+        uploadResult.setPreferredSize(new Dimension(150,20));
+        uploadResult.setForeground(Color.RED);
     }
 
     //设置连接数量
@@ -51,10 +53,4 @@ public class MyLabel {
             MyLabel.deviceNmb.setForeground(Color.RED);
         }
     }
-
-    //设置showFile的文字
-    public static void setShowFileWord(String s){
-        showFile.setText(s);
-    }
-
 }

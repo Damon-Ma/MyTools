@@ -19,7 +19,7 @@ public class CMD {
             Process process = Runtime.getRuntime().exec(cmd);
             return process;
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.logger.error(e);
             return null;
         }
     }
@@ -38,7 +38,7 @@ public class CMD {
                 }
             }
         }catch (IOException e){
-            e.printStackTrace();
+            Log.logger.error(e);
             return null;
         }
         Log.logger.info("执行结果："+result);
@@ -54,7 +54,7 @@ public class CMD {
                 MyTextArea.setOutText(line.trim());
             }
         }catch (IOException e){
-            e.printStackTrace();
+            Log.logger.error(e);
         }
     }
     //获取异常结果
@@ -68,7 +68,7 @@ public class CMD {
                 errorResult = errorLine.trim();
             }
         }catch (IOException e){
-            e.printStackTrace();
+            Log.logger.error(e);
         }
         Log.logger.error("异常结果："+errorResult);
         return errorResult;

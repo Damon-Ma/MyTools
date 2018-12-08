@@ -18,6 +18,10 @@ public class Application extends JFrame{
         new MyTable();
         new MyJProgressBar();
 
+        //设置log4j日志输出路径
+//        String logPath = Util.getThisPath()+"logs";
+//        System.setProperty("log_home",logPath);
+
         //按钮 网格
         JPanel BtJpanel = new JPanel();
         BtJpanel.setBorder(BorderFactory.createEtchedBorder()); //添加蚀刻边框
@@ -138,7 +142,7 @@ public class Application extends JFrame{
         sign_p_4.add(MyLabel.fileNameLabel);
         sign_p_4.add(MyLabel.upLoadFileName);
         sign_p_4.add(MyLabel.tempo);
-        sign_p_4.add(MyJProgressBar.progressBar);
+        sign_p_4.add(MyJProgressBar.uploadProgressBar);
         sign_p_4.add(MyLabel.uploadResultLabel);
         sign_p_4.add(MyLabel.uploadResult);
 
@@ -173,7 +177,7 @@ public class Application extends JFrame{
         //setIconImage(img);
         setIconImage(new ImageIcon(Objects.requireNonNull(this.getClass().getClassLoader().getResource("1.jpg"))).getImage());
         setTitle("Tools");
-        setSize(700,550);
+        setSize(850,600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
