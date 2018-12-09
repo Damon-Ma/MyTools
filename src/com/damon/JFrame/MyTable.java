@@ -29,11 +29,6 @@ public class MyTable{
     public static DefaultTableModel signDTM;
     public static JTable signFileTable;
 
-    //按钮框
-    public static JPanel buttonPanel;
-    public static JButton srcDownloadBt;
-    public static JButton signedDownloadBt;
-
     public MyTable(){
         //安装应用表格
         dtm = new DefaultTableModel();
@@ -73,7 +68,7 @@ public class MyTable{
         column1.setPreferredWidth(400);
         column2.setPreferredWidth(300);
         column3.setPreferredWidth(400);
-        column4.setPreferredWidth(600);
+        column4.setPreferredWidth(300);
 
         column3.setCellRenderer(new ButtonRenderer());
         //column4.setCellRenderer(this.cellRenderer());
@@ -83,7 +78,7 @@ public class MyTable{
         column2.setCellEditor(this.cellEditor());
 
         column3.setCellEditor(new ButtonEditor(new JTextField()));
-        //column4.setCellEditor(this.cellEditor());
+        column4.setCellEditor(this.cellEditor());
 
 
     }
@@ -229,9 +224,12 @@ class ButtonEditor extends DefaultCellEditor {
     public Object getCellEditorValue() {
         if (isPushed) {
             //
-            //
-            // JOptionPane.showMessageDialog(button, label + ": Ouch!");
-            // System.out.println(label + ": Ouch!");
+            CommandThread download = new CommandThread(Keys.DOWNLOAD_SIGNED_APK);
+            download.start();
+
+
+//             JOptionPane.showMessageDialog(button, label + ": Ouch!");
+//             System.out.println(label + ": Ouch!");
         }
         isPushed = false;
         return new String(label);

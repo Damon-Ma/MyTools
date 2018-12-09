@@ -1,5 +1,6 @@
 package com.damon.JFrame;
 
+import com.damon.Util.Config;
 import com.damon.Util.Log;
 import com.damon.Util.Util;
 
@@ -40,11 +41,12 @@ public class MyComboBox {
         signType = new JComboBox();
         signType.addItem("---请选择---");
         signType.addItem("I9000");
-        signType.addItem("NEW_V2");
+        signType.addItem("NEW_V2_POS");
         signType.addItemListener(e -> {
             switch (e.getStateChange()) {
                 case ItemEvent.SELECTED:
                     typeName = String.valueOf(e.getItem());
+                    Config.signType = typeName;
                     Log.logger.info("选择："+typeName);
                     break;
                 case ItemEvent.DESELECTED:

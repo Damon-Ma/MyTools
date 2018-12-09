@@ -11,6 +11,7 @@ import com.damon.sign.Sign;
 import org.apache.commons.text.StringEscapeUtils;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -64,6 +65,8 @@ public class CommandThread extends Thread{
             this.getAPKList();
         }else if (name==Keys.UPLOAD_APK){
             this.upload();
+        }else if (name==Keys.DOWNLOAD_SIGNED_APK){
+            this.downloadSignedFile();
         }
     }
     //截图
@@ -365,16 +368,25 @@ public class CommandThread extends Thread{
         Boolean signResult = Config.sign.login();
         if (signResult){
             MyLabel.uploadResult.setText("登陆成功!");
+            Log.logger.info("登陆成功！");
         }else {
             MyLabel.uploadResult.setText("登陆失败！！");
         }
     }
     //获取应用列表
     private void getAPKList(){
+        //fileIdList
+        Config.fileIdList = new ArrayList<Integer>();
+        int count = MyTable.signDTM.getRowCount();
+        Log.logger.info("共有："+count+"行");
+        for (int i=0; i<count;i++){
+            MyTable.signDTM.removeRow(0);
+        }
+
         if (Config.sign==null){
             MyLabel.uploadResult.setText("请先登陆！");
         }else {
-            MyLabel.uploadResult.setText("获取中...");
+            MyLabel.uploadResult.setText("获取列表...");
 
             JSONObject resultJson = Config.sign.getFileList();
 
@@ -391,18 +403,20 @@ public class CommandThread extends Thread{
                     JSONObject apkJson = apkList.getJSONObject(i);
 
                     //id
-                    String id = apkJson.getString("id");
+                    int id = (int)apkJson.get("id");
                     //证书类型
                     String signType = apkJson.getString("certificate");
                     //文件名
                     String apkName = apkJson.getString("fileName");
                     //上传时间
                     String uploadTime = apkJson.getString("uploadTimeStr");
-                    Log.logger.info("id:"+id);
-                    Log.logger.info("证书类型："+signType);
-                    Log.logger.info("文件名："+apkName);
-                    Log.logger.info("上传时间："+uploadTime);
-                    Log.logger.info("================================");
+//                    Log.logger.info("id:"+id);
+//                    Log.logger.info("证书类型："+signType);
+//                    Log.logger.info("文件名："+apkName);
+//                    Log.logger.info("上传时间："+uploadTime);
+//                    Log.logger.info("================================");
+
+                    Config.fileIdList.add(id);
 
                     Object[] apkMsg = {apkName,uploadTime,signType,"下载签名文件"};
                     MyTable.signDTM.addRow(apkMsg);
@@ -418,16 +432,41 @@ public class CommandThread extends Thread{
     }
     //上传
     private void upload(){
-        MyLabel.uploadResult.setText("正在上传...");
-        String uploadResult = Config.sign.upload("","");
+        if (Config.scrFilePath==null){
+            JOptionPane.showMessageDialog(null,
+                    "请拖入apk文件！",
+                    "提示",
+                    JOptionPane.WARNING_MESSAGE);
+        }else if (Config.signType==null || Config.signType.equals("---请选择---")){
+            JOptionPane.showMessageDialog(null,
+                    "请选择证书类型！",
+                    "提示",
+                    JOptionPane.WARNING_MESSAGE);
+        }else {
+            MyLabel.uploadResult.setText("正在上传...");
 
-        String matchResult = Util.match(uploadResult,"(?<=<font color=\"red\">).*(?= </font>)");
-        matchResult = StringEscapeUtils.unescapeHtml4(matchResult);
-        MyLabel.uploadResult.setText(matchResult);
+            Log.logger.info("证书类型："+Config.signType);
+            Log.logger.info("文件路径："+Config.scrFilePath);
+
+            String uploadResult = Config.sign.upload(Config.signType,Config.scrFilePath);
+            String matchResult = Util.match(uploadResult,"(?<=<font color=\"red\">).*(?= </font>)");
+            matchResult = StringEscapeUtils.unescapeHtml4(matchResult);
+            MyLabel.uploadResult.setText(matchResult);
+            if (matchResult.equals("上传成功")){
+                getAPKList();
+            }
+        }
+
     }
     //下载签名文件
     private void downloadSignedFile(){
+
         int rowNum = Config.downloadRowNum;
         System.out.println("下载第："+rowNum+"行");
+
+        int id = Config.fileIdList.get(rowNum);
+        Config.sign.signDownload(id);
+        cmd.Cmd("start "+Util.getDesktopPath()+"\\签名文件\\");
+
     }
 }

@@ -24,7 +24,7 @@ public class MyHttpClient {
         //初始化cookiejar
         final Map<String, List<Cookie>> cookieMap = new HashMap<String, List<Cookie>>();
 
-        CookieJar cookieJar = new CookieJar() {
+        Config.cookieJar = new CookieJar() {
             @Override
             public void saveFromResponse(HttpUrl httpUrl, List<Cookie> list) {
                 cookieMap.put(httpUrl.host(),list);
@@ -43,7 +43,7 @@ public class MyHttpClient {
 
         //获取HttpClient对象
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                .cookieJar(cookieJar)
+                .cookieJar(Config.cookieJar)
                 .connectTimeout(1000,TimeUnit.SECONDS)
                 .readTimeout(1000,TimeUnit.SECONDS)
                 .writeTimeout(1000,TimeUnit.SECONDS);

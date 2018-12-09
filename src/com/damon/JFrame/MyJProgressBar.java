@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MyJProgressBar {
 
-    public static JProgressBar uploadProgressBar;
+    public static JProgressBar uploadProgressBar, downloadProgressBar;
 
    public MyJProgressBar() {
 
@@ -33,6 +33,14 @@ public class MyJProgressBar {
         uploadProgressBar.setSize(500, 100);
         uploadProgressBar.setMinimum(0);
         uploadProgressBar.setMaximum(100);
+    }
+
+    private void setDownloadProgressBar() {
+        downloadProgressBar.setOrientation(JProgressBar.HORIZONTAL);
+        downloadProgressBar.setStringPainted(true);
+        downloadProgressBar.setSize(500, 100);
+        downloadProgressBar.setMinimum(0);
+        downloadProgressBar.setMaximum(100);
     }
 
     public static void setUploadProgress(int n){

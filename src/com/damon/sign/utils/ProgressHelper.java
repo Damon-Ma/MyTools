@@ -1,11 +1,13 @@
 package com.damon.sign.utils;
 
+import com.damon.sign.Config;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 进度回调辅助类
@@ -14,15 +16,17 @@ import java.io.IOException;
 public class ProgressHelper {
     /**
      * 包装OkHttpClient，用于下载文件的回调
-     * @param client 待包装的OkHttpClient
      * @param progressListener 进度回调接口
      * @return 包装后的OkHttpClient，使用clone方法返回
      */
-    public static OkHttpClient addProgressResponseListener(OkHttpClient client, final ProgressResponseListener progressListener){
-        //克隆
-        OkHttpClient clone = client;
-        //增加拦截器
-        clone.networkInterceptors().add(new Interceptor() {
+    public static OkHttpClient addProgressResponseListener(final ProgressResponseListener progressListener){
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                .cookieJar(Config.cookieJar)
+                .connectTimeout(1000,TimeUnit.SECONDS)
+                .readTimeout(1000,TimeUnit.SECONDS)
+                .writeTimeout(1000,TimeUnit.SECONDS);
+
+        builder.networkInterceptors().add(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 //拦截
@@ -33,7 +37,8 @@ public class ProgressHelper {
                         .build();
             }
         });
-        return clone;
+
+        return builder.build();
     }
  
     /**

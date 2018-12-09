@@ -5,19 +5,21 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.damon.JFrame.MyJProgressBar;
 import com.damon.JFrame.MyLabel;
+import com.damon.JFrame.MyTable;
 import com.damon.Util.Log;
 import com.damon.Util.Util;
 import com.damon.sign.utils.ProgressHelper;
 import com.damon.sign.utils.ProgressRequestListener;
+import com.damon.sign.utils.ProgressResponseListener;
 import okhttp3.*;
-import org.apache.commons.text.StringEscapeUtils;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.regex.Matcher;
 
 /**
  * @ClassName Sign
@@ -74,7 +76,7 @@ public class Sign {
         String testUrl = Config.url+Config.getFileUri;
         JSONObject result = null;
         FormBody body = new FormBody.Builder()
-                .add("startUploadTime",getDate())
+                .add("startUploadTime","2018-12-08")
                 .add("endUploadTime",getDate())
                 .add("fileName","")
                 .add("userName","undefined")
@@ -121,13 +123,15 @@ public class Sign {
         final ProgressRequestListener progressRequestListener = new ProgressRequestListener() {
             @Override
             public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                Log.logger.info("bytesWrite:" + bytesWritten);
-                Log.logger.info("contentLength" + contentLength);
+//                Log.logger.info("bytesWrite:" + bytesWritten);
+//                Log.logger.info("contentLength" + contentLength);
                 Log.logger.info((100 * bytesWritten) / contentLength + " % done ");
-                Log.logger.info("done:" + done);
-                Log.logger.info("================================");
-
+//                Log.logger.info("done:" + done);
+//                Log.logger.info("================================");
                 MyJProgressBar.setUploadProgress((int)((100 * bytesWritten)/contentLength));
+                if (done){
+                    MyLabel.uploadResult.setText("正在签名...");
+                }
 
             }
         };
@@ -162,7 +166,65 @@ public class Sign {
 
     }
 
+    //下载
+    public void signDownload(int id){
+        Log.logger.info("开始下载："+id);
+        String testUrl = Config.url+Config.signedDownloadUri;
+        int downloadRowNum = com.damon.Util.Config.downloadRowNum;
+        MyTable.signDTM.setValueAt("准备下载...",downloadRowNum,4);
+        final ProgressResponseListener progressResponseListener = new ProgressResponseListener() {
+            @Override
+            public void onResponseProgress(long bytesRead, long contentLength, boolean done) {
+                if (contentLength != -1) {
+                    //长度未知的情况下回返回-1
+                    Log.logger.info((100 * bytesRead) / contentLength + "% done");
+                }
+                MyTable.signDTM.setValueAt("已下载："+bytesRead/1024+"kb",downloadRowNum,4);
+                //Log.logger.info("下载："+bytesRead/1024+"kb");
+                if (done){
+                    Log.logger.info("下载完成！");
+                    MyTable.signDTM.setValueAt("下载完成！",downloadRowNum,4);
+                }
+            }
+        };
 
+        Request request = new Request.Builder()
+                .url(testUrl+"?id="+id)
+                .build();
+
+
+        try {
+            Response response = ProgressHelper.addProgressResponseListener(progressResponseListener).newCall(request).execute();
+
+            String downloadFileName = response.header("Content-Disposition").split("=")[1];
+            String path = getDownloadPath();
+            Log.logger.info("下载路径:"+path);
+            Log.logger.info("文件名称："+downloadFileName);
+
+            InputStream is = response.body().byteStream();
+
+            long bodySize = response.body().contentLength();
+            Log.logger.info("bodySize:"+bodySize);
+
+            int len = 0;
+            File file = new File(path,downloadFileName);
+            byte[] buf = new byte[1024];
+            FileOutputStream fos = new FileOutputStream(file);
+
+            while ((len = is.read(buf)) != -1){
+                fos.write(buf,0,len);
+            }
+            fos.flush();
+            fos.close();
+            is.close();
+
+        } catch (IOException e) {
+            Log.logger.error(e);
+            e.printStackTrace();
+        }
+
+
+    }
 
 
 
@@ -171,4 +233,13 @@ public class Sign {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         return df.format(System.currentTimeMillis());
     }
+
+    //创建下载文件目录
+    private String getDownloadPath(){
+        String desktopPath = Util.getDesktopPath();
+        String path = desktopPath + "\\签名文件\\";
+        File file = new File(path);
+        return path;
+    }
+
 }

@@ -46,7 +46,7 @@ public class LabelListener {
                         dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
                         List list = (List)tr.getTransferData(DataFlavor.javaFileListFlavor);
                         Iterator it = list.iterator();
-                        //每一次拖拽都初始化一下allpath
+
                         while (it.hasNext()){
                             File f = (File) it.next();
                             path = f.getAbsolutePath();
@@ -54,8 +54,13 @@ public class LabelListener {
 
                             if (path.endsWith("apk")){
                                 MyLabel.upLoadFileName.setText(fileName);
-                            }else {
+                                Config.scrFilePath = path;
 
+                            }else {
+                                JOptionPane.showMessageDialog(null,
+                                        "请拖入apk文件！",
+                                        "提示",
+                                        JOptionPane.WARNING_MESSAGE);
                             }
 
                         }
