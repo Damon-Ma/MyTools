@@ -453,13 +453,24 @@ public class CommandThread extends Thread{
             Log.logger.info("文件路径："+Config.scrFilePath);
 
             String uploadResult = Config.sign.upload(Config.signType,Config.scrFilePath);
+
             String matchResult = Util.match(uploadResult,"(?<=<font color=\"red\">).*(?= </font>)");
-            matchResult = StringEscapeUtils.unescapeHtml4(matchResult);
-            MyLabel.uploadResult.setText(matchResult);
-            if (matchResult.equals("上传成功")){
-                getAPKList();
-                MyLabel.upLoadFileName.setText("");
-                MyLabel.showFile.setForeground(Color.RED);
+            if (matchResult ==null){
+                if (uploadResult.contains("用户名不能为空")){
+                    MyLabel.uploadResult.setText("登录过期！");
+                }else {
+                    MyLabel.uploadResult.setText("未知异常！");
+                    Log.logger.error(uploadResult);
+                }
+            }else {
+                matchResult = StringEscapeUtils.unescapeHtml4(matchResult);
+                MyLabel.uploadResult.setText(matchResult);
+                if (matchResult.equals("上传成功")) {
+                    getAPKList();
+                    MyLabel.upLoadFileName.setText("");
+                    MyLabel.showFile.setForeground(Color.RED);
+                }
+
             }
         }
 

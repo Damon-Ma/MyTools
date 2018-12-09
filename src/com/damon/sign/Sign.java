@@ -156,7 +156,6 @@ public class Sign {
 
             String result = response.body().string();
 
-
             return result;
         } catch (IOException e) {
             e.printStackTrace();
@@ -196,26 +195,35 @@ public class Sign {
         try {
             Response response = ProgressHelper.addProgressResponseListener(progressResponseListener).newCall(request).execute();
 
-            String downloadFileName = response.header("Content-Disposition").split("=")[1];
+            try {
+                String downloadFileName = response.header("Content-Disposition").split("=")[1];
+                String path = getDownloadPath();
+                Log.logger.info("下载路径:"+path);
+                Log.logger.info("文件名称："+downloadFileName);
 
-            String path = getDownloadPath();
-            Log.logger.info("下载路径:"+path);
-            Log.logger.info("文件名称："+downloadFileName);
+                InputStream is = response.body().byteStream();
 
-            InputStream is = response.body().byteStream();
+                int len = 0;
+                File file = new File(path,downloadFileName);
+                byte[] buf = new byte[1024];
+                FileOutputStream fos = new FileOutputStream(file);
 
-
-            int len = 0;
-            File file = new File(path,downloadFileName);
-            byte[] buf = new byte[1024];
-            FileOutputStream fos = new FileOutputStream(file);
-
-            while ((len = is.read(buf)) != -1){
-                fos.write(buf,0,len);
+                while ((len = is.read(buf)) != -1){
+                    fos.write(buf,0,len);
+                }
+                fos.flush();
+                fos.close();
+                is.close();
+            }catch (IndexOutOfBoundsException e){
+                if (response.body().string().contains("用户名不能为空")){
+                    MyLabel.uploadResult.setText("登录过期！");
+                }else {
+                    MyLabel.uploadResult.setText("未知异常！");
+                    Log.logger.error(response.body().string());
+                }
             }
-            fos.flush();
-            fos.close();
-            is.close();
+
+
 
         } catch (IOException e) {
             Log.logger.error(e);
