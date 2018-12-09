@@ -139,6 +139,9 @@ public class CommandThread extends Thread{
             publicP = cmd.Cmd("adb -s "+MyComboBox.choose+" "+Util.getCommand(name.getName())+filePath);
             cmd.getResult(publicP);
             MyTextArea.setOutText("抓取成功："+filePath);
+
+            publicP = cmd.Cmd("start "+path);
+
         }
 
     }
