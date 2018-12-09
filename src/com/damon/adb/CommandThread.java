@@ -11,6 +11,7 @@ import com.damon.sign.Sign;
 import org.apache.commons.text.StringEscapeUtils;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -457,6 +458,8 @@ public class CommandThread extends Thread{
             MyLabel.uploadResult.setText(matchResult);
             if (matchResult.equals("上传成功")){
                 getAPKList();
+                MyLabel.upLoadFileName.setText("");
+                MyLabel.showFile.setForeground(Color.RED);
             }
         }
 

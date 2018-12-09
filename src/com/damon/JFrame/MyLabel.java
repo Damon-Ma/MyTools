@@ -23,16 +23,28 @@ public class MyLabel {
 
         chooseMessage = new JLabel("请选择证书类型：",SwingConstants.CENTER);
 
-        showFile = new JLabel("<html>&nbsp&nbsp请<br/>&nbsp&nbsp拖<br/>&nbsp&nbsp入<br/>&nbsp&nbsp A<br/>&nbsp&nbsp P<br/>&nbsp&nbsp K<br/>&nbsp&nbsp文<br/>&nbsp&nbsp件</html>");
-        showFile.setPreferredSize(new Dimension(60,230));
-        showFile.setFont(new Font("Dialog",Font.BOLD ,22));
+        showFile = new JLabel("<html>" +
+                "&nbsp&nbsp&nbsp&nbsp请<br/>" +
+                "&nbsp&nbsp&nbsp&nbsp拖<br/>" +
+                "&nbsp&nbsp&nbsp&nbsp入<br/>" +
+                "&nbsp&nbsp&nbsp&nbsp A<br/>" +
+                "&nbsp&nbsp&nbsp&nbsp P<br/>" +
+                "&nbsp&nbsp&nbsp&nbsp K<br/>" +
+                "&nbsp&nbsp&nbsp&nbsp文<br/>" +
+                "&nbsp&nbsp&nbsp&nbsp件</html>");
+        showFile.setPreferredSize(new Dimension(100,270));
+        showFile.setFont(new Font("Dialog",Font.BOLD ,26));
+        showFile.setForeground(Color.RED);
         LabelListener labelListener = new LabelListener();
         labelListener.OutputLabelListener(showFile);
 
-        fileNameLabel = new JLabel("文件名：");
+        fileNameLabel = new JLabel("待上传文件名：");
 
+        //显示待上传文件名
         upLoadFileName = new JLabel();
-        upLoadFileName.setPreferredSize(new Dimension(150,20));
+        upLoadFileName.setPreferredSize(new Dimension(200,20));
+        upLoadFileName.setFont(new Font("Dialog",Font.BOLD,15));
+        upLoadFileName.setForeground(Color.BLUE);
 
         tempo = new JLabel("上传进度：");
 
@@ -40,7 +52,7 @@ public class MyLabel {
 
         //上传状态
         uploadResult = new JLabel();
-        uploadResult.setPreferredSize(new Dimension(150,20));
+        uploadResult.setPreferredSize(new Dimension(200,20));
         uploadResult.setForeground(Color.RED);
     }
 

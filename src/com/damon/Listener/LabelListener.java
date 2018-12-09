@@ -6,6 +6,7 @@ import com.damon.Util.Config;
 import com.damon.Util.Util;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -54,6 +55,8 @@ public class LabelListener {
 
                             if (path.endsWith("apk")){
                                 MyLabel.upLoadFileName.setText(fileName);
+                                MyLabel.showFile.setForeground(Color.GREEN);
+
                                 Config.scrFilePath = path;
 
                             }else {
