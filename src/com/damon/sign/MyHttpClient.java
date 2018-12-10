@@ -24,8 +24,8 @@ public class MyHttpClient {
     public OkHttpClient.Builder mOkHttpClient(){
 
         //初始化日志拦截器
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new Log());
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new Log());
+//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         //初始化cookiejar
         final Map<String, List<Cookie>> cookieMap = new HashMap<String, List<Cookie>>();

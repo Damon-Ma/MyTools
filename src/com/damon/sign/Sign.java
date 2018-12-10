@@ -171,24 +171,22 @@ public class Sign {
 
     //下载
     public void signDownload(int id){
-        Log.logger.info("开始下载："+id);
+        Log.logger.info(Thread.currentThread().getId()+"开始下载："+id);
+        //拼接URL
         String testUrl = Config.url+Config.signedDownloadUri;
-        int downloadRowNum = com.damon.Util.Config.downloadRowNum;
-        MyTable.signDTM.setValueAt("准备下载...",downloadRowNum,4);
+        int downloadRowNumNow = com.damon.Util.Config.downloadRowNum;
+        MyTable.signDTM.setValueAt("准备下载...",downloadRowNumNow,4);
         final ProgressResponseListener progressResponseListener = new ProgressResponseListener() {
             @Override
             public void onResponseProgress(long bytesRead, long contentLength, boolean done) {
-                if (contentLength > 0 && contentLength < 5000) {
-                    //长度未知的情况下回返回-1
-                    Log.logger.info("cookie可能过期了");
-                }else {
-                    MyTable.signDTM.setValueAt("已下载："+bytesRead/1024+"kb",downloadRowNum,4);
-                    //Log.logger.info("下载："+bytesRead/1024+"kb");
-                    if (done){
-                        Log.logger.info("下载完成！");
-                        Log.logger.info("文件大小："+bytesRead/1024+"kb");
-                        MyTable.signDTM.setValueAt("下载完成！",downloadRowNum,4);
-                    }
+                MyTable.signDTM.setValueAt("已下载："+bytesRead/1024+"kb",
+                        downloadRowNumNow,4);
+            //    Log.logger.info(Thread.currentThread().getId()+"下载："+bytesRead/1024+"kb");
+                if (done){
+                    Log.logger.info(downloadRowNumNow+":下载完成！");
+                    Log.logger.info(downloadRowNumNow+":文件大小："+bytesRead/1024+"kb");
+                    MyTable.signDTM.setValueAt("下载完成！",downloadRowNumNow,4);
+
                 }
             }
         };

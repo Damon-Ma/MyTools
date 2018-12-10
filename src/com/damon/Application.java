@@ -20,8 +20,8 @@ public class Application extends JFrame{
         new MyJProgressBar();
 
         //设置log4j日志输出路径
-        String logPath = Util.getThisPath()+"logs";
-        System.setProperty("log_home",logPath);
+//        String logPath = Util.getThisPath()+"logs";
+//        System.setProperty("log_home",logPath);
 
         //按钮 网格
         JPanel BtJpanel = new JPanel();

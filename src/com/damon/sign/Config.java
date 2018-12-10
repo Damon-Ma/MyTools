@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 public class Config {
     public static OkHttpClient.Builder builder;
     static OkHttpClient httpClient;
-    static CookieJar cookieJar;
+    public static CookieJar cookieJar;
     static ResourceBundle bundle;
     static String url;
     static String loginUri;
