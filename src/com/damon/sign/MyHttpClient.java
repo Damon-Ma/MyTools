@@ -1,9 +1,11 @@
 package com.damon.sign;
 
+import com.damon.Util.Log;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +21,11 @@ import java.util.concurrent.TimeUnit;
  * @Version 1.0
  **/
 public class MyHttpClient {
-    public OkHttpClient mOkHttpClient(){
+    public OkHttpClient.Builder mOkHttpClient(){
+
+        //初始化日志拦截器
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new Log());
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         //初始化cookiejar
         final Map<String, List<Cookie>> cookieMap = new HashMap<String, List<Cookie>>();
@@ -41,15 +47,16 @@ public class MyHttpClient {
         };
 
 
-        //获取HttpClient对象
+        //获取HttpClient.builder对象
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .cookieJar(Config.cookieJar)
+                .addNetworkInterceptor(loggingInterceptor)
                 .connectTimeout(1000,TimeUnit.SECONDS)
                 .readTimeout(1000,TimeUnit.SECONDS)
                 .writeTimeout(1000,TimeUnit.SECONDS);
 
 
-        return builder.build();
+        return builder;
 
     }
 }

@@ -20,11 +20,8 @@ public class ProgressHelper {
      * @return 包装后的OkHttpClient，使用clone方法返回
      */
     public static OkHttpClient addProgressResponseListener(final ProgressResponseListener progressListener){
-        OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                .cookieJar(Config.cookieJar)
-                .connectTimeout(1000,TimeUnit.SECONDS)
-                .readTimeout(1000,TimeUnit.SECONDS)
-                .writeTimeout(1000,TimeUnit.SECONDS);
+
+        OkHttpClient.Builder builder = Config.builder;
 
         builder.networkInterceptors().add(new Interceptor() {
             @Override

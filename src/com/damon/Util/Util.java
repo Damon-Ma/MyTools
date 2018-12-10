@@ -19,6 +19,14 @@ public class Util {
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd_HH_mm_ss");
         return df.format(System.currentTimeMillis());
         }
+
+    //获取时间
+    public static long getLongTime(){
+
+        long time = System.currentTimeMillis();
+        Log.logger.info("时间："+time);
+        return time;
+    }
     //获取安装结果
     public static String getLastLine(String s){
         String[] strings = s.split("\n");

@@ -19,4 +19,6 @@ public class Config {
 
     public static List<Integer> fileIdList;
 
+    public static long loginTime;
+
 }

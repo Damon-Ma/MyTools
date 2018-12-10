@@ -367,6 +367,7 @@ public class CommandThread extends Thread{
     }
     //登陆签名系统
     private void loginSignSys(){
+        Config.loginTime = Util.getLongTime();
         MyLabel.uploadResult.setText("正在登陆...");
         Config.sign = new Sign();
         Boolean signResult = Config.sign.login();
@@ -382,20 +383,21 @@ public class CommandThread extends Thread{
         //fileIdList
         Config.fileIdList = new ArrayList<Integer>();
         int count = MyTable.signDTM.getRowCount();
-        Log.logger.info("共有："+count+"行");
         for (int i=0; i<count;i++){
             MyTable.signDTM.removeRow(0);
         }
 
         if (Config.sign==null){
             MyLabel.uploadResult.setText("请先登陆！");
+        }else if (Util.getLongTime() - Config.loginTime > 1200000) {
+            JOptionPane.showMessageDialog(null,
+                    "登陆过期，请重新登陆！",
+                    "提示",
+                    JOptionPane.WARNING_MESSAGE);
         }else {
             MyLabel.uploadResult.setText("获取列表...");
 
             JSONObject resultJson = Config.sign.getFileList();
-
-            //tisohiyong
-//            JSONObject resultJson = HelloWorld.resultJson();
 
             if (resultJson.size()==1){
                 MyLabel.uploadResult.setText(resultJson.getString("result"));
@@ -414,11 +416,12 @@ public class CommandThread extends Thread{
                     String apkName = apkJson.getString("fileName");
                     //上传时间
                     String uploadTime = apkJson.getString("uploadTimeStr");
-//                    Log.logger.info("id:"+id);
-//                    Log.logger.info("证书类型："+signType);
-//                    Log.logger.info("文件名："+apkName);
-//                    Log.logger.info("上传时间："+uploadTime);
-//                    Log.logger.info("================================");
+
+                    Log.logger.info("id:"+id);
+                    Log.logger.info("证书类型："+signType);
+                    Log.logger.info("文件名："+apkName);
+                    Log.logger.info("上传时间："+uploadTime);
+                    Log.logger.info("================================");
 
                     Config.fileIdList.add(id);
 
@@ -426,7 +429,6 @@ public class CommandThread extends Thread{
                     MyTable.signDTM.addRow(apkMsg);
                     MyLabel.uploadResult.setText("获取成功！");
                 }
-
 
             }else {
                 MyLabel.uploadResult.setText("获取成功，列表为空！");
@@ -436,7 +438,9 @@ public class CommandThread extends Thread{
     }
     //上传
     private void upload(){
-        if (Config.scrFilePath==null){
+        if (Config.sign==null){
+            MyLabel.uploadResult.setText("请先登陆！");
+        }else if (Config.scrFilePath==null){
             JOptionPane.showMessageDialog(null,
                     "请拖入apk文件！",
                     "提示",
@@ -446,9 +450,13 @@ public class CommandThread extends Thread{
                     "请选择证书类型！",
                     "提示",
                     JOptionPane.WARNING_MESSAGE);
+        }else if (Util.getLongTime() - Config.loginTime > 1200000) {
+            JOptionPane.showMessageDialog(null,
+                    "登陆过期，请重新登陆！",
+                    "提示",
+                    JOptionPane.WARNING_MESSAGE);
         }else {
             MyLabel.uploadResult.setText("正在上传...");
-
             Log.logger.info("证书类型："+Config.signType);
             Log.logger.info("文件路径："+Config.scrFilePath);
 
@@ -456,12 +464,7 @@ public class CommandThread extends Thread{
 
             String matchResult = Util.match(uploadResult,"(?<=<font color=\"red\">).*(?= </font>)");
             if (matchResult ==null){
-                if (uploadResult.contains("用户名不能为空")){
-                    MyLabel.uploadResult.setText("登录过期！");
-                }else {
-                    MyLabel.uploadResult.setText("未知异常！");
-                    Log.logger.error(uploadResult);
-                }
+                Log.logger.error("上传结果："+uploadResult);
             }else {
                 matchResult = StringEscapeUtils.unescapeHtml4(matchResult);
                 MyLabel.uploadResult.setText(matchResult);
@@ -477,13 +480,19 @@ public class CommandThread extends Thread{
     }
     //下载签名文件
     private void downloadSignedFile(){
+        if (Util.getLongTime() - Config.loginTime > 1200000) {
+            JOptionPane.showMessageDialog(null,
+                    "登陆过期，请重新登陆！",
+                    "提示",
+                    JOptionPane.WARNING_MESSAGE);
+        }else {
+            int rowNum = Config.downloadRowNum;
+            System.out.println("下载第："+rowNum+"行");
 
-        int rowNum = Config.downloadRowNum;
-        System.out.println("下载第："+rowNum+"行");
-
-        int id = Config.fileIdList.get(rowNum);
-        Config.sign.signDownload(id);
-        cmd.Cmd("start "+Util.getDesktopPath()+"\\签名文件\\");
+            int id = Config.fileIdList.get(rowNum);
+            Config.sign.signDownload(id);
+            cmd.Cmd("start "+Util.getDesktopPath()+"\\签名文件\\");
+        }
 
     }
 }

@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
-Class-Path: libs/log4j-1.2.17.jar libs/okhttp-3.9.1.jar libs/okio-1.13.0.jar libs/fastjson-1.2.51.jar libs/commons-lang3-3.7.jar libs/commons-text-1.6.jar
+Class-Path: libs/log4j-1.2.17.jar libs/okhttp-3.9.1.jar libs/okio-1.13.0.jar libs/logging-interceptor-3.9.1.jar libs/fastjson-1.2.51.jar libs/commons-lang3-3.7.jar libs/commons-text-1.6.jar
 Main-Class: com.damon.Application
 

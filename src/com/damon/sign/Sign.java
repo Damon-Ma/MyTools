@@ -30,7 +30,8 @@ import java.util.ResourceBundle;
  **/
 public class Sign {
     public Sign(){
-        Config.httpClient = new MyHttpClient().mOkHttpClient();
+        Config.builder = new MyHttpClient().mOkHttpClient();
+        Config.httpClient = Config.builder.build();
         Config.bundle = ResourceBundle.getBundle("interfaceMsg",Locale.CHINA);
         Config.url = Config.bundle.getString("url");
 
@@ -67,6 +68,7 @@ public class Sign {
         } catch (IOException e) {
             Log.logger.error(e);
             e.printStackTrace();
+            MyLabel.uploadResult.setText("请求异常！");
             return false;
         }
     }
@@ -99,10 +101,12 @@ public class Sign {
             try {
                  result = JSON.parseObject(resultString);
             }catch (JSONException e){
-                System.out.println(resultString);
                 if (resultString.contains("用户名不能为空")){
                     result = new JSONObject();
                     result.put("result","登陆已过期！");
+                }else {
+                    MyLabel.uploadResult.setText("未知异常！");
+                    Log.logger.error(resultString);
                 }
             }
         } catch (IOException e) {
@@ -160,7 +164,7 @@ public class Sign {
         } catch (IOException e) {
             e.printStackTrace();
             Log.logger.error(e);
-            return "上传失败";
+            return "签名失败";
         }
 
     }
@@ -174,15 +178,17 @@ public class Sign {
         final ProgressResponseListener progressResponseListener = new ProgressResponseListener() {
             @Override
             public void onResponseProgress(long bytesRead, long contentLength, boolean done) {
-                if (contentLength != -1) {
+                if (contentLength > 0 && contentLength < 5000) {
                     //长度未知的情况下回返回-1
-                    Log.logger.info("下载："+(100 * bytesRead) / contentLength + "% done");
-                }
-                MyTable.signDTM.setValueAt("已下载："+bytesRead/1024+"kb",downloadRowNum,4);
-                Log.logger.info("下载："+bytesRead/1024+"kb");
-                if (done){
-                    Log.logger.info("下载完成！");
-                    MyTable.signDTM.setValueAt("下载完成！",downloadRowNum,4);
+                    Log.logger.info("cookie可能过期了");
+                }else {
+                    MyTable.signDTM.setValueAt("已下载："+bytesRead/1024+"kb",downloadRowNum,4);
+                    //Log.logger.info("下载："+bytesRead/1024+"kb");
+                    if (done){
+                        Log.logger.info("下载完成！");
+                        Log.logger.info("文件大小："+bytesRead/1024+"kb");
+                        MyTable.signDTM.setValueAt("下载完成！",downloadRowNum,4);
+                    }
                 }
             }
         };
@@ -215,19 +221,20 @@ public class Sign {
                 fos.close();
                 is.close();
             }catch (IndexOutOfBoundsException e){
-                if (response.body().string().contains("用户名不能为空")){
+                String result = response.body().string();
+                if (result.contains("用户名不能为空")){
                     MyLabel.uploadResult.setText("登录过期！");
                 }else {
                     MyLabel.uploadResult.setText("未知异常！");
-                    Log.logger.error(response.body().string());
+                    Log.logger.error(result);
                 }
             }
 
-
-
         } catch (IOException e) {
             Log.logger.error(e);
+            MyLabel.uploadResult.setText("请求异常！");
             e.printStackTrace();
+
         }
 
 
