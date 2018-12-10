@@ -50,7 +50,7 @@ public class MyHttpClient {
         //获取HttpClient.builder对象
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .cookieJar(Config.cookieJar)
-                .addNetworkInterceptor(loggingInterceptor)
+       //         .addNetworkInterceptor(loggingInterceptor)    //上传监控和日志拦截器冲突，屏蔽！
                 .connectTimeout(1000,TimeUnit.SECONDS)
                 .readTimeout(1000,TimeUnit.SECONDS)
                 .writeTimeout(1000,TimeUnit.SECONDS);

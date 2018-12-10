@@ -33,8 +33,8 @@ public class Sign {
         Config.builder = new MyHttpClient().mOkHttpClient();
         Config.httpClient = Config.builder.build();
         Config.bundle = ResourceBundle.getBundle("interfaceMsg",Locale.CHINA);
-        Config.url = Config.bundle.getString("url");
 
+        Config.url = Config.bundle.getString("url");
         Config.getFileUri = Config.bundle.getString("getList.uri");
         Config.loginUri = Config.bundle.getString("login.uri");
         Config.signedDownloadUri = Config.bundle.getString("signedDownload.uri");

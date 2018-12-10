@@ -39,6 +39,7 @@ public class MyComboBox {
 
 
         signType = new JComboBox();
+        //证书类型
         signType.addItem("---请选择---");
         signType.addItem("I9000");
         signType.addItem("NEW_V2_POS");
