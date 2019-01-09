@@ -31,48 +31,68 @@ public class CommandThread extends Thread {
 
     @Override
     public void run() {
-        if (name == Keys.DEVICES || name == Keys.SP_DEVICES) {
-            this.devices();
-        } else if (name == Keys.KILL_SERVER) {
-            this.killServer();
-        } else if (name == Keys.LOGCAT) {
-            this.logcat();
-        } else if (name == Keys.CLEAN_LOG) {
-            this.cleanLog();
-        } else if (name == Keys.INSTALL) {
-            this.tableInstall();
-        } else if (name == Keys.PACKAGE) {
-            this.getpackage();
-        } else if (name == Keys.SEND) {
-            this.sendText();
-        } else if (name == Keys.RECOVERY) {
-            this.recovery();
-        } else if (name == Keys.MAIN_ACTIVITY) {
-            this.toHome();
-        } else if (name == Keys.IS_SIDELOAD) {
-            this.isSideload();
-        } else if (name == Keys.SIDELOAD) {
-            this.sideload();
-        } else if (name == Keys.SIGN_TO_NOSIGN) {
-            this.signToNosign();
-            //this.monitor();
-        } else if (name == Keys.NOSIGN_TO_SIGN) {
-            this.nosignToSign();
-            //this.shell();
-        } else if (name == Keys.SCREEN) {
-            this.screen();
-        } else if (name == Keys.INSTALL_CELL_APK) {
-            this.installCellAKP();
-        } else if (name == Keys.SIGN_LOGIN) {
-            this.loginSignSys();
-        } else if (name == Keys.GET_APK_LIST) {
-            this.getAPKList();
-        } else if (name == Keys.UPLOAD_APK) {
-            this.upload();
-        } else if (name == Keys.DOWNLOAD_SIGNED_APK) {
-            this.downloadSignedFile();
-        }else if (name == Keys.FASTBOOT){
-            this.fastboot();
+        switch (name){
+            case DEVICES:
+            case SP_DEVICES:
+                this.devices();
+                break;
+            case KILL_SERVER:
+                this.killServer();
+                break;
+            case LOGCAT:
+                this.logcat();
+                break;
+            case CLEAN_LOG:
+                this.cleanLog();
+                break;
+            case INSTALL:
+                this.tableInstall();
+                break;
+            case PACKAGE:
+                this.getpackage();
+                break;
+            case SEND:
+                this.sendText();
+                break;
+            case RECOVERY:
+                this.recovery();
+                break;
+            case MAIN_ACTIVITY:
+                this.toHome();
+                break;
+            case IS_SIDELOAD:
+                this.isSideload();
+                break;
+            case SIDELOAD:
+                this.sideload();
+                break;
+            case SIGN_TO_NOSIGN:
+                this.signToNosign();
+                break;
+            case NOSIGN_TO_SIGN:
+                this.nosignToSign();
+                break;
+            case SCREEN:
+                this.screen();
+                break;
+            case INSTALL_CELL_APK:
+                this.installCellAKP();
+                break;
+            case SIGN_LOGIN:
+                this.loginSignSys();
+                break;
+            case GET_APK_LIST:
+                this.getAPKList();
+                break;
+            case UPLOAD_APK:
+                this.upload();
+                break;
+            case DOWNLOAD_SIGNED_APK:
+                this.downloadSignedFile();
+                break;
+            case FASTBOOT:
+                this.fastboot();
+                break;
         }
     }
 
@@ -529,7 +549,9 @@ public class CommandThread extends Thread {
         this.unlock(2);
 
     }
+
     //解锁
+
     private void unlock(int i){
         Process p = cmd.Cmd("fastboot devices");
         String devicesResult = cmd.getResult(p);
@@ -567,9 +589,8 @@ public class CommandThread extends Thread {
         }else {
             MyTextArea.setOutText("请检查是否连接或设备是否进入fastboot模式");
         }
-
-
     }
+
     //fastboot
     private void fastboot(){
 
