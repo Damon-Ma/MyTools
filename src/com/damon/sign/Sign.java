@@ -129,7 +129,7 @@ public class Sign {
             public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
 //                Log.logger.info("bytesWrite:" + bytesWritten);
 //                Log.logger.info("contentLength" + contentLength);
-                Log.logger.info("上传："+(100 * bytesWritten) / contentLength + " % done ");
+//                Log.logger.info("上传："+(100 * bytesWritten) / contentLength + " % done ");
 //                Log.logger.info("done:" + done);
 //                Log.logger.info("================================");
                 MyJProgressBar.setUploadProgress((int)((100 * bytesWritten)/contentLength));
