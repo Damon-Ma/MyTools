@@ -94,13 +94,15 @@ public class ButtonListener implements ActionListener {
                 CommandThread isSideload = new CommandThread(Keys.IS_SIDELOAD);
                 isSideload.start();
                 break;
-            case "adb shell":
-                CommandThread shell = new CommandThread(Keys.SHELL);
-                shell.start();
+            case "签名转非签":
+                CommandThread signToNosign = new CommandThread(Keys.SIGN_TO_NOSIGN);
+                signToNosign.start();
+                //shell.start();
                 break;
-            case "monitor":
-                CommandThread monitor = new CommandThread(Keys.DDMS);
-                monitor.start();
+            case "非签转签名":
+                CommandThread nosignToSign = new CommandThread(Keys.NOSIGN_TO_SIGN);
+                nosignToSign.start();
+                //monitor.start();
                 break;
             case "截图":
                 MyTabbedPane.jTabbedpane.setSelectedIndex(0);
@@ -126,6 +128,10 @@ public class ButtonListener implements ActionListener {
             case "刷新文件列表":
                 CommandThread getAPKList = new CommandThread(Keys.GET_APK_LIST);
                 getAPKList.start();
+                break;
+            case "fastboot模式":
+                CommandThread fastboot = new CommandThread(Keys.FASTBOOT);
+                fastboot.start();
                 break;
         }
     }

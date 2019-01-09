@@ -20,8 +20,8 @@ public class Application extends JFrame{
         new MyJProgressBar();
 
         //设置log4j日志输出路径
-//        String logPath = Util.getThisPath()+"logs";
-//        System.setProperty("log_home",logPath);
+        String logPath = Util.getThisPath()+"logs";
+        System.setProperty("log_home",logPath);
 
         //按钮 网格
         JPanel BtJpanel = new JPanel();
@@ -50,15 +50,16 @@ public class Application extends JFrame{
 
         Bt3.add(MyButton.toHome);
         Bt3.add(MyButton.isSideload);
-        Bt3.add(MyButton.monitor);
-        Bt3.add(MyButton.shell);
+        Bt3.add(MyButton.signToNosign);
+        Bt3.add(MyButton.nosignToSign);
 
         Bt4 = new JPanel();
-        Bt4.setLayout(new GridLayout(3,1,5,5));
+        Bt4.setLayout(new GridLayout(4,1,5,5));
 
         Bt4.add(MyButton.installBt);
         Bt4.add(MyButton.screen);
         Bt4.add(MyButton.sideloadBt);
+        Bt4.add(MyButton.fastbootBt);
 
         Bt5 = new JPanel();
         Bt5.setLayout(new GridLayout(4,1,5,5));

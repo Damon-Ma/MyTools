@@ -6,8 +6,8 @@ import javax.swing.*;
 
 public class MyButton {
     public static JButton devicesBt,killBt,specialBt,logcatBt,recoveryBt,packageBt,
-            installBt,sendBt,cleanLogBt,sideloadBt,cleanOutBt,cleanInputBt,toHome,isSideload,monitor,shell,screen,
-            signInBt,uploadBt,getFileListBt;
+            installBt,sendBt,cleanLogBt,sideloadBt,cleanOutBt,cleanInputBt,toHome,isSideload,signToNosign,nosignToSign,screen,
+            signInBt,uploadBt,getFileListBt,fastbootBt;
     public MyButton(){
         ButtonListener listener = new ButtonListener();
 
@@ -25,12 +25,13 @@ public class MyButton {
         cleanInputBt = new JButton("清空");
         toHome = new JButton("返回主界面");
         isSideload = new JButton("检查sideload");
-        shell = new JButton("adb shell");
-        monitor = new JButton("monitor");
+        signToNosign = new JButton("签名转非签");
+        nosignToSign = new JButton("非签转签名");
         screen = new JButton("截图");
         signInBt = new JButton("登录");
         uploadBt = new JButton("上传");
         getFileListBt = new JButton("刷新文件列表");
+        fastbootBt = new JButton("fastboot模式");
 
         listener.BtListener(devicesBt);
         listener.BtListener(killBt);
@@ -46,11 +47,12 @@ public class MyButton {
         listener.BtListener(cleanInputBt);
         listener.BtListener(toHome);
         listener.BtListener(isSideload);
-        listener.BtListener(shell);
-        listener.BtListener(monitor);
+        listener.BtListener(signToNosign);
+        listener.BtListener(nosignToSign);
         listener.BtListener(screen);
         listener.BtListener(signInBt);
         listener.BtListener(uploadBt);
         listener.BtListener(getFileListBt);
+        listener.BtListener(fastbootBt);
     }
 }

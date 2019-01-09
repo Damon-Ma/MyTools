@@ -18,15 +18,16 @@ public enum  Keys {
     APK_VERSION("appVersion"),
     MAIN_ACTIVITY("toHome"),
     IS_SIDELOAD("isSideload"),
-    DDMS("monitor"),
-    SHELL("shell"),
+    NOSIGN_TO_SIGN(""),
+    SIGN_TO_NOSIGN(""),
     SCREEN("screen"),
     INSTALL_CELL_APK("installCellAKP"),
     SIGN_LOGIN(""),
     GET_APK_LIST(""),
     UPLOAD_APK(""),
     DOWNLOAD_SRC_APK(""),
-    DOWNLOAD_SIGNED_APK("");
+    DOWNLOAD_SIGNED_APK(""),
+    FASTBOOT("");
 
     private final String name;
 
