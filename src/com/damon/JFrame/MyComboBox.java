@@ -28,10 +28,14 @@ public class MyComboBox {
                 case ItemEvent.SELECTED:
                     choose = String.valueOf(e.getItem());
                     if (choose != null) {
-                        choose = choose.split("、")[1];
+                        try {
+                            choose = choose.split("、")[1];
+                            getDeviceMsg();
+                            break;
+                        }catch (IndexOutOfBoundsException expect){
+                            break;
+                        }
                     }
-                    getDeviceMsg();
-                    break;
                 case ItemEvent.DESELECTED:
                     break;
             }

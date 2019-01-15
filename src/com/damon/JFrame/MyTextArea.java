@@ -12,6 +12,8 @@ public class MyTextArea {
         textArea = new MJTextArea();
         textArea.setEditable(false);
         textArea.setFont(new Font("Dialog", Font.PLAIN,12));
+        textArea.setForeground(Color.WHITE);
+        textArea.setBackground(new Color(1,36,86));
         textArea.setLineWrap(true);        //激活自动换行功能
         textArea.setWrapStyleWord(true);   // 激活断行不断字功能
         TextAreaListener listener = new TextAreaListener();

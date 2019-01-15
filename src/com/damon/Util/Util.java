@@ -135,15 +135,18 @@ public class Util {
     }
     //获取当前class路径
     public static String getThisPath(){
-        String s =  Objects.requireNonNull(Util.class.getClassLoader().getResource("1.jpg")).getPath();
-        //s=  file:/C:/Users/Malik/Desktop/MyTools.jar!/1.jpg
-        s = s.split("file:/")[1].split("MyTools.jar!")[0];
-        //将/换成\
-        s = s.replace("/","\\");
-        //路径中有空格时，因为获取到的是url，所以空格显示的是%20，把空格换成空格
-        s = s.replace("%20"," ");
-
-        return s;
+        try {
+            String s =  Objects.requireNonNull(Util.class.getClassLoader().getResource("1.jpg")).getPath();
+            //s=  file:/C:/Users/Malik/Desktop/MyTools.jar!/1.jpg
+            s = s.split("file:/")[1].split("MyTools.jar!")[0];
+            //将/换成\
+            s = s.replace("/","\\");
+            //路径中有空格时，因为获取到的是url，所以空格显示的是%20，把空格换成空格
+            s = s.replace("%20"," ");
+            return s;
+        }catch (ArrayIndexOutOfBoundsException e){
+            return "";
+        }
     }
     //获取当前OS版本
     public static String getOS(String getChoose) {
