@@ -65,7 +65,11 @@ public class CMD {
                 (new InputStreamReader(p.getErrorStream()));
         try {
             while ((errorLine = errorBufferedReader.readLine()) != null) {
-                errorResult = errorLine.trim();
+                if (errorResult != null){
+                    errorResult = errorResult +"\n\t"+ errorLine.trim();
+                }else {
+                    errorResult = "\n\t"+errorLine.trim();
+                }
             }
         }catch (IOException e){
             Log.logger.error(e);

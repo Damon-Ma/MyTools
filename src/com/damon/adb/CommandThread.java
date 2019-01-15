@@ -554,32 +554,56 @@ public class CommandThread extends Thread {
 
     private void unlock(int i){
         Process p = cmd.Cmd("fastboot devices");
+        MyTextArea.setOutText("执行：fastboot devices");
         String devicesResult = cmd.getResult(p);
+        MyTextArea.setOutText("结果：" + devicesResult);
         if (devicesResult != null){
+
+            System.out.printf(devicesResult);
+            String devicesName = devicesResult.split("fastboot")[0];
+            //设置下拉框
+            MyComboBox.rmItem();
+            MyComboBox.addItem("解锁模式...");
+
+
             //i=1  签名转非签   i=2 非签转签名
-            Process p1 = cmd.Cmd("fastboot oem unlock "+ Util.getCommand("unlockPwd"));
-            String unlockResult = cmd.getResult(p1);
-            MyTextArea.setOutText(unlockResult);
-            if (unlockResult.contains("OKEY")) {
+            String unlock = "fastboot oem unlock "+ Util.getCommand("unlockPwd");
+            MyTextArea.setOutText("执行："+unlock);
+            Process p1 = cmd.Cmd(unlock);
+
+            String errorResult = cmd.getErrorResult(p1);
+            MyTextArea.setOutText("结果："+errorResult);
+
+            if (errorResult.contains("OKAY")&&!errorResult.contains("FAILED")) {
                 Process p2 = null;
+                String flashComm = "";
                 if (i == 1) {
-                    p2 = cmd.Cmd("fastboot flash recovery " + "\"" + Util.getThisPath() + "libs\\signtonosign.img\"");
+                    flashComm = "fastboot flash recovery " + "\"" + Util.getThisPath() + "libs\\signtonosign.img\"";
                 } else if (i == 2) {
-                    p2 = cmd.Cmd("fastboot flash recovery " + "\"" + Util.getThisPath() + "libs\\nosigntosign.img\"");
+                    flashComm = "fastboot flash recovery " + "\"" + Util.getThisPath() + "libs\\nosigntosign.img\"";
                 }
-                String flashResult = cmd.getResult(p2);
-                MyTextArea.setOutText(flashResult);
-                if (flashResult.contains("OKEY")) {
+                MyTextArea.setOutText("执行："+flashComm);
+                p2 = cmd.Cmd(flashComm);
+                String flashResult = cmd.getErrorResult(p2);
+                MyTextArea.setOutText("结果："+flashResult);
+
+                if (flashResult.contains("OKAY")&&!errorResult.contains("FAILED")) {
+//                    MyTextArea.setOutText("解锁完成，请断开电源手动进入recovery模式。。");
+                    MyTextArea.setOutText("解锁完成，重启自动进入recovery模式，请稍等...");
+
                     Process p3 = cmd.Cmd("fastboot reboot");
                     String rebootResult = cmd.getResult(p3);
-                    MyTextArea.setOutText("解锁完成，重启中。。");
-
                     String recoveryResult = "";
                     do {
-                        Process p4 = cmd.Cmd(" adb reboot recovery");
+                        Process p4 = cmd.Cmd(" adb devices");
                         recoveryResult = cmd.getResult(p4);
-                    }while (recoveryResult.contains("device not found"));
+                        if (recoveryResult == null){
+                            recoveryResult = "";
+                        }
+                    }while (!recoveryResult.contains(devicesName));
 
+                    Process p5 = cmd.Cmd("adb -s "+devicesName+" reboot recovery");
+                    String re = cmd.getResult(p5);
                 } else {
                     MyTextArea.setOutText("解锁失败，请检查！");
                 }
@@ -597,7 +621,7 @@ public class CommandThread extends Thread {
         if (cmd.isConnect()) {
             //弹出提示框，返回的是按钮的index i=0或者1
             int n = JOptionPane.showConfirmDialog(null,
-                    "确认进入recovery模式?",
+                    "确认进入fastboot模式?",
                     "提示", JOptionPane.YES_NO_OPTION);
             if (n == 0) {
                 Process p = cmd.Cmd("adb -s " + MyComboBox.choose+ " reboot bootloader");
