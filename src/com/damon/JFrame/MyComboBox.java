@@ -41,12 +41,13 @@ public class MyComboBox {
             }
         });
 
-
         signType = new JComboBox();
         //证书类型
         signType.addItem("---请选择---");
-        signType.addItem("I9000");
-        signType.addItem("NEW_V2_POS");
+        String signTypes = Util.getCommand("signType");
+        for (String type : signTypes.split(",")){
+            signType.addItem(type);
+        }
         signType.addItemListener(e -> {
             switch (e.getStateChange()) {
                 case ItemEvent.SELECTED:

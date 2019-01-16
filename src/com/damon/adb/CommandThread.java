@@ -437,7 +437,6 @@ public class CommandThread extends Thread {
                     JOptionPane.WARNING_MESSAGE);
         } else {
             MyLabel.uploadResult.setText("获取列表...");
-
             JSONObject resultJson = Config.sign.getFileList();
 
             if (resultJson.size() == 1) {
@@ -445,30 +444,34 @@ public class CommandThread extends Thread {
             } else if (resultJson.size() == 2) {
                 //获取apk的jsonarray
                 JSONArray apkList = resultJson.getJSONArray("rows");
-                for (int i = 0; i < apkList.size(); i++) {
-                    //获取单个apk的json对象
-                    JSONObject apkJson = apkList.getJSONObject(i);
+                if (apkList.size() == 0){
+                    MyLabel.uploadResult.setText("获取成功，列表为空！");
+                }else {
+                    for (int i = 0; i < apkList.size(); i++) {
+                        //获取单个apk的json对象
+                        JSONObject apkJson = apkList.getJSONObject(i);
+                        //id
+                        int id = (int) apkJson.get("id");
+                        //证书类型
+                        String signType = apkJson.getString("certificate");
+                        //文件名
+                        String apkName = apkJson.getString("fileName");
+                        //上传时间
+                        String uploadTime = apkJson.getString("uploadTimeStr");
 
-                    //id
-                    int id = (int) apkJson.get("id");
-                    //证书类型
-                    String signType = apkJson.getString("certificate");
-                    //文件名
-                    String apkName = apkJson.getString("fileName");
-                    //上传时间
-                    String uploadTime = apkJson.getString("uploadTimeStr");
+                        Log.logger.info("id:" + id);
+                        Log.logger.info("证书类型：" + signType);
+                        Log.logger.info("文件名：" + apkName);
+                        Log.logger.info("上传时间：" + uploadTime);
+                        Log.logger.info("================================");
 
-                    Log.logger.info("id:" + id);
-                    Log.logger.info("证书类型：" + signType);
-                    Log.logger.info("文件名：" + apkName);
-                    Log.logger.info("上传时间：" + uploadTime);
-                    Log.logger.info("================================");
+                        Config.fileIdList.add(id);
 
-                    Config.fileIdList.add(id);
+                        Object[] apkMsg = {apkName, uploadTime, signType, "下载签名文件"};
+                        MyTable.signDTM.addRow(apkMsg);
+                        MyLabel.uploadResult.setText("获取成功！");
+                    }
 
-                    Object[] apkMsg = {apkName, uploadTime, signType, "下载签名文件"};
-                    MyTable.signDTM.addRow(apkMsg);
-                    MyLabel.uploadResult.setText("获取成功！");
                 }
 
             } else {

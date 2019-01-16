@@ -98,6 +98,7 @@ public class Sign {
             Log.logger.info("获取apk列表...");
             Response response = Config.httpClient.newCall(request).execute();
             String resultString = response.body().string();
+            Log.logger.info("获取结果："+resultString);
             try {
                  result = JSON.parseObject(resultString);
             }catch (JSONException e){
