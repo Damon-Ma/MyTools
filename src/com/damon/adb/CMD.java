@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 public class CMD {
 
@@ -25,8 +26,13 @@ public class CMD {
     }
     //获取结果
     public String getResult(Process p) {
-        BufferedReader bufferedReader = new BufferedReader
-                (new InputStreamReader(p.getInputStream()));
+        BufferedReader bufferedReader = null;
+        try {
+            bufferedReader = new BufferedReader
+                    (new InputStreamReader(p.getInputStream(),"GBK"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         String line;
         String result = null;
         try {
@@ -46,23 +52,40 @@ public class CMD {
     }
     //打印实时结果
     public void printRealResult(Process p) {
-        BufferedReader bufferedReader = new BufferedReader
-                (new InputStreamReader(p.getInputStream()));
+        BufferedReader bufferedReader = null;
+        try {
+            bufferedReader = new BufferedReader
+                    (new InputStreamReader(p.getInputStream(),"GBK"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         String line;
+        //对于4.3版本，重复显示修复
+        String tmp = "";
         try {
             while ((line = bufferedReader.readLine()) != null){
-                MyTextArea.setOutText(line.trim());
+                if (!line.trim().equals(tmp)){
+                    MyTextArea.setOutText(line.trim());
+                    Log.logger.info(line.trim());
+                    tmp = line.trim();
+                }
             }
         }catch (IOException e){
             Log.logger.error(e);
         }
+
     }
     //获取异常结果
     public String getErrorResult(Process p){
         String errorLine;
         String errorResult = null;
-        BufferedReader	errorBufferedReader = new BufferedReader
-                (new InputStreamReader(p.getErrorStream()));
+        BufferedReader	errorBufferedReader = null;
+        try {
+            errorBufferedReader = new BufferedReader
+                    (new InputStreamReader(p.getErrorStream(),"GBK"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         try {
             while ((errorLine = errorBufferedReader.readLine()) != null) {
                 if (errorResult != null){

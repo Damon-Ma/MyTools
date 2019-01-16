@@ -40,7 +40,6 @@ public class MyComboBox {
                     break;
             }
         });
-
         signType = new JComboBox();
         //证书类型
         signType.addItem("---请选择---");
@@ -57,13 +56,10 @@ public class MyComboBox {
                     break;
                 case ItemEvent.DESELECTED:
                     break;
-
             }
         });
 
     }
-
-
     private String getChoose(){
         return choose;
     }
@@ -81,26 +77,27 @@ public class MyComboBox {
         //获取设备型号
 
         String modle = Util.getMode(this.getChoose());
-
+        MyTextArea.setOutText("=========================================================");
+        MyTextArea.setOutText("设备已连接，当前选择设备："+MyComboBox.choose);
         MyTextArea.setOutText("=========================================================");
         if (modle==null||modle.equals("")){
-            MyTextArea.setOutText("获取设备型号错误："+modle);
+            MyTextArea.setOutText("获取设备型号失败！");
         }else {
             MyTextArea.setOutText("设备型号："+modle);
         }
 
         //获取OS版本
         String osVersion = Util.getOS(this.getChoose());
-        if (osVersion.equals("")){
-            MyTextArea.setOutText("获取系统版本错误："+osVersion);
+        if (osVersion==null||osVersion.equals("")){
+            MyTextArea.setOutText("获取系统版本失败！");
         }else {
             MyTextArea.setOutText("系统版本："+osVersion);
         }
 
         //获取SN号
         String snNum = Util.getSnNum(this.getChoose());
-        if (snNum.equals("")){
-            MyTextArea.setOutText("获取设备SN号错误："+snNum);
+        if (snNum==null||snNum.equals("")){
+            MyTextArea.setOutText("获取设备SN号失败！");
         }else {
             MyTextArea.setOutText("SN："+snNum);
             String tusn = Util.getTusnNum(this.getChoose());
