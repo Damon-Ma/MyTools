@@ -12,6 +12,7 @@ import org.apache.commons.text.StringEscapeUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -103,6 +104,12 @@ public class CommandThread extends Thread {
             MyTextArea.setOutText("正在截图...");
             //截图文件路径
             String path = Util.getDesktopPath() + "\\Screenshots";
+            //创建截图保存路径
+            File file = new File(path);
+            if (!file.exists()){
+                file.mkdir();
+            }
+
             //日期
             String date = Util.getDate();
             //文件名
@@ -111,8 +118,6 @@ public class CommandThread extends Thread {
             String sdPath = "/sdcard/" + screenName;
             //文件保存路径
             String screenPath = path + "\\" + screenName;
-            publicP = cmd.Cmd("mkdir " + path);
-            cmd.getResult(publicP);
             publicP = cmd.Cmd("adb -s " + MyComboBox.choose + " " + Util.getCommand(name.getName()) + sdPath);
             cmd.getResult(publicP);
             publicP = cmd.Cmd("adb -s " + MyComboBox.choose + " pull " + sdPath + " " + path);
@@ -162,9 +167,11 @@ public class CommandThread extends Thread {
             MyTextArea.setOutText("正在抓取日志...");
             //日志文件路径
             String path = Util.getDesktopPath() + "\\logcat";
+            File file = new File(path);
+            if (!file.exists()){
+                file.mkdir();
+            }
             String filePath = path + "\\logcat" + Util.getDate() + ".txt";
-            publicP = cmd.Cmd("mkdir " + path);
-            cmd.getResult(publicP);
             publicP = cmd.Cmd("adb -s " + MyComboBox.choose + " " + Util.getCommand(name.getName()) + filePath);
             cmd.getResult(publicP);
             MyTextArea.setOutText("抓取成功：" + filePath);

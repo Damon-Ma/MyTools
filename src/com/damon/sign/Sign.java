@@ -252,6 +252,9 @@ public class Sign {
         String desktopPath = Util.getDesktopPath();
         String path = desktopPath + "\\签名文件\\";
         File file = new File(path);
+        if(!file.exists()){
+            file.mkdirs();
+        }
         return path;
     }
 
