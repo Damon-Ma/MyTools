@@ -6,7 +6,8 @@ import javax.swing.*;
 
 public class MyButton {
     public static JButton devicesBt,killBt,specialBt,logcatBt,recoveryBt,packageBt,
-            installBt,sendBt,cleanLogBt,sideloadBt,cleanOutBt,cleanInputBt,toHome,isSideload,signToNosign,nosignToSign,screen,
+            installBt,sendBt,cleanLogBt,sideloadBt,cleanOutBt,cleanInputBt,toHome,
+            isSideload,signToNosign,nosignToSign,screen,
             signInBt,uploadBt,getFileListBt,fastbootBt;
     public MyButton(){
         ButtonListener listener = new ButtonListener();

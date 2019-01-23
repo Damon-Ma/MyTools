@@ -7,7 +7,6 @@ import java.awt.*;
 
 public class MyTextArea {
     public static JTextArea textArea ;
-
     public MyTextArea(){
         textArea = new MJTextArea();
         textArea.setEditable(false);

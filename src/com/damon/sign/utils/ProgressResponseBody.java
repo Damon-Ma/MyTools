@@ -27,8 +27,7 @@ public class ProgressResponseBody extends ResponseBody {
         this.responseBody = responseBody;
         this.progressListener = progressListener;
     }
- 
- 
+
     /**
      * 重写调用实际的响应体的contentType
      * @return MediaType

@@ -6,7 +6,6 @@ import com.damon.Util.Util;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
 /**
  * 下拉选项框，添加监听，并获取到所选选项
@@ -105,5 +104,4 @@ public class MyComboBox {
         }
         MyTextArea.setOutText("=========================================================");
     }
-
 }

@@ -176,7 +176,6 @@ public class MyTable{
             }
         };
     }
-
 }
 //重写CellEditor
 class ButtonEditor extends DefaultCellEditor {
@@ -226,7 +225,6 @@ class ButtonEditor extends DefaultCellEditor {
             //
             CommandThread download = new CommandThread(Keys.DOWNLOAD_SIGNED_APK);
             download.start();
-
 
 //             JOptionPane.showMessageDialog(button, label + ": Ouch!");
 //             System.out.println(label + ": Ouch!");

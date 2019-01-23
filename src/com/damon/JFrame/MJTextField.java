@@ -111,5 +111,4 @@ public class MJTextField extends JTextField implements MouseListener {
 
     public void mouseReleased(MouseEvent e) {
     }
-
 }

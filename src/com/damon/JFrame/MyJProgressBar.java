@@ -35,13 +35,13 @@ public class MyJProgressBar {
         uploadProgressBar.setMaximum(100);
     }
 
-    private void setDownloadProgressBar() {
-        downloadProgressBar.setOrientation(JProgressBar.HORIZONTAL);
-        downloadProgressBar.setStringPainted(true);
-        downloadProgressBar.setSize(500, 100);
-        downloadProgressBar.setMinimum(0);
-        downloadProgressBar.setMaximum(100);
-    }
+//    private void setDownloadProgressBar() {
+//        downloadProgressBar.setOrientation(JProgressBar.HORIZONTAL);
+//        downloadProgressBar.setStringPainted(true);
+//        downloadProgressBar.setSize(500, 100);
+//        downloadProgressBar.setMinimum(0);
+//        downloadProgressBar.setMaximum(100);
+//    }
 
     public static void setUploadProgress(int n){
        uploadProgressBar.setValue(n);

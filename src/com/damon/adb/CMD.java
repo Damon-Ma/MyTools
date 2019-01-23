@@ -29,7 +29,7 @@ public class CMD {
         BufferedReader bufferedReader = null;
         try {
             bufferedReader = new BufferedReader
-                    (new InputStreamReader(p.getInputStream(),"GBK"));
+                    (new InputStreamReader(p.getInputStream(),"utf-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -82,7 +82,7 @@ public class CMD {
         BufferedReader	errorBufferedReader = null;
         try {
             errorBufferedReader = new BufferedReader
-                    (new InputStreamReader(p.getErrorStream(),"GBK"));
+                    (new InputStreamReader(p.getErrorStream(),"utf-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

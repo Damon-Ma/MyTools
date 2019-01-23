@@ -30,12 +30,10 @@ public enum  Keys {
     FASTBOOT("");
 
     private final String name;
-
     private Keys(String name)
     {
         this.name = name;
     }
-
     public String getName() {
         return name;
     }

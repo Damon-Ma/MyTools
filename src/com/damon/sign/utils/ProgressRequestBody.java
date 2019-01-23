@@ -15,6 +15,7 @@ public  class ProgressRequestBody extends RequestBody {
     private final RequestBody requestBody;
     //进度回调接口
     private final ProgressRequestListener progressListener;
+
     //包装完成的BufferedSink
     private BufferedSink bufferedSink;
  

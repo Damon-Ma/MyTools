@@ -20,8 +20,6 @@ public class TableListener {
     private String fileName;
 
     public void OutputLabelListener(JTable table){
-
-
         //输出台拖拽监听
         DropTarget dt = new DropTarget(table,new DropTargetListener() {
             @Override

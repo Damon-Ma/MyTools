@@ -228,6 +228,4 @@ public class Util {
         }
         return connectDevice.toArray();
     }
-
-
 }

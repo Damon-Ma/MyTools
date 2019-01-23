@@ -11,14 +11,10 @@ public class Config {
     public static String cellVal;
     public static String OSPath;
     public static Sign sign;
-
     public static int downloadRowNum;
-
     public static String signType;
     public static String scrFilePath;
-
     public static List<Integer> fileIdList;
-
     public static long loginTime;
 
 }

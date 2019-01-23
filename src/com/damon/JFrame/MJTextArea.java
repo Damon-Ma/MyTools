@@ -68,5 +68,4 @@ public class MJTextArea extends JTextArea implements MouseListener {
 
     public void mouseReleased(MouseEvent e) {
     }
-
 }

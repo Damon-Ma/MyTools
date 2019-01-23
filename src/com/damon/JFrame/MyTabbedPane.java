@@ -26,7 +26,6 @@ public class MyTabbedPane  extends JPanel {
         jTabbedpane.addTab("签名", null, jPanelThird, "");// 加入第san个页面
         jTabbedpane.setMnemonicAt(2, KeyEvent.VK_2);// 设置快捷键为1
 
-
         setLayout(new GridLayout(1, 1));
         add(jTabbedpane);
     }

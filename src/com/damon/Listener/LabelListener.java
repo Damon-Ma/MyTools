@@ -65,7 +65,6 @@ public class LabelListener {
                                         "提示",
                                         JOptionPane.WARNING_MESSAGE);
                             }
-
                         }
                         dtde.dropComplete(true);
 

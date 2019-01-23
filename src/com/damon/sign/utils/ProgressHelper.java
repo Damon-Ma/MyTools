@@ -21,7 +21,6 @@ public class ProgressHelper {
      */
     public static OkHttpClient addProgressResponseListener(final ProgressResponseListener progressListener){
 
-//        OkHttpClient.Builder builder = Config.builder;
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .cookieJar(Config.cookieJar)
                 .connectTimeout(1000,TimeUnit.SECONDS)

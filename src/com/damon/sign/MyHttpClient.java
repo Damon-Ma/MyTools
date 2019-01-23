@@ -46,7 +46,6 @@ public class MyHttpClient {
             }
         };
 
-
         //获取HttpClient.builder对象
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .cookieJar(Config.cookieJar)

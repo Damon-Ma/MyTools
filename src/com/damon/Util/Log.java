@@ -11,7 +11,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
  * @Version 1.0
  **/
 public class Log {
-
     public static Logger logger = Logger.getLogger("");
 
 //    @Override

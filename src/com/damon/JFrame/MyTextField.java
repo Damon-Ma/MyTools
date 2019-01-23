@@ -11,6 +11,7 @@ public class MyTextField {
     public static String getInputText(){
         return MyTextField.inputText.getText();
     }
+
     //清空输入框
     public static void cleanInputBox(){
         MyTextField.inputText.setText("");

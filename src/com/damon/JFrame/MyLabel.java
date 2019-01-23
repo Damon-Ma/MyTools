@@ -10,7 +10,6 @@ public class MyLabel {
             tempo,upLoadFileName,fileNameLabel,uploadResultLabel,uploadResult;
     public MyLabel() {
         input = new JLabel("inputText");
-
         devices = new JLabel("当前连接设备数：");
 
         deviceNmb = new JLabel("0",SwingConstants.CENTER); //默认为0，显示位置中心

@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 
 /**
  * @ClassName Config
- * @Description TODO
+ * @Description 静态变量
  * @Author Damon
  * @Date 2018/12/7
  * @Version 1.0

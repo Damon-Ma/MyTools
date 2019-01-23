@@ -561,7 +561,6 @@ public class CommandThread extends Thread {
     }
 
     //解锁
-
     private void unlock(int i){
         Process p = cmd.Cmd("fastboot devices");
         MyTextArea.setOutText("执行：fastboot devices");
@@ -598,22 +597,22 @@ public class CommandThread extends Thread {
                 MyTextArea.setOutText("结果："+flashResult);
 
                 if (flashResult.contains("OKAY")&&!errorResult.contains("FAILED")) {
-//                    MyTextArea.setOutText("解锁完成，请断开电源手动进入recovery模式。。");
-                    MyTextArea.setOutText("解锁完成，重启自动进入recovery模式，请稍等...");
+                    MyTextArea.setOutText("解锁完成，请断开电源手动进入recovery模式。。");
 
-                    Process p3 = cmd.Cmd("fastboot reboot");
-                    String rebootResult = cmd.getResult(p3);
-                    String recoveryResult = "";
-                    do {
-                        Process p4 = cmd.Cmd(" adb devices");
-                        recoveryResult = cmd.getResult(p4);
-                        if (recoveryResult == null){
-                            recoveryResult = "";
-                        }
-                    }while (!recoveryResult.contains(devicesName));
-
-                    Process p5 = cmd.Cmd("adb -s "+devicesName+" reboot recovery");
-                    String re = cmd.getResult(p5);
+//                    MyTextArea.setOutText("解锁完成，重启自动进入recovery模式，请稍等...");
+//                    Process p3 = cmd.Cmd("fastboot reboot");
+//                    String rebootResult = cmd.getResult(p3);
+//                    String recoveryResult = "";
+//                    do {
+//                        Process p4 = cmd.Cmd(" adb devices");
+//                        recoveryResult = cmd.getResult(p4);
+//                        if (recoveryResult == null){
+//                            recoveryResult = "";
+//                        }
+//                    }while (!recoveryResult.contains(devicesName));
+//
+//                    Process p5 = cmd.Cmd("adb -s "+devicesName+" reboot recovery");
+//                    String re = cmd.getResult(p5);
                 } else {
                     MyTextArea.setOutText("解锁失败，请检查！");
                 }
