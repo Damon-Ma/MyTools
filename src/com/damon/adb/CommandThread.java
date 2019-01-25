@@ -227,6 +227,7 @@ public class CommandThread extends Thread {
         if (cmd.isConnect()) {
             Process p = cmd.Cmd("adb -s " + MyComboBox.choose + " " + Util.getCommand(name.getName()));
             String ADBresult = cmd.getResult(p);
+
             String PAAresult = Util.getPackage(ADBresult);
             String[] split = PAAresult.split("/");
             if (split.length > 1) {

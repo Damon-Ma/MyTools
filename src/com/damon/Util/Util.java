@@ -55,10 +55,13 @@ public class Util {
     }
 //     获取包名和Activity
     public static String getPackage(String s){
-
-        String [] s1  = s.split(" ");
-        String s2 = s1[s1.length-1];
-        return s2.substring(0,s2.length()-1);
+        try {
+            String [] s1  = s.split(" ");
+            String s2 = s1[s1.length-1];
+            return s2.substring(0,s2.length()-1);
+        }catch (NullPointerException e){
+            return "  / ";
+        }
     }
     //截取文件名
     public static String getFileName(String filePath){
@@ -155,7 +158,7 @@ public class Util {
         p = cmd.Cmd("adb -s "+getChoose+" "+Util.getCommand("system"));
         result = cmd.getResult(p);
         //System.out.println("错误结果："+cmd.getResult(p)+"--");
-        if (result==null) {
+        if (result==null || result.equals("")) {
             p = cmd.Cmd("adb -s "+getChoose+" "+Util.getCommand("system6.0"));
             result = cmd.getResult(p);
         }
