@@ -33,7 +33,15 @@ public class Sign {
         Config.builder = new MyHttpClient().mOkHttpClient();
         Config.httpClient = Config.builder.build();
         Config.bundle = ResourceBundle.getBundle("interfaceMsg",Locale.CHINA);
-        Config.url = Config.bundle.getString("url");
+
+        String signUrl = com.damon.Util.Config.signURL;
+        if (signUrl==""){
+            Config.url = Config.bundle.getString("url");
+        }else {
+            Config.url = signUrl;
+        }
+        Log.logger.info("签名地址："+Config.url);
+
         Config.getFileUri = Config.bundle.getString("getList.uri");
         Config.loginUri = Config.bundle.getString("login.uri");
         Config.signedDownloadUri = Config.bundle.getString("signedDownload.uri");

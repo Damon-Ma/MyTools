@@ -18,6 +18,7 @@ public class Application extends JFrame{
         new MyLabel();
         new MyTable();
         new MyJProgressBar();
+        new MyRadioButton();
 
         //设置log4j日志输出路径
         String logPath = Util.getThisPath()+"logs";
@@ -142,6 +143,8 @@ public class Application extends JFrame{
         JPanel sign_p_4 = new JPanel(); //底部
 
         //
+        sign_p_1.add(MyRadioButton.netRadioButton1);
+        sign_p_1.add(MyRadioButton.netRadioButton2);
         sign_p_1.add(MyButton.signInBt);
         sign_p_1.add(MyLabel.chooseMessage);
         sign_p_1.add(MyComboBox.signType);

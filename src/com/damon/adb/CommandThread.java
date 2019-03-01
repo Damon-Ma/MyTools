@@ -145,7 +145,12 @@ public class CommandThread extends Thread {
             p = cmd.Cmd("\"" + Util.getThisPath() + "libs\\adb.exe\"\" devices");
         }
 
-        Object[] deviceResult = Util.getConnectDevice(cmd.getResult(p));
+        String result = cmd.getResult(p);
+        if (result==null){
+            MyTextArea.setOutText("获取设备信息异常！");
+            return;
+        }
+        Object[] deviceResult = Util.getConnectDevice(result);
         MyLabel.setDevicesNmb(String.valueOf(deviceResult.length));
         int deviceNmb = 0;   //连接序号
         if (deviceResult.length > 0) {
@@ -349,7 +354,7 @@ public class CommandThread extends Thread {
                         "请将刷机包拖进输出台！",
                         "提示", JOptionPane.WARNING_MESSAGE);
             }
-            Process p = cmd.Cmd("adb -s " + MyComboBox.choose + " " + Util.getCommand(name.getName()) + Config.OSPath);
+            Process p = cmd.Cmd("adb -s " + MyComboBox.choose +" "+ Util.getCommand(name.getName()) + "\""+Config.OSPath+"\"");
             cmd.printRealResult(p);
             Config.OSPath = null;
             if (cmd.getErrorResult(p) != null) {
@@ -415,6 +420,10 @@ public class CommandThread extends Thread {
 
     //登陆签名系统
     private void loginSignSys() {
+        if (Config.signURL == null){
+            MyLabel.uploadResult.setText("请先选择内网/外网！");
+            return;
+        }
         Config.loginTime = Util.getLongTime();
         MyLabel.uploadResult.setText("正在登陆...");
         Config.sign = new Sign();
@@ -588,17 +597,31 @@ public class CommandThread extends Thread {
                 Process p2 = null;
                 String flashComm = "";
                 if (i == 1) {
-                    flashComm = "fastboot flash recovery " + "\"" + Util.getThisPath() + "libs\\signtonosign.img\"";
+                    flashComm = "fastboot flash recovery " + "\"" + Util.getThisPath() + "libs\\signtonosign\\recovery.img\"";
                 } else if (i == 2) {
-                    flashComm = "fastboot flash recovery " + "\"" + Util.getThisPath() + "libs\\nosigntosign.img\"";
+                    flashComm = "fastboot flash recovery " + "\"" + Util.getThisPath() + "libs\\nosigntosign\\recovery.img\"";
                 }
+
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 MyTextArea.setOutText("执行："+flashComm);
                 p2 = cmd.Cmd(flashComm);
                 String flashResult = cmd.getErrorResult(p2);
                 MyTextArea.setOutText("结果："+flashResult);
 
-                if (flashResult.contains("OKAY")&&!errorResult.contains("FAILED")) {
-                    MyTextArea.setOutText("解锁完成，请断开电源手动进入recovery模式。。");
+                if (flashResult.contains("OKAY")&&!flashResult.contains("FAILED")) {
+                    MyTextArea.setOutText("解锁完成，请重启...");
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+//                    cmd.Cmd("fastboot reboot");
+//                    MyTextArea.setOutText("解锁完成，自动重启。。\n请按住“电源键+音量+”进入recovery模式");
 
 //                    MyTextArea.setOutText("解锁完成，重启自动进入recovery模式，请稍等...");
 //                    Process p3 = cmd.Cmd("fastboot reboot");

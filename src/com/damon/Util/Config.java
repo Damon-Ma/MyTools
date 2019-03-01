@@ -16,5 +16,6 @@ public class Config {
     public static String scrFilePath;
     public static List<Integer> fileIdList;
     public static long loginTime;
+    public static String signURL;
 
 }
